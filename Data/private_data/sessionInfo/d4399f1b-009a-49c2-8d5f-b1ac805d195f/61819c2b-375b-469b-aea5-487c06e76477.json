@@ -1,0 +1,566 @@
+{
+  "success": true,
+  "creationTimestamp": 1725459040,
+  "elements": [
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "VSPiO",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1725459084191,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=8-2\\cdot5x$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1725459094955,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "EquationsBalanceMethodArrangeTerms",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsOperationsAdd",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=8-10x$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "EquationsBalanceMethodArrangeTerms",
+                "weight": 100
+              },
+              {
+                "id": "EquationsOperationsAdd",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$y =8- 10 x $$",
+          "derivation": [
+            {
+              "result": "$$t =5 x $$",
+              "description": "Geef de formule voor  $t $ .",
+              "derivation": [
+                {
+                  "expression": "$$t - 5 x =0$$"
+                },
+                {
+                  "result": "$$t =5 x $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $\\text{-}5 x $  eraf."
+                }
+              ]
+            },
+            {
+              "result": "$$y =8- 10 x $$",
+              "description": "Geef de formule voor  $y $ .",
+              "derivation": [
+                {
+                  "expression": "$$y =8- 2 t $$"
+                },
+                {
+                  "result": "$$y =8- 2\\times 5 x $$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$y =8- 10 x $$",
+                  "description": "Reken uit:  $\\text{-}2\\times 5$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "hfyFr",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1725459148883,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$p=4\\left(8-5q\\right)+64$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "ExpandSingleBrackets"
+                ]
+              },
+              {
+                "timestamp": 1725459267178,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$p=32-20a+64$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt de vermenigvuldiging niet goed uitgewerkt.",
+                    "sub": "De term  $\\text{-}20 a $  klopt niet.",
+                    "expr": "$$p =32- \\begingroup\\color{darkred}\\begingroup 20 a \\endgroup\\endgroup+ 64$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1725459288657,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$p=32-20q+64$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.8333333333333333,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1725459306015,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "ExpandSingleBrackets",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsBalanceMethodArrangeTerms",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsOperationsAdd",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$p=-20q+96$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "ExpandSingleBrackets",
+                "weight": 100
+              },
+              {
+                "id": "EquationsBalanceMethodArrangeTerms",
+                "weight": 100
+              },
+              {
+                "id": "EquationsOperationsAdd",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0.75,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.25,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$p =96- 20 q $$",
+          "derivation": [
+            {
+              "result": "$$a =8- 5 q $$",
+              "description": "Geef de formule voor  $a $ .",
+              "derivation": [
+                {
+                  "expression": "$$a + 5 q =8$$"
+                },
+                {
+                  "result": "$$a =8- 5 q $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $5 q $  eraf."
+                }
+              ]
+            },
+            {
+              "result": "$$p =96- 20 q $$",
+              "description": "Geef de formule voor  $p $ .",
+              "derivation": [
+                {
+                  "expression": "$$p =4 a + 64$$"
+                },
+                {
+                  "result": "$$p =4 \\left(8- 5 q \\right)+ 64$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$p =32- 20 q + 64$$",
+                  "skills": [
+                    "ExpandSingleBrackets"
+                  ],
+                  "description": "Werk de haakjes uit"
+                },
+                {
+                  "result": "$$p =96- 20 q $$",
+                  "description": "Reken uit:  $32+ 64$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "XJhz0",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1725459705290,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$2x=16+6m$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "EquationsBalanceMethodDivideCoefficient",
+                  "EquationsOperationsMultiply",
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1725459712628,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "EquationsBalanceMethodArrangeTerms",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsOperationsAdd",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsBalanceMethodDivideCoefficient",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsOperationsMultiply",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$x=8+3m$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.5,
+                "inputStatus": "FINISHED"
+              },
+              {
+                "timestamp": 1725459735242,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "ExpandSingleBrackets",
+                    "weight": -100,
+                    "errors": [
+                      "SkippingTerms"
+                    ]
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$r=18-3m+8$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt de vermenigvuldiging niet goed uitgewerkt.",
+                    "sub": "Je hebt niet alle termen van  $8+ 3 m $  met  $\\text{-}1$  vermenigvuldigd.",
+                    "expr": "$$r =18- 3 m + \\begingroup\\color{darkred}\\begingroup 8\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.5,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1725459758671,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "ExpandSingleBrackets",
+                    "weight": -100,
+                    "errors": [
+                      "SkippingTerms"
+                    ]
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$r=18+3m-8$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt de vermenigvuldiging niet goed uitgewerkt.",
+                    "sub": "Je hebt niet alle termen van  $8+ 3 m $  met  $\\text{-}1$  vermenigvuldigd.",
+                    "expr": "$$r =18+ \\begingroup\\color{darkred}\\begingroup 3 m \\endgroup\\endgroup- 8$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.5,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1725459758835,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [
+              {
+                "id": "EquationsBalanceMethodArrangeTerms",
+                "weight": 100
+              },
+              {
+                "id": "EquationsOperationsAdd",
+                "weight": 100
+              },
+              {
+                "id": "EquationsBalanceMethodDivideCoefficient",
+                "weight": 100
+              },
+              {
+                "id": "EquationsOperationsMultiply",
+                "weight": 100
+              },
+              {
+                "id": "ExpandSingleBrackets",
+                "weight": -100,
+                "errors": [
+                  "SkippingTerms"
+                ]
+              },
+              {
+                "id": "ExpandSingleBrackets",
+                "weight": -100,
+                "errors": [
+                  "SkippingTerms"
+                ]
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$r =10- 3 m $$",
+          "derivation": [
+            {
+              "result": "$$x =8+ 3 m $$",
+              "description": "Geef de formule voor  $x $ .",
+              "derivation": [
+                {
+                  "expression": "$$2 x - 6 m =16$$"
+                },
+                {
+                  "result": "$$2 x =16+ 6 m $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $\\text{-}6 m $  eraf."
+                },
+                {
+                  "result": "$$x =8+ 3 m $$",
+                  "skills": [
+                    "EquationsBalanceMethodDivideCoefficient",
+                    "EquationsOperationsMultiply"
+                  ],
+                  "description": "Deel links en rechts door  $2$"
+                }
+              ]
+            },
+            {
+              "result": "$$r =10- 3 m $$",
+              "description": "Geef de formule voor  $r $ .",
+              "derivation": [
+                {
+                  "expression": "$$r =18- x $$"
+                },
+                {
+                  "result": "$$r =18- \\left(8+ 3 m \\right)$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$r =18- 8- 3 m $$",
+                  "skills": [
+                    "ExpandSingleBrackets"
+                  ],
+                  "description": "Werk de haakjes uit"
+                },
+                {
+                  "result": "$$r =10- 3 m $$",
+                  "description": "Reken uit:  $18- 8$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "EquationsBalanceMethodArrangeTerms": {
+      "descr": {
+        "nl": "Termen met de variabele naar links en andere termen naar rechts halen."
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsOperationsAdd": {
+      "descr": {
+        "nl": "Termen optellen of aftrekken via de balansmethode"
+      },
+      "stepType": "STRATEGY"
+    },
+    "ExpandSingleBrackets": {
+      "descr": {
+        "nl": "Eén paar haakjes uitwerken"
+      },
+      "stepType": "ALGEBRA",
+      "errors": [
+        {
+          "id": "SkippingTerms",
+          "type": [
+            "MISCONCEPTION"
+          ],
+          "descr": {
+            "nl": "Niet alle termen vermenigvuldigen met de coëfficiënt."
+          }
+        }
+      ]
+    },
+    "EquationsBalanceMethodDivideCoefficient": {
+      "descr": {
+        "nl": "Delen door de coëfficiënt voor de variabele om de oplossing te krijgen."
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsOperationsMultiply": {
+      "descr": {
+        "nl": "Vermenigvuldigen of delen van een vergelijking via de balansmethode"
+      },
+      "stepType": "STRATEGY"
+    },
+    "FractionArithmeticSimplifyProper": {
+      "descr": {
+        "nl": "Een breuk vereenvoudigen"
+      },
+      "stepType": "CALCULATE"
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 1.75,
+    "marksTotal": 3
+  }
+}

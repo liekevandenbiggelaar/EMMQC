@@ -1,0 +1,268 @@
+{
+  "success": true,
+  "creationTimestamp": 1727988192,
+  "elements": [
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "VSPiO",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "CORRECT",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1727988205587,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$?$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Deze invoer kan niet worden nagekeken.",
+                    "expr": "$$\\text{Ongeldige invoer}$$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "PARSE_ERROR"
+              },
+              {
+                "timestamp": 1727988212960,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$?$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Deze invoer kan niet worden nagekeken.",
+                    "expr": "$$\\text{Ongeldige invoer}$$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "PARSE_ERROR"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$y =8- 10 x $$",
+          "derivation": [
+            {
+              "result": "$$t =5 x $$",
+              "description": "Geef de formule voor  $t $ .",
+              "derivation": [
+                {
+                  "expression": "$$t - 5 x =0$$"
+                },
+                {
+                  "result": "$$t =5 x $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $\\text{-}5 x $  eraf."
+                }
+              ]
+            },
+            {
+              "result": "$$y =8- 10 x $$",
+              "description": "Geef de formule voor  $y $ .",
+              "derivation": [
+                {
+                  "expression": "$$y =8- 2 t $$"
+                },
+                {
+                  "result": "$$y =8- 2\\times 5 x $$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$y =8- 10 x $$",
+                  "description": "Reken uit:  $\\text{-}2\\times 5$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "hfyFr",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "VIRGIN",
+            "progress": 0,
+            "events": [],
+            "tags": [],
+            "scoring": {
+              "finished": false,
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "solution": "$$p =96- 20 q $$",
+          "derivation": [
+            {
+              "result": "$$a =8- 5 q $$",
+              "description": "Geef de formule voor  $a $ .",
+              "derivation": [
+                {
+                  "expression": "$$a + 5 q =8$$"
+                },
+                {
+                  "result": "$$a =8- 5 q $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $5 q $  eraf."
+                }
+              ]
+            },
+            {
+              "result": "$$p =96- 20 q $$",
+              "description": "Geef de formule voor  $p $ .",
+              "derivation": [
+                {
+                  "expression": "$$p =4 a + 64$$"
+                },
+                {
+                  "result": "$$p =4 \\left(8- 5 q \\right)+ 64$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$p =32- 20 q + 64$$",
+                  "skills": [
+                    "ExpandSingleBrackets"
+                  ],
+                  "description": "Werk de haakjes uit"
+                },
+                {
+                  "result": "$$p =96- 20 q $$",
+                  "description": "Reken uit:  $32+ 64$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "XJhz0",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "VIRGIN",
+            "progress": 0,
+            "events": [],
+            "tags": [],
+            "scoring": {
+              "finished": false,
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "solution": "$$r =10- 3 m $$",
+          "derivation": [
+            {
+              "result": "$$x =8+ 3 m $$",
+              "description": "Geef de formule voor  $x $ .",
+              "derivation": [
+                {
+                  "expression": "$$2 x - 6 m =16$$"
+                },
+                {
+                  "result": "$$2 x =16+ 6 m $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $\\text{-}6 m $  eraf."
+                },
+                {
+                  "result": "$$x =8+ 3 m $$",
+                  "skills": [
+                    "EquationsBalanceMethodDivideCoefficient",
+                    "EquationsOperationsMultiply"
+                  ],
+                  "description": "Deel links en rechts door  $2$"
+                }
+              ]
+            },
+            {
+              "result": "$$r =10- 3 m $$",
+              "description": "Geef de formule voor  $r $ .",
+              "derivation": [
+                {
+                  "expression": "$$r =18- x $$"
+                },
+                {
+                  "result": "$$r =18- \\left(8+ 3 m \\right)$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$r =18- 8- 3 m $$",
+                  "skills": [
+                    "ExpandSingleBrackets"
+                  ],
+                  "description": "Werk de haakjes uit"
+                },
+                {
+                  "result": "$$r =10- 3 m $$",
+                  "description": "Reken uit:  $18- 8$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {},
+  "scoring": {
+    "finished": false,
+    "marksEarned": 0,
+    "marksTotal": 3
+  }
+}

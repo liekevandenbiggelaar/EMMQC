@@ -1,0 +1,497 @@
+{
+  "success": true,
+  "creationTimestamp": 1725889888,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "m3FQZ",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1725889915777,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Geef de formule voor  $b $ .",
+                    "sub": "Vervang  $t $  in  $b = 8t - 65$  door  $7p $  , want in formule <strong>B</strong> staat  $t = 7p $  ."
+                  }
+                ]
+              },
+              {
+                "timestamp": 1725889935834,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b=8\\cdot7p-65$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1725889943571,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$56p-65$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen vergelijking.",
+                    "sub": "Je invoer moet een '='-teken bevatten.",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 56 p - 65\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1725889956210,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b=56p-65$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0.65,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.35,
+                "hintsRequested": 1,
+                "mathErrors": 1
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$b =56 p - 65$$",
+          "derivation": [
+            {
+              "result": "$$b =56 p - 65$$",
+              "description": "Geef de formule voor  $b $ .",
+              "derivation": [
+                {
+                  "expression": "$$b =8 t - 65$$"
+                },
+                {
+                  "result": "$$b =8\\times 7 p - 65$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$b =56 p - 65$$",
+                  "description": "Reken uit:  $8\\times 7$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "J3bQo",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1725889978836,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "ExpandSingleBrackets",
+                    "weight": -100,
+                    "errors": [
+                      "SkippingTerms"
+                    ]
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b=6+3\\cdot34+8p$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt de vermenigvuldiging niet goed uitgewerkt.",
+                    "sub": "Je hebt niet alle termen van  $34+ 8 p $  met  $3$  vermenigvuldigd.",
+                    "expr": "$$b =6+ 3\\times 34+ \\begingroup\\color{darkred}\\begingroup 8 p \\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1725890015767,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "<p>Substitueer formule  $t = 34+ 8p $  </p><p>in de formule  $b = 6+ 3t $  </p>"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1725890021949,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "ExpandSingleBrackets",
+                    "weight": -100,
+                    "errors": [
+                      "SkippingTerms"
+                    ]
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b=6+3\\cdot34+8p$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt de vermenigvuldiging niet goed uitgewerkt.",
+                    "sub": "Je hebt niet alle termen van  $34+ 8 p $  met  $3$  vermenigvuldigd.",
+                    "expr": "$$b =6+ 3\\times 34+ \\begingroup\\color{darkred}\\begingroup 8 p \\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1725890022324,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [
+              {
+                "id": "ExpandSingleBrackets",
+                "weight": -100,
+                "errors": [
+                  "SkippingTerms"
+                ]
+              },
+              {
+                "id": "ExpandSingleBrackets",
+                "weight": -100,
+                "errors": [
+                  "SkippingTerms"
+                ]
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 1,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$b =108+ 24 p $$",
+          "derivation": [
+            {
+              "result": "$$b =108+ 24 p $$",
+              "description": "Geef de formule voor  $b $ .",
+              "derivation": [
+                {
+                  "expression": "$$b =6+ 3 t $$"
+                },
+                {
+                  "result": "$$b =6+ 3 \\left(34+ 8 p \\right)$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$b =6+ 102+ 24 p $$",
+                  "skills": [
+                    "ExpandSingleBrackets"
+                  ],
+                  "description": "Werk de haakjes uit"
+                },
+                {
+                  "result": "$$b =108+ 24 p $$",
+                  "description": "Reken uit:  $6+ 102$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "VSPiO",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1725890058527,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b=-49+14p+34$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.6666666666666666,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1725890065637,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "ExpandSingleBrackets",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b=14p-15$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "ExpandSingleBrackets",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$b =\\text{-}15+ 14 p $$",
+          "derivation": [
+            {
+              "result": "$$b =\\text{-}15+ 14 p $$",
+              "description": "Geef de formule voor  $b $ .",
+              "derivation": [
+                {
+                  "expression": "$$b =\\text{-}7 t + 34$$"
+                },
+                {
+                  "result": "$$b =\\text{-}7 \\left(7- 2 p \\right)+ 34$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$b =\\text{-}49+ 14 p + 34$$",
+                  "skills": [
+                    "ExpandSingleBrackets"
+                  ],
+                  "description": "Werk de haakjes uit"
+                },
+                {
+                  "result": "$$b =\\text{-}15+ 14 p $$",
+                  "description": "Reken uit:  $\\text{-}49+ 34$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "RKDGY",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1725890084850,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "ExpandSingleBrackets",
+                    "weight": -100,
+                    "errors": [
+                      "SkippingTerms"
+                    ]
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b=11-4\\cdot4p+3$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt de vermenigvuldiging niet goed uitgewerkt.",
+                    "sub": "Je hebt niet alle termen van  $4 p + 3$  met  $\\text{-}4$  vermenigvuldigd.",
+                    "expr": "$$b =11- 4\\times 4 p + \\begingroup\\color{darkred}\\begingroup 3\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1725890108460,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$11-4\\left(4p+3\\right)$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1725890108706,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [
+              {
+                "id": "ExpandSingleBrackets",
+                "weight": -100,
+                "errors": [
+                  "SkippingTerms"
+                ]
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$b =\\text{-}1- 16 p $$",
+          "derivation": [
+            {
+              "result": "$$b =\\text{-}1- 16 p $$",
+              "description": "Geef de formule voor  $b $ .",
+              "derivation": [
+                {
+                  "expression": "$$b =11- 4 t $$"
+                },
+                {
+                  "result": "$$b =11- 4 \\left(4 p + 3\\right)$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$b =11- 16 p - 12$$",
+                  "skills": [
+                    "ExpandSingleBrackets"
+                  ],
+                  "description": "Werk de haakjes uit"
+                },
+                {
+                  "result": "$$b =\\text{-}1- 16 p $$",
+                  "description": "Reken uit:  $11- 12$"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "ExpandSingleBrackets": {
+      "descr": {
+        "nl": "Eén paar haakjes uitwerken"
+      },
+      "stepType": "ALGEBRA",
+      "errors": [
+        {
+          "id": "SkippingTerms",
+          "type": [
+            "MISCONCEPTION"
+          ],
+          "descr": {
+            "nl": "Niet alle termen vermenigvuldigen met de coëfficiënt."
+          }
+        }
+      ]
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 1.65,
+    "marksTotal": 4
+  }
+}

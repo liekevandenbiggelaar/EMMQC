@@ -1,0 +1,506 @@
+{
+  "success": true,
+  "creationTimestamp": 1742927060,
+  "elements": [
+    {
+      "id": "Q5",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "NqQBF",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "VIRGIN",
+            "progress": 0,
+            "events": [],
+            "tags": [],
+            "scoring": {
+              "finished": false,
+              "marksTotal": 1,
+              "marksEarned": 0,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "De formule kun je schrijven als  $$y = 2\\cdot 3\\cdot 4\\cdot k \\cdot \\akitinteraction{I1 }\\cdot \\akitinteraction{{I1 _{1 }} }$$  <gap></gap>  <gap></gap>",
+          "solution": "De formule kun je schrijven als  $$y = 2\\cdot 3\\cdot 4\\cdot k \\cdot \\akitinteraction{I1 }\\cdot \\akitinteraction{{I1 _{1 }} }$$  <gap></gap>  <gap></gap>"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "Zhx54",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1742927073388,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [],
+                "exerciseStatus": "FINISHED",
+                "progress": 1
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": true,
+              "marksTotal": 1,
+              "marksEarned": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "Deze formule kun je dan nog korter schrijven als  $$y = \\akitinteraction{I1 }k ^{3}$$  <gap></gap>",
+          "solution": "Deze formule kun je dan nog korter schrijven als  $$y = \\akitinteraction{I1 }k ^{3}$$  <gap></gap>"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "bgAWz",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "VIRGIN",
+            "progress": 0,
+            "events": [],
+            "tags": [],
+            "scoring": {
+              "finished": false,
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "<span style=\"background-color: rgb(255, 255, 255); color: rgb(28, 28, 28);\"> Schrijf deze formule nog korter als </span> $$b = $$   <gap></gap> &nbsp; $$a ^{3}$$ .",
+          "solution": "<span style=\"background-color: rgb(255, 255, 255); color: rgb(28, 28, 28);\"> Schrijf deze formule nog korter als </span> $$b = $$   <gap></gap> &nbsp; $$a ^{3}$$ ."
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$p = 7m ^{2}\\cdot 6m $$"
+        },
+        {
+          "id": "gt8OC",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1742927090629,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$42m3$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1742927092602,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$3$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1742927093039,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$4$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1742927099710,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$p=4$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1742927102437,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$p=4$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1742927102511,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$p =42 m ^{3}$$",
+          "derivation": [
+            {
+              "expression": "$$p =7\\times 6 m ^{2} m $$"
+            },
+            {
+              "result": "$$p =42 m ^{2} m $$",
+              "description": "Reken uit:  $7\\times 6$"
+            },
+            {
+              "result": "$$p =42 m ^{3}$$",
+              "description": "Bij vermenigvuldigen van machten kun je de exponenten optellen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$m = 2c \\cdot 2c \\cdot 2c $$"
+        },
+        {
+          "id": "c6dnq",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1743523232814,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$8c$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1743523242076,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$8c^{3}$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1743523242205,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$m =8 c ^{3}$$",
+          "derivation": [
+            {
+              "expression": "$$m =2\\times 2\\times 2 c \\times c \\times c $$"
+            },
+            {
+              "result": "$$m =8 c \\times c \\times c $$",
+              "description": "Reken uit:  $2\\times 2\\times 2$"
+            },
+            {
+              "result": "$$m =8 c ^{3}$$",
+              "description": "Schrijf de herhaalde vermenigvuldiging als een macht"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q7",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$k = 18g \\cdot \\frac{2}{3}g ^{2}$$"
+        },
+        {
+          "id": "ASkrV",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1742927114004,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$2$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $k =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 2\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742927115087,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$2$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $k =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 2\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742927115164,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$k =12 g ^{3}$$",
+          "derivation": [
+            {
+              "expression": "$$k =18\\times \\frac{2}{3} g  g ^{2}$$"
+            },
+            {
+              "result": "$$k =12 g  g ^{2}$$",
+              "description": "Herleid."
+            },
+            {
+              "result": "$$k =12 g ^{3}$$",
+              "description": "Bij vermenigvuldigen van machten kun je de exponenten optellen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q8",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$l = n \\cdot 8n \\cdot 9n $$"
+        },
+        {
+          "id": "CzdWm",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1742927122936,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$2$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $l =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 2\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742927123285,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$3$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $l =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 3\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742927123367,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$l =72 n ^{3}$$",
+          "derivation": [
+            {
+              "expression": "$$l =8\\times 9 n \\times n \\times n $$"
+            },
+            {
+              "result": "$$l =72 n \\times n \\times n $$",
+              "description": "Reken uit:  $8\\times 9$"
+            },
+            {
+              "result": "$$l =72 n ^{3}$$",
+              "description": "Schrijf de herhaalde vermenigvuldiging als een macht"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {},
+  "scoring": {
+    "finished": false,
+    "marksEarned": 1,
+    "marksTotal": 7
+  }
+}
