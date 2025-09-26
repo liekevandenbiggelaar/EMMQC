@@ -154,5 +154,8 @@ def collection_refinement(subgroup=None, attribute=None, limit=None):
 
     return candidates
 
-def sequence_refinement():
+def sequence_refinement(): # I think the same as collection so no additional needed.
+    return None
+
+def text_refinement(): #tbd future
     return None

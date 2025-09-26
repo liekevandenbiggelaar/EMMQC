@@ -5,7 +5,7 @@ import numpy as np
 
 import refinements as rf
 
-def split_spaces(data=None, descriptors=[], targets=[], ids=[], skips=[]):
+def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
     """
     The original database gets split into the descriptive and target space, discarding all other columns that are not mentioned.
 
@@ -73,8 +73,11 @@ def get_attribute_types(data=None, ids=[]):
         elif isinstance(data[col].dropna().iloc[0], str) and len(data[col].dropna().unique()) > 2:
             dtypes['categorical'].append(col)
         
-        elif isinstance(data[col].dropna().iloc[0], list):
+        elif isinstance(data[col].dropna().iloc[0], list): # lists are unordered
             dtypes['collection'].append(col)
+
+        elif isinstance(data[col].dropna().iloc[0], tuple): # tuples are ordered
+            dtypes['sequence'].append(col)
         
         else:
             continue
@@ -135,7 +138,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_
         candidates_per_attribute[att] = att_list 
 
     # go over all collection attributes
-    for att in dtypes['collection']:
+    for att in dtypes['collection'] or att in dtypes['sequence']:
         conditions = rf.collection_refinement(descriptive_space, att, limit=collection_limit)
         candidates += conditions
         att_list = []
@@ -147,11 +150,19 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_
 
     return candidates_per_attribute, candidates
 
-def add_condition(candidate=None):
+def add_condition(description=None, starting_candidates=None):
     """
     Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
     If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
     """
 
-    # Check redundancy
-    return None
+    # Get all attributes already covered in the description
+    attributes = list(description.keys())
+
+    # Select only the starting descriptions of other attributes than those already included in the input description
+    other_descriptions = [starting_candidates[i] for i in range(len(starting_candidates)) if not set(attributes).issubset(set(list(starting_candidates[i].keys()))) ]
+
+    # Combine these descriptions with the existing one to make new candidates
+    new_candidates = [description | new for new in other_descriptions]
+
+    return new_candidates
