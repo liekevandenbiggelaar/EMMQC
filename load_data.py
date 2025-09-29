@@ -1,5 +1,8 @@
 import json
 import os
+import re
+import ast
+from collections import Counter
 
 import pandas as pd
 
@@ -259,8 +262,69 @@ def exercise_dataframes(library_dict):
 
     return df_exercises
 
+def additional_columns(data=None):
+    """
+    Case-specific!
+    """
+
+    collection_attributes = ['skillName', 'skillsTodo', 'stepType']
+
+    for colatt in collection_attributes:
+        data[colatt] = data[colatt].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
+
+    # get ratios
+    ## marksEarned and marksTotal
+    data['marksRatio'] = data['marksEarned'] / data['marksTotal']
+
+
+    # get counts
+    ## stepType
+    counts = data["stepType"].apply(lambda x: Counter(x) if isinstance(x, list) else Counter())
+    expanded = pd.DataFrame(list(counts)).fillna(0).astype(int)
+    expanded = expanded.rename(columns=lambda c: f"step_{c}_count")
+    data = pd.concat([data, expanded], axis=1)
+
+
+    # transform dictionaries
+    def safe_eval(val):
+        if pd.isna(val):
+            return []
+        try:
+            # Always work with string
+            s = str(val)
+
+            # Normalize all variants of nan
+            s = re.sub(r"\bnan\b", "None", s, flags=re.IGNORECASE)
+
+            # Parse safely
+            parsed = ast.literal_eval(s)
+
+            # Function to flatten nested lists
+            def flatten(lst):
+                out = []
+                for x in lst:
+                    if isinstance(x, list):
+                        out.extend(flatten(x))
+                    elif x is not None:
+                        out.append(x)
+                return out
+
+            if isinstance(parsed, list):
+                return flatten(parsed)
+            return parsed
+        except Exception as e:
+            print("Parse error:", e, "on", val)
+            return []
+    
+    data["errors"] = data["errors"].apply(safe_eval)
+
+    return data
+
 
 def transform_jsons(data_path='Data/private_data/sessionInfo'):
     library_dict = open_library(data_path)
     df_library = exercise_dataframes(library_dict)
-    df_library.to_csv("algebrakit_firstbatch.csv", index=False)
+
+    df_library = additional_columns(df_library)
+
+    df_library.to_csv("algebrakit_firstbatch_2.csv", index=False)

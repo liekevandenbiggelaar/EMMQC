@@ -41,7 +41,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, numerical_b
 
         beam = pq.PriorityQueue(queue=[], max_length=w)
 
-        for description in candididate_queue:
+        for description in candidate_queue:
             return None
 
 
