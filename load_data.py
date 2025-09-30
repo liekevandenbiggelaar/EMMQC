@@ -276,15 +276,6 @@ def additional_columns(data=None):
     ## marksEarned and marksTotal
     data['marksRatio'] = data['marksEarned'] / data['marksTotal']
 
-
-    # get counts
-    ## stepType
-    counts = data["stepType"].apply(lambda x: Counter(x) if isinstance(x, list) else Counter())
-    expanded = pd.DataFrame(list(counts)).fillna(0).astype(int)
-    expanded = expanded.rename(columns=lambda c: f"step_{c}_count")
-    data = pd.concat([data, expanded], axis=1)
-
-
     # transform dictionaries
     def safe_eval(val):
         if pd.isna(val):
@@ -317,6 +308,71 @@ def additional_columns(data=None):
             return []
     
     data["errors"] = data["errors"].apply(safe_eval)
+    data["interactionDerivation"] = data["interactionDerivation"].apply(safe_eval)
+    data["result.tags"] = data["result.tags"].apply(safe_eval)
+
+    ## error Description and Types
+    error_descs, error_types = [], []
+
+    for i in range(len(data)):
+        if len(data.iloc[i]['errors']) == 0:
+            error_descs.append([])
+            error_types.append([])
+        else:
+            row_desc, row_type = [], []
+            for j in range(len(data['errors'].iloc[i])):
+                row_desc.append( data['errors'].iloc[i][j]['id'] )
+                row_type += data['errors'].iloc[i][j]['type']
+        
+            error_descs.append(row_desc)
+            error_types.append(row_type)
+
+    data['error_descriptions'] = error_descs
+    data['error_types'] = error_types
+
+    ## result tags: positive and negative
+    posTag = []
+    negTag = []
+
+    for i in range(len(data)):
+        if len(data.iloc[i]['result.tags']) == 0:
+            posTag.append([])
+            negTag.append([])
+        else:
+            rowPos, rowNeg = [], []
+            for j in range(len(data['result.tags'].iloc[i])):
+                if data['result.tags'].iloc[i][j]['weight'] == 100:
+                    rowPos.append(data['result.tags'].iloc[i][j]['id'])
+                elif data['result.tags'].iloc[i][j]['weight'] == -100:
+                    rowNeg.append(data['result.tags'].iloc[i][j]['id'])
+
+            posTag.append(rowPos)
+            negTag.append(rowNeg)
+
+    data['positiveResultTags'] = posTag
+    data['negativeResultTags'] = negTag
+
+    # get counts
+    ## stepType
+    counts = data["stepType"].apply(lambda x: Counter(x) if isinstance(x, list) else Counter())
+    expanded = pd.DataFrame(list(counts)).fillna(0).astype(int)
+    expanded = expanded.rename(columns=lambda c: f"step_{c}_count")
+    data = pd.concat([data, expanded], axis=1)
+
+    ## errorDescription
+    counts = data["error_descriptions"].apply(lambda x: Counter(x) if isinstance(x, list) else Counter())
+    expanded = pd.DataFrame(list(counts)).fillna(0).astype(int)
+    expanded = expanded.rename(columns=lambda c: f"errorDesc_{c}_count")
+    data = pd.concat([data, expanded], axis=1)
+
+    ## errorType
+    counts = data["error_types"].apply(lambda x: Counter(x) if isinstance(x, list) else Counter())
+    expanded = pd.DataFrame(list(counts)).fillna(0).astype(int)
+    expanded = expanded.rename(columns=lambda c: f"errorTypes_{c}_count")
+    data = pd.concat([data, expanded], axis=1)
+
+    ## derivation steps
+    data['interactionStepsNeeded'] = data['interactionDerivation'].apply(lambda x: len(x))
 
     return data
 
@@ -325,6 +381,6 @@ def transform_jsons(data_path='Data/private_data/sessionInfo'):
     library_dict = open_library(data_path)
     df_library = exercise_dataframes(library_dict)
 
-    df_library = additional_columns(df_library)
+    #df_library = additional_columns(df_library)
 
     df_library.to_csv("algebrakit_firstbatch_2.csv", index=False)

@@ -23,11 +23,25 @@ class PriorityQueue():
         self._average_quality = np.mean(self.get_qualities())
         print(f"This queue has subgroups of average size {self._average_size} in a queue of length {self._length_queue} and an average quality of {self._average_quality}.")
     
-    def insert_subgroup(self):
-        return None
-    
-    def remove_subgroup(self):
-        return None
+    def insert_subgroup(self, subgroup: s.Subgroup):
+
+        if len(self._queue) < self._max_length:
+            self._queue.append(subgroup)
+            self._queue = sorted(self._queue, reverse=True, key = lambda i: i._quality)
+
+        else:
+            least_exceptional_in_queue = self._queue[-1]
+            quality_least_in_queue = least_exceptional_in_queue._quality
+            quality_candidate = subgroup._quality
+
+            if quality_candidate < quality_least_in_queue: 
+                # new candidate is more exceptional (worse exercise)
+                self._queue.pop(-1)
+                self._queue.append(subgroup)
+                self._queue = sorted(self._queue, reverse = False, key = lambda i: i._quality)
+            else:
+                self._queue = self._queue
+
     
     def compare_subgroups(self):
         return None

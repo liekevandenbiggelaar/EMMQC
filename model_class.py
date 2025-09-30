@@ -2,17 +2,25 @@
 This file contains all code related to the model class and fitting thereof.
 """
 
-def model_setup():
-    return None
+import numpy as np
 
-def model_fit():
-    return None
+def finish_rate(target_space=None):
 
-def model_fit_population():
-    return None
+    all_sessions = len(target_space)
+    data_finished_sessions = target_space[target_space['finished'] == True]
+    count_finished = len(data_finished_sessions)
 
-def model_fit_subgroup():
-    return None
+    model_quality = count_finished / all_sessions
 
-def get_model_params():
-    return None
+    return model_quality
+
+
+def average_marks_ratio(target_space=None):
+
+    marks_ratio = np.array(target_space['marksEarned']) / np.array(target_space['marksTotal'])
+    model_quality = np.mean(marks_ratio)
+
+    return model_quality
+
+
+

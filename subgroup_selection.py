@@ -14,7 +14,7 @@ def check_record_inclusion(descriptive_space=None, dtypes=None, candidate=None):
     Get the indices of the records that correspond to the conditions set in the candidate description.
     """
 
-    new_space = descriptive_space # in condition iteration, do include all again to save time.
+    subgroup_descriptors = descriptive_space # in condition iteration, do include all again to save time.
 
     for attribute in candidate.keys():
         condition = candidate[attribute]
@@ -22,26 +22,26 @@ def check_record_inclusion(descriptive_space=None, dtypes=None, candidate=None):
 
         
         if attr_type == 'numerical':
-            new_space = get_indices_numerical(new_space, attribute, condition)
+            subgroup_descriptors = get_indices_numerical(subgroup_descriptors, attribute, condition)
         
         elif attr_type == 'boolean':
-            new_space = get_indices_boolean(new_space, attribute, condition)
+            subgroup_descriptors = get_indices_boolean(subgroup_descriptors, attribute, condition)
 
         elif attr_type == 'categorical':
-            new_space = get_indices_categorical(new_space, attribute, condition)
+            subgroup_descriptors = get_indices_categorical(subgroup_descriptors, attribute, condition)
 
         elif attr_type == 'collection':
-            new_space = get_indices_collection(new_space, attribute, condition)
+            subgroup_descriptors = get_indices_collection(subgroup_descriptors, attribute, condition)
         
         elif attr_type == 'sequence':
-            new_space = get_indices_sequence(new_space, attribute, condition)
+            subgroup_descriptors = get_indices_sequence(subgroup_descriptors, attribute, condition)
         
         else:
             return "ERROR -- Invalid attribute type."
 
-    indices = list(new_space.index) # Keep updating each iteration.
+    indices = list(subgroup_descriptors.index) # Keep updating each iteration.
 
-    return indices, new_space
+    return indices, subgroup_descriptors
 
 
 def get_indices_numerical(descriptive_space=None, attribute=None, condition=None):

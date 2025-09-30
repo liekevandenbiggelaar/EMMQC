@@ -14,7 +14,7 @@ class Subgroup():
     - values (list[float])  : a list of all model values for each record.
     """
     
-    def __init__(self, model: str, description: str, indices: list, quality: float, values: list[float]):
+    def __init__(self, model: str, description: str, indices: list, quality: float):
 
         self._model = model
         self._rank = None #added later if it is included in the top-k.
@@ -22,32 +22,9 @@ class Subgroup():
         self._indices = indices
         self._size = len(indices) #size of the subgroup
         self._quality = quality
-        self._values = values
 
     def __str__(self):
         return f"This subgroup of size {self._size} has description {self._description} and a quality score of {self._quality}."
-    
-    def insert_condition(self, condition):  
-        return None
-    
-    def remove_condition(self, condition):
-        return None
-    
-    def modify_description(self, new_description: str):
-        self._description = new_description
-    
-    def modify_indices(self, new_indices: list):
-        self._indices = new_indices
-        self._size = len(new_indices)
-    
-    def modify_values(self, new_values: list):
-        self._values = new_values
-    
-    def modify_quality(self, new_quality: float):
-        self._quality = new_quality
-    
-    def insert_rank(self, rank):
-        self._rank = rank
     
     # Print the containments of the subgroup
     def print_model(self):
