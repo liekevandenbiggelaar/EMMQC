@@ -26,15 +26,18 @@ def entropy_function(subgroup_size=None, population_size=None):
 def model_function(target_space=None, model=None):
 
     if model == 'finish_rate':
-        quality = mc.finish_rate(target_space) 
+        quality, values = mc.finish_rate(target_space) 
+
+    elif model == 'exercise_finish_rate':
+        quality, values = mc.exercise_finish_rate(target_space) 
 
     elif model == 'average_marks_ratio':
-        quality = mc.average_marks_ratio(target_space)
+        quality, values = mc.average_marks_ratio(target_space)
     
     else:
         return "== ERROR: Invalid Model Class"
 
-    return quality
+    return quality, values
 
 
 def compute_quality_measure(subgroup_indices=None, target_space=None, model=None, population_quality=None, population_size=None):
@@ -48,13 +51,13 @@ def compute_quality_measure(subgroup_indices=None, target_space=None, model=None
 
     # Calculate both components
     entropy = entropy_function(subgroup_size, population_size)
-    subgroup_quality = model_function(subgroup_target_space, model)
+    subgroup_quality, values = model_function(subgroup_target_space, model)
+
 
     # Total quality
-    #model_quality = np.abs(population_quality - subgroup_quality)
-    quality_measure = subgroup_quality
+    model_quality = population_quality - subgroup_quality #*entropy
 
-    return quality_measure
+    return model_quality, values
 
 
 

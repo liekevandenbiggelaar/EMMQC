@@ -7,6 +7,7 @@ import priority_queue as pq
 import subgroup_selection as ss
 import subgroups as sub
 import quality_measure as qm
+import redundancy as rd
 
 
 def beam_search(data=None, descriptors=None, targets=None, ids=None, numerical_bins=None, collection_limit=None, k=None, max_depth=None, beam_width=None, model=None, minimum_size=None):
@@ -40,7 +41,9 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, numerical_b
     candidate_queue = starting_candidates 
 
     # 3. Get the population quality
-    population_quality = qm.model_function(target_space=target_space, model=model)
+    population_quality, population_values = qm.model_function(target_space=target_space, model=model)
+    print(population_quality)
+    print(population_values)
     population_size = len(target_space)
 
     # 4. Initialize the result set and the candidate queue
@@ -58,9 +61,12 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, numerical_b
 
     # 8.        Get the subgroup: indices, quality -> store as Subgroup Class if conditions hold
             indices, subgroup_descriptors = ss.check_record_inclusion(descriptive_space=descriptive_space, dtypes=descriptor_types, candidate=description)
-            if len(indices) > minimum_size:
-                quality = qm.compute_quality_measure(subgroup_indices=indices, target_space=target_space, model=model, population_quality=population_quality, population_size=population_size)
-                selected_subgroup = sub.Subgroup(model=model, description=description, indices=indices, quality=quality)
+
+            # It should be sufficiently long and the descriptions should not exist in the beam queue in any form.
+            if len(indices) > minimum_size and not( rd.similarity_redundancy(description=description, list_of_descriptions=beam_queue.get_descriptions()) ):
+                
+                quality, values = qm.compute_quality_measure(subgroup_indices=indices, target_space=target_space, model=model, population_quality=population_quality, population_size=population_size)
+                selected_subgroup = sub.Subgroup(model=model, description=description, indices=indices, quality=quality, values=values)
 
     # 9.        Insert the subgroup in the beam queue and into the result set.
             beam_queue.insert_subgroup(selected_subgroup)

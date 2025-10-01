@@ -3,11 +3,12 @@ This file has the priority queue class that is used in the beam search.
 """
 import numpy as np
 
-import subgroups as s
+import subgroups as sub
+import redundancy as re
 
 class PriorityQueue():
     
-    def __init__(self, queue: list[s.Subgroup], max_length: int):
+    def __init__(self, queue: list[sub.Subgroup], max_length: int):
         self._queue = queue #Form [Subgroup(A), Subgroup(B), ...]
         self._max_length = max_length
         self._average_size = None #Get after summarizing
@@ -23,9 +24,14 @@ class PriorityQueue():
         self._average_quality = np.mean(self.get_qualities())
         print(f"This queue has subgroups of average size {self._average_size} in a queue of length {self._length_queue} and an average quality of {self._average_quality}.")
     
-    def insert_subgroup(self, subgroup: s.Subgroup):
+    def insert_subgroup(self, subgroup: sub.Subgroup):
 
-        if len(self._queue) < self._max_length:
+
+        if self.redundancy_check(subgroup._description):
+            # if there is redundancy, do not consider.
+            self._queue = self._queue
+
+        elif len(self._queue) < self._max_length:
             self._queue.append(subgroup)
             self._queue = sorted(self._queue, reverse=True, key = lambda i: i._quality)
 
@@ -34,11 +40,11 @@ class PriorityQueue():
             quality_least_in_queue = least_exceptional_in_queue._quality
             quality_candidate = subgroup._quality
 
-            if quality_candidate < quality_least_in_queue: 
-                # new candidate is more exceptional (worse exercise)
+            if quality_candidate > quality_least_in_queue: 
+                # new candidate is more exceptional (higher difference with population)
                 self._queue.pop(-1)
                 self._queue.append(subgroup)
-                self._queue = sorted(self._queue, reverse = False, key = lambda i: i._quality)
+                self._queue = sorted(self._queue, reverse = True, key = lambda i: i._quality)
             else:
                 self._queue = self._queue
 
@@ -46,8 +52,9 @@ class PriorityQueue():
     def compare_subgroups(self):
         return None
     
-    def redundancy_check(self):
-        return None
+    def redundancy_check(self, candidate=None):
+
+        return re.similarity_redundancy(description=candidate, list_of_descriptions=self.get_descriptions()) or re.generalization_redundancy()
     
     def get_descriptions(self):
         return [subgroup._description for subgroup in self._queue]
@@ -60,3 +67,6 @@ class PriorityQueue():
     
     def get_sizes(self):
         return [subgroup._size for subgroup in self._queue]
+    
+    def get_values(self):
+        return [subgroup._values for subgroup in self._queue]
