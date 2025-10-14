@@ -110,30 +110,30 @@ def interaction_dataframes(interaction_dict: str, questionID: str):
     df_interaction['questionID'] = len(df_interaction) * [questionID]
     df_interaction = df_interaction.iloc[:, [-1] + list(range(len(df_interaction.columns)-1))]
 
-    # Append the event dataframe to the interactions
-    for item in interaction_dict:
+    # # Append the event dataframe to the interactions
+    # for item in interaction_dict:
         
-        if item['itemType'] == 'INTERACTION':
-            events = item['result']['events']
-            itemID = item['id']
+    #     if item['itemType'] == 'INTERACTION':
+    #         events = item['result']['events']
+    #         itemID = item['id']
             
-            list_event_frames = []
-            for event in events:
-                one_item = event_dataframes(event, itemID)
-                list_event_frames.append(one_item)
+    #         list_event_frames = []
+    #         for event in events:
+    #             one_item = event_dataframes(event, itemID)
+    #             list_event_frames.append(one_item)
             
-            if len(list_event_frames) >= 1 :
-                df_event = pd.concat(list_event_frames, axis=0, ignore_index=True)
-                df_interaction = pd.merge(df_interaction, df_event, on="interactionID", how='outer')
+    #         if len(list_event_frames) >= 1 :
+    #             df_event = pd.concat(list_event_frames, axis=0, ignore_index=True)
+    #             df_interaction = pd.merge(df_interaction, df_event, on="interactionID", how='outer')
             
-            else:
-                df_interaction = df_interaction
+    #         else:
+    #             df_interaction = df_interaction
 
     return df_interaction
 
 
 def question_dataframes(questions, sessionID):
-    """
+    """f
     A dataframe with all questions of one session and all interactions of that question and all events of that interaction included.
     """
 
