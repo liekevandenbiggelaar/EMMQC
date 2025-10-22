@@ -4,7 +4,7 @@ This file has the code to do refinements on the descriptive attributes to make t
 The refinements are now done for one attribute, based on the data in the subgroup but independant of previous candidate conditions.
 """
 import numpy as np
-from itertools import combinations
+from itertools import combinations, permutations
 
 def numerical_refinement(subgroup=None, attribute=None, bins=None):
     """
@@ -154,8 +154,38 @@ def collection_refinement(subgroup=None, attribute=None, limit=None):
 
     return candidates
 
-def sequence_refinement(): # I think the same as collection so no additional needed.
-    return None
+def sequence_refinement(subgroup=None, attribute=None, limit=None): # I think the same as collection so no additional needed.
+    """ Same as collection but does not have to be unique. """
+
+    data_attribute = subgroup[attribute]
+    uniques = list(data_attribute.explode().dropna().unique())
+
+    options = []
+    for u in uniques:
+        options += limit * [u]
+
+    if len(options) <= 1:
+        # No variation in the data so no candidate is returned
+        return []
+
+    if limit == None:
+        limit = len(options) - 1 #Do not take into account the one with all options
+        
+    combs = []
+    for i in range(limit):
+        combs += list(permutations(options, i+1))
+    
+    combs = list(set(combs)) # drop duplicates -> but it randomized I think!
+
+    candidates = []
+    for comb in combs:
+        candidates.append({attribute: comb})
+    
+    return candidates
+
+def subsequence_refinement(subgroup=None, attribute=None, limit=None): # I think the same as collection so no additional needed.
+    candidates = sequence_refinement(subgroup=subgroup, attribute=attribute, limit=limit) #improve later, basic version is still the same
+    return candidates
 
 def text_refinement(): #tbd future
     return None

@@ -30,15 +30,27 @@ def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
     skipped = list( set(data.columns) - set(descriptors) - set(targets) - set(ids))
 
     # get all data types of the descriptive attributes, necessary for refinement
-    descriptor_types = get_attribute_types(descriptive_space, ids)
+    descriptor_types = manual_attribute_types()
+    #descriptor_types = get_attribute_types(descriptive_space, ids)
 
     # store relevant information on attribute placements
     attributes = {'descriptive_attributes': descriptors, 'target_attributes': targets, 'id_attributes': ids, 'skip_attributes': skipped}
 
     return descriptive_space, target_space, attributes, descriptor_types
 
+def manual_attribute_types():
 
-def get_attribute_types(data=None, ids=[]):
+    dtypes = {'categorical': ['itemType', 'interactionType'], 
+              'boolean': [], 
+              'numerical': ['marksPenalty'], 
+              'ordinal': ['marksTotal', 'marksTotal_interaction', 'usedAttempts', 'marksPenalty', 'hintsRequested', 'mathErrors'],
+              'collection': ['skills', 'positive_skills', 'negative_skills'],
+              'sequence': ['event_types', 'event_evaluations'],
+              'subsequence': ['stepTypes']}
+
+    return dtypes
+
+def DEPRECATED_get_attribute_types(data=None, ids=[]):
     """ 
     The columns in the data are categorized into four data types: numerical, boolean, categorical. We assume that all attributes are within these three types.
     Other attribute types such as lists, dicts, tuples, etc. should be removed as a skip attribute.

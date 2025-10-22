@@ -3,10 +3,11 @@ import os
 import re
 import ast
 import pandas as pd
+import numpy as np
 
 def transform_jsons(data_path='Data/private_data/sessionInfo'):
     library_dict = open_library(data_path)
-    df_library = exercise_dataframes(library_dict)
+    df_library = exercise_dataframe(library_dict)
 
     #df_library = additional_columns(df_library)
 
@@ -131,6 +132,7 @@ def exercise_dataframe(library_dict):
         all_exercises.append(session)
     
     data = pd.concat(all_exercises)
+    data = data.reset_index(drop=True)
 
     return data
 
@@ -146,7 +148,7 @@ def question_dataframe(data):
     for i in range(len(data)): # over all sessions
         all_questions = []
         for question in data.iloc[i]['elements']:
-            dats = pd.DataFrame.from_dict(question).rename(columns={'id': 'questionID'})
+            dats = pd.DataFrame.from_dict(question).rename(columns={'id': 'questionID', 'type': 'questionType'})
             dats['sessionID'] = len(dats) * [data.iloc[i]['sessionID']]
             
             all_questions.append(dats)
@@ -162,6 +164,10 @@ def question_dataframe(data):
     session = pd.merge(data, session, on="sessionID", how='outer')
     session.drop('elements', axis=1, inplace=True)
 
+    # Aggregate all items for the same question: now they are in different rows but we want them in the same one.
+    org_columns = session.columns
+    session = session.groupby(['sessionID', 'questionID'], sort=False, as_index=False).agg({'items': list, **{c: 'first' for c in session.columns if c not in ['sessionID', 'questionID', 'items']}})
+    session = session[[c for c in org_columns]] # get original column order back
 
     # Into next hierarchical level
     session = interaction_dataframe(session)
@@ -175,20 +181,99 @@ def interaction_dataframe(data):
     
     
     all_items = []
-    for i in range(len(data)): # go over all interactions
-        if data.iloc[i]['items']['itemType'] == 'TEXT':
-            continue
-        item = pd.DataFrame.from_dict([data.iloc[i]['items']]).rename(columns={'id': 'interactionID'}) # we just keep TEXT, but they get NaNs
-        item['questionID'] = len(item) * [data.iloc[i]['questionID']]
-        item['sessionID'] = len(item) * [data.iloc[i]['sessionID']]
+    for i in range(len(data)): # go over all questions
+        esq_data = data.iloc[i] # get the exercise, session, question row
+
+        content = ''
+
+        # Go over all available interactions for this unique ESQ-combination
+        for j in range(len(esq_data['items'])):
+            
+            # We want to skip all text interaction -> only contains content that we include already now.
+            if esq_data['items'][j]['itemType'] == 'TEXT':
+                content = esq_data['items'][j]['content']
+                continue
+
+            item = pd.DataFrame.from_dict([esq_data['items'][j]]).rename(columns={'id': 'interactionID'}) # we just keep TEXT, but they get NaNs
+            item['questionID'] = len(item) * [data.iloc[i]['questionID']]
+            item['sessionID'] = len(item) * [data.iloc[i]['sessionID']]
+            item['content'] = content
+            content = '' # Only content for immediately successive interactions
 
 
-        # Attributes with further levels, but in need of aggregation to get on the same level as interaction
-        all_items.append(item)
+            # Attributes with further levels, but in need of aggregation to get on the same level as interaction
+            all_items.append(item)
     
     items = pd.concat(all_items)
     items = pd.merge(data, items, on=['sessionID', 'questionID'], how='outer')
+    items['content'] = [s.replace('$', '') for s in items['content']]
+    items['solution'] = [s.replace('$', '') for s in items['solution']]
+    items.drop(['items', 'derivation'], axis=1, inplace=True) #derivation is too complex
     
-    #items.drop('items', axis=1, inplace=True)
-    #items.drop('derivation', axis=1, inplace=True) #way too complex with little information
-    return items
+
+    # Cleaning the strings
+    items_events = aggregate_results(items)
+    
+
+    return items_events
+
+def aggregate_results(df):
+    event_type_list, event_eval_list = [], []
+    pos_tags_all, neg_tags_all = [], []
+
+    for i in range(len(df)):
+        inter = df['result'].iloc[i]
+
+        # Events of students
+        events = inter['events']
+        et, ee = [], [] # event type and evaluation
+
+        for ev in events:
+            et.append(ev['event'])
+
+            if 'inputStatus' in ev.keys():
+                ee.append(ev['inputStatus'])
+            elif ev['event'] == 'EVALUATE':
+                ee.append(ev['exerciseStatus'])
+            else:
+                ee.append(ev['event']) 
+        
+        event_eval_list.append(ee)
+        event_type_list.append(et) 
+        
+        # Skills tackled by students
+        tags = inter['tags']
+        pos, neg = [], []
+
+        for t in tags:
+            if t['weight'] > 0:
+                pos.append(t['id'])
+            elif t['weight'] < 0:
+                neg.append(t['id'])
+            
+        pos_tags_all.append(pos)
+        neg_tags_all.append(neg)
+
+
+
+    df['event_types'] = event_type_list
+    df['event_evaluations'] = event_eval_list 
+    df['positive_skills'] = pos_tags_all
+    df['negative_skills'] = neg_tags_all
+
+    #Simple, non-list, attributes
+    df['result_status'] = [ df['result'].iloc[i]['status'] for i in range(len(df)) ]
+    df['result_progress'] = [ df['result'].iloc[i]['progress'] for i in range(len(df)) ] 
+    df['marksEarned_interaction'] = [ df['result'].iloc[i]['scoring']['marksEarned'] for i in range(len(df)) ] 
+    df['marksTotal_interaction'] = [ df['result'].iloc[i]['scoring']['marksTotal'] for i in range(len(df)) ] 
+    df['finished_interaction'] = [ df['result'].iloc[i]['scoring']['finished'] for i in range(len(df)) ] 
+    df['maxAttempts'] = [ df['result'].iloc[i]['scoring']['maxAttempts'] if 'maxAttempts' in df['result'].iloc[i]['scoring'].keys() else np.nan for i in range(len(df)) ] 
+    df['usedAttempts'] = [ df['result'].iloc[i]['scoring']['usedAttempts'] if 'usedAttempts' in df['result'].iloc[i]['scoring'].keys() else np.nan for i in range(len(df)) ] 
+    df['failed'] = [ df['result'].iloc[i]['scoring']['failed'] if 'failed' in df['result'].iloc[i]['scoring'].keys() else np.nan for i in range(len(df)) ] 
+    df['marksPenalty'] = [ df['result'].iloc[i]['scoring']['penalties']['marksPenalty'] for i in range(len(df)) ] 
+    df['hintsRequested'] = [ df['result'].iloc[i]['scoring']['penalties']['hintsRequested'] for i in range(len(df)) ] 
+    df['mathErrors'] = [ df['result'].iloc[i]['scoring']['penalties']['mathErrors'] for i in range(len(df)) ] 
+
+    df.drop('result', axis=1, inplace=True)
+
+    return df
