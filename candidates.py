@@ -42,7 +42,7 @@ def manual_attribute_types():
 
     dtypes = {'categorical': ['itemType', 'interactionType'], 
               'boolean': [], 
-              'numerical': ['marksPenalty'], 
+              'numerical': [], 
               'ordinal': ['marksTotal', 'marksTotal_interaction', 'usedAttempts', 'marksPenalty', 'hintsRequested', 'mathErrors'],
               'collection': ['skills', 'positive_skills', 'negative_skills'],
               'sequence': ['event_types', 'event_evaluations'],
@@ -150,7 +150,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_
         candidates_per_attribute[att] = att_list 
 
     # go over all collection attributes
-    for att in dtypes['collection'] or att in dtypes['sequence']:
+    for att in dtypes['collection'] or att in dtypes['sequence'] or att in dtypes['subsequence']:
         conditions = rf.collection_refinement(descriptive_space, att, limit=collection_limit)
         candidates += conditions
         att_list = []
