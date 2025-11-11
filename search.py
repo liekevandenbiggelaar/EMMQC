@@ -1,6 +1,7 @@
 """
 This file has the beam search strategy.
 """
+import numpy as np
 
 import candidates as ca
 import priority_queue as pq
@@ -76,7 +77,8 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
                 if len(unique_sessions) > constraint_params['minimum_size']:
                    
                     subgroup_targets = target_space.iloc[indices]
-                    subgroup_metrics = qm.subgroup_quality(subgroup_targets=subgroup_targets, params=model_params, population_dct=population_finished_counts) #already compared to population
+
+                    subgroup_metrics = qm.subgroup_quality(subgroup_targets=subgroup_targets, population_targets=target_space, params=model_params, population_dct=population_finished_counts) #already compared to population
                     selected_subgroup = sub.Subgroup(model_params=model_params, description=description, indices=indices, metrics=subgroup_metrics)
 
         # 9.        Insert the subgroup in the beam queue if all constraints are met and into the result set.

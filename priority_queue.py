@@ -27,7 +27,6 @@ class PriorityQueue():
     
     def insert_subgroup(self, subgroup: sub.Subgroup):
         
-
         if len(self._queue) > 0:
             redundancy_found, best_descr, idx_descr = re.remove_redundant_descriptions(queue=self._queue, subgroup=subgroup)
 

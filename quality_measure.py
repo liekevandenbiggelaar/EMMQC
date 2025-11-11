@@ -8,12 +8,13 @@ import math
 import subgroup_selection as ss
 import model_class as mc
 
-def subgroup_quality(subgroup_targets=None, params={}, population_dct={}):
+def subgroup_quality(subgroup_targets=None, population_targets=None, params={}, population_dct={}):
     """
     This calculates the quality score of the entire subgroup (or population).
 
     INPUT
     * subgroup_targets  : [None] the dataframe with the target space of the records included in the subgroup.
+    * complement_targets : [None] the dataframe with the target space of the records included in the complements (and excluded in the subgroup).
     * params (dict)     : [{}]   a dictionary containing all model settings, including:
         * weighted (bool)       : [True] an option to remove weighting of more difficult exercises, automatically weighting is added.
         * function (str)        : [None] an option to select the wanted metric, choose from 'recall', 'precision', or 'F_beta'.
@@ -29,11 +30,13 @@ def subgroup_quality(subgroup_targets=None, params={}, population_dct={}):
     metrics = { 'total_quality': 0,
                 'exercise_qualities': [],
                 'subgroup_quality': 0,
+                'entropy': 0,
 
                 'session_counts': session_counts,
                 'exercise_count': 0,
 
                 'goodness_weights': [],
+                'fail rates': [],
                 'recall': [],
                 'precision': [],
                 'F_beta': [],
@@ -45,6 +48,8 @@ def subgroup_quality(subgroup_targets=None, params={}, population_dct={}):
 
         sg_fail = subgroup_dct[eID][False] #negative  (TP)  -> we correctly captures these in the subgroup of "failed" exercises, and they actually failed.
         sg_pass = subgroup_dct[eID][True]  #positive  (FP)  -> we incorrectly captures these in the subgroup of "failed" exercises, and they actually passed.
+        sg_ex_failrate = sg_fail / (sg_fail + sg_pass)
+        metrics['fail rates'].append(sg_ex_failrate)
 
         # initialize and fill a confusion matrix for the score computation
         confusion_matrix = {}
@@ -83,10 +88,12 @@ def subgroup_quality(subgroup_targets=None, params={}, population_dct={}):
 
         metrics['total_quality'] += exercise_quality # the higher the better
 
-    metrics['subgroup_quality'] = (1 / metrics['exercise_count']) * metrics['total_quality']
+    entropy = entropy_function(subgroup=subgroup_targets, population=population_targets, level=params['entropy level'])
+    metrics['entropy'] = entropy
+    exercise_count_correction = 1 / metrics['exercise_count']
+    metrics['subgroup_quality'] = entropy * exercise_count_correction * metrics['total_quality']
     
     return metrics
-
 
 
 def finished_rates(target_space=None):
@@ -164,6 +171,39 @@ def F_beta(confusion_matrix=None, beta=1):
     return ( 1 + beta**2 ) * ( ( precision(confusion_matrix) * recall(confusion_matrix) ) / ( beta**2 * precision(confusion_matrix) + recall(confusion_matrix) ) )
 
 
+def entropy_function(subgroup=None, population=None, level=None):
+    """
+    The entropy function is a Hierarchy-based Entropy where the level that we fit entropy on is selectable.
+
+    e.g. on level = Exercise: we want to enforce a 50/50 split between the exercises that are covered in the subgroup and for which no sessions are included.
+    e.g. on level = Session: we want to find a 50/50 split of unique student sessions, irrelevant on what exercise they are associated with.
+
+    INPUT
+    * subgroup   [None]: the dataframe with the records included in the subgroup
+    * population [None]: the dataframe with all records
+    * level      [None]: a str that mentions the hierarchical level on which the entropy is fitted, options in use case: [exercise, session, None]
+    """
+
+    if level == None:
+        entropy = 1 #no entropy will be added
+        return entropy
+
+    wanted_ID = level + 'ID'
+    
+    n_subgroup = len( list(subgroup[wanted_ID].unique()) ) # count all unique values on "level" in the subgroup
+    n_population = len( list(population[wanted_ID].unique()) )
+    n_complement = n_population - n_subgroup 
+
+    if n_subgroup == 0 or n_complement == 0:
+        entropy = 0 #one is empty so we select the entire dataset -> give 0 to remove from the top-k list
+        return entropy
+
+    p_subgroup = n_subgroup / n_population
+    p_complement = n_complement / n_population
+
+    entropy = -p_subgroup * math.log(p_subgroup) + p_complement * math.log(p_complement)
+
+    return entropy
 
 
 

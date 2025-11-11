@@ -40,8 +40,8 @@ def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
 
 def manual_attribute_types():
 
-    dtypes = {'categorical': ['itemType', 'interactionType'], 
-              'boolean': [], 
+    dtypes = {'categorical': ['itemType'], 
+              'boolean': ['interactionType'], 
               'numerical': [], 
               'ordinal': ['marksTotal', 'marksTotal_interaction', 'usedAttempts', 'marksPenalty', 'hintsRequested', 'mathErrors'],
               'collection': ['skills', 'positive_skills', 'negative_skills'],
