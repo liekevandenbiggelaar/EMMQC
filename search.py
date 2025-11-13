@@ -62,6 +62,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
         candidates_satisfied = []
 
     # 7.    For each description in the candidate queue, do:
+        print(candidate_queue)
         for description in candidate_queue:
             
 
@@ -90,10 +91,17 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
 
         # 10.   Get the new candidate queue, by refining all descriptions in the beam queue
         candidate_queue = []
-        for subgroup_description in beam_queue.get_descriptions():
-            new_conditions = ca.add_condition(description=subgroup_description, starting_candidates=starting_candidates)
-            candidate_queue += new_conditions
+        print(beam_queue.get_descriptions())
+        for subgroup in beam_queue._queue:
+            subgroup_indices = subgroup._indices
+            temp_subgroup_descriptors = descriptive_space.iloc[subgroup_indices]
+            candidates_per_attribute, new_conditions  = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, 
+                                                                                     numerical_bins=refinement_params['numerical_bins'], collection_limit=refinement_params['collection_limit'])
+            new_candidates = ca.add_condition(description=subgroup._description, candidates=new_conditions)
+
+            candidate_queue += new_candidates
         
+
         print(f"Last beam was {beam_queue}")
         
     # 11. Return the result queue

@@ -97,7 +97,7 @@ def DEPRECATED_get_attribute_types(data=None, ids=[]):
     return dtypes
 
 
-def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_bins=None, collection_limit=None):
+def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_bins=None, collection_limit=None, description_keys=[]):
     """
     This performs the refinement on all attributes in the type dictionary. It returns a dictionary with the possible conditions stored per attribute.
     
@@ -118,6 +118,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_
 
     # go over all numerical attributes
     for att in dtypes['numerical']:
+
         conditions = rf.numerical_refinement(descriptive_space, att, numerical_bins)
         candidates += conditions
         att_list = []
@@ -129,6 +130,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_
 
     # go over all boolean attributes
     for att in dtypes['boolean']:
+
         conditions = rf.boolean_refinement(descriptive_space, att)
         candidates += conditions
         att_list = []
@@ -140,6 +142,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_
 
     # go over all categorical attributes
     for att in dtypes['categorical']:
+
         conditions = rf.categorical_refinement(descriptive_space, att)
         candidates += conditions
         att_list = []
@@ -151,6 +154,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_
 
     # go over all collection attributes
     for att in dtypes['collection'] or att in dtypes['sequence'] or att in dtypes['subsequence']:
+
         conditions = rf.collection_refinement(descriptive_space, att, limit=collection_limit)
         candidates += conditions
         att_list = []
@@ -162,7 +166,25 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_
 
     return candidates_per_attribute, candidates
 
-def add_condition(description=None, starting_candidates=None):
+def add_condition(description=None, candidates=None):
+    """
+    Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
+    If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
+    """
+
+    new_candidates = []
+
+    for cand in candidates:
+        candidate_attribute = list(cand.keys())[0]
+        description_copy = description.copy()
+
+        description_copy[candidate_attribute] = cand[candidate_attribute] #replaces if candidate attribute already in description, otherwise adds.
+        new_candidates.append(description_copy)
+
+    return new_candidates
+
+
+def global_add_condition(description=None, starting_candidates=None):
     """
     Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
     If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
