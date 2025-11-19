@@ -50,6 +50,112 @@ def manual_attribute_types():
 
     return dtypes
 
+def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement_params=None):
+    """
+    This performs the refinement on all attributes in the type dictionary. It returns a dictionary with the possible conditions stored per attribute.
+    
+    INPUT
+    - descriptive_space     : the database of the descriptor space of the selected subgroup.
+    - dtypes (dict)         : a dictionary that contains the attributes sorted per category for the input dataframe.
+    - numerical_bins (int)  : the number of bins that the numerical attributes need to be divided into.
+    - collection_limit (int): the maximum number of options in the collection refinement lists.
+
+    OUTPUT
+    - candidates_per_attribute (dict) : a dictionary with all candidate conditions stored per attribute.
+    - candidates (list)               : a list of all candidate conditions
+    """
+
+    # initialize
+    candidates = []
+
+    # go over all numerical attributes
+    for att in dtypes['numerical']:
+
+        conditions = rf.numerical_refinement(subgroup=descriptive_space, attribute=att, bins=refinement_params['numerical_bins'])
+        candidates += conditions
+ 
+
+    # go over all boolean attributes
+    for att in dtypes['boolean']:
+
+        conditions = rf.boolean_refinement(subgroup=descriptive_space, attribute=att)
+        candidates += conditions
+ 
+
+    # go over all categorical attributes
+    for att in dtypes['categorical']:
+
+        conditions = rf.categorical_refinement(subgroup=descriptive_space, attribute=att)
+        candidates += conditions
+
+
+    # go over all collection attributes
+    for att in dtypes['collection']:
+
+        conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
+                                              minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
+        candidates += conditions
+
+
+    # go over all sequence attributes
+    for att in dtypes['sequence']:
+        
+        conditions = rf.sequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_sequence'],
+                                              minimal_support=refinement_params['minimal_support_sequence'], maximum_support=refinement_params['maximum_support_sequence'])
+        candidates += conditions
+
+
+    # go over all subsequence attributes
+    for att in dtypes['subsequence']:
+        
+        conditions = rf.subsequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_subsequence'],
+                                              minimal_support=refinement_params['minimal_support_subsequence'], maximum_support=refinement_params['maximum_support_subsequence'])
+        candidates += conditions
+
+
+    return candidates
+
+
+def add_condition(description=None, candidates=None):
+    """
+    Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
+    If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
+    """
+
+    new_candidates = []
+
+    for cand in candidates:
+        candidate_attribute = list(cand.keys())[0]
+        description_copy = description.copy()
+
+        description_copy[candidate_attribute] = cand[candidate_attribute] #replaces if candidate attribute already in description, otherwise adds.
+        new_candidates.append(description_copy)
+
+    return new_candidates
+
+
+def global_add_condition(description=None, starting_candidates=None):
+    """
+    Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
+    If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
+    """
+
+    # Get all attributes already covered in the description
+    attributes = list(description.keys())
+
+    # Select only the starting descriptions of other attributes than those already included in the input description
+    other_descriptions = [starting_candidates[i] for i in range(len(starting_candidates)) if not set(attributes).issubset(set(list(starting_candidates[i].keys()))) ]
+
+    # Combine these descriptions with the existing one to make new candidates
+    new_candidates = [description | new for new in other_descriptions]
+
+    return new_candidates
+
+
+
+
+
+
 def DEPRECATED_get_attribute_types(data=None, ids=[]):
     """ 
     The columns in the data are categorized into four data types: numerical, boolean, categorical. We assume that all attributes are within these three types.
@@ -96,107 +202,3 @@ def DEPRECATED_get_attribute_types(data=None, ids=[]):
 
     return dtypes
 
-
-def get_candidates_per_attribute(descriptive_space=None, dtypes=None, numerical_bins=None, collection_limit=None, description_keys=[]):
-    """
-    This performs the refinement on all attributes in the type dictionary. It returns a dictionary with the possible conditions stored per attribute.
-    
-    INPUT
-    - descriptive_space     : the database of the descriptor space of the selected subgroup.
-    - dtypes (dict)         : a dictionary that contains the attributes sorted per category for the input dataframe.
-    - numerical_bins (int)  : the number of bins that the numerical attributes need to be divided into.
-    - collection_limit (int): the maximum number of options in the collection refinement lists.
-
-    OUTPUT
-    - candidates_per_attribute (dict) : a dictionary with all candidate conditions stored per attribute.
-    - candidates (list)               : a list of all candidate conditions
-    """
-
-    # initialize
-    candidates_per_attribute = {}
-    candidates = []
-
-    # go over all numerical attributes
-    for att in dtypes['numerical']:
-
-        conditions = rf.numerical_refinement(descriptive_space, att, numerical_bins)
-        candidates += conditions
-        att_list = []
-
-        for cond in conditions:
-            att_list.append(cond[att])
-
-        candidates_per_attribute[att] = att_list  
-
-    # go over all boolean attributes
-    for att in dtypes['boolean']:
-
-        conditions = rf.boolean_refinement(descriptive_space, att)
-        candidates += conditions
-        att_list = []
-
-        for cond in conditions:
-            att_list.append(cond[att])
-
-        candidates_per_attribute[att] = att_list  
-
-    # go over all categorical attributes
-    for att in dtypes['categorical']:
-
-        conditions = rf.categorical_refinement(descriptive_space, att)
-        candidates += conditions
-        att_list = []
-
-        for cond in conditions:
-            att_list.append(cond[att])
-
-        candidates_per_attribute[att] = att_list 
-
-    # go over all collection attributes
-    for att in dtypes['collection'] or att in dtypes['sequence'] or att in dtypes['subsequence']:
-
-        conditions = rf.collection_refinement(descriptive_space, att, limit=collection_limit)
-        candidates += conditions
-        att_list = []
-
-        for cond in conditions:
-            att_list.append(cond[att])
-
-        candidates_per_attribute[att] = att_list  
-
-    return candidates_per_attribute, candidates
-
-def add_condition(description=None, candidates=None):
-    """
-    Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
-    If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
-    """
-
-    new_candidates = []
-
-    for cand in candidates:
-        candidate_attribute = list(cand.keys())[0]
-        description_copy = description.copy()
-
-        description_copy[candidate_attribute] = cand[candidate_attribute] #replaces if candidate attribute already in description, otherwise adds.
-        new_candidates.append(description_copy)
-
-    return new_candidates
-
-
-def global_add_condition(description=None, starting_candidates=None):
-    """
-    Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
-    If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
-    """
-
-    # Get all attributes already covered in the description
-    attributes = list(description.keys())
-
-    # Select only the starting descriptions of other attributes than those already included in the input description
-    other_descriptions = [starting_candidates[i] for i in range(len(starting_candidates)) if not set(attributes).issubset(set(list(starting_candidates[i].keys()))) ]
-
-    # Combine these descriptions with the existing one to make new candidates
-    new_candidates = [description | new for new in other_descriptions]
-
-    return new_candidates

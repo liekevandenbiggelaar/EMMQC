@@ -4,7 +4,10 @@ This file has the code to do refinements on the descriptive attributes to make t
 The refinements are now done for one attribute, based on the data in the subgroup but independant of previous candidate conditions.
 """
 import numpy as np
+import pandas as pd
 from itertools import combinations, permutations
+from mlxtend.frequent_patterns import fpgrowth
+from mlxtend.preprocessing import TransactionEncoder
 
 def numerical_refinement(subgroup=None, attribute=None, bins=None):
     """
@@ -120,7 +123,88 @@ def categorical_refinement(subgroup=None, attribute=None):
 
     return candidates
 
-def collection_refinement(subgroup=None, attribute=None, limit=None):
+
+def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None):
+    """
+    Refinement of the collection attributes into the containments.
+    The condition will look like: eventTypes includes [GIVEUP, EVALUATE], order does not matter.
+    It is based on Frequent Itemset Theory's FP-Growth: we extract frequent itemsets from the data's collections.
+    It eliminates the most frequent and not frequent itemsets.
+
+    INPUT: no restrictions is the basis
+    - subgroup                      : the subgroup (or entire population) that has the wanted information in the descriptor space.
+    - attribute (str)               : the name of a list-type attribute that needs to be refined.
+    - minimal_support (0.01; float)  : the minimal support that the itemset must have in the entire subgroup (or population). 
+    - maximum_support (1.0; float)  : the maximum support that the itemset is allowed to have in the entire subgroup (or population)
+    - maximum_length (int)          : a limit to the number of categories in the collection.
+
+    OUTPUT
+    - candidates (list) : a list that has all possible conditions for that attribute, as many as there are unique combinations of the instances.
+    """
+
+    # Gather a list of all collections
+    lst_te = [subgroup.iloc[i][attribute] for i in range(len(subgroup))]
+
+    # Transform it into a binary matrix whether the categories are or aren't included in the row
+    te = TransactionEncoder()
+    te_ary = te.fit(lst_te).transform(lst_te)
+    df_te = pd.DataFrame(te_ary, columns=te.columns_)
+
+    frequent_itemsets = fpgrowth(df_te, min_support = minimal_support, max_len=maximum_length, use_colnames=True)
+    frequent_itemsets = frequent_itemsets.sort_values(by='support', ascending=False)
+    frequent_itemsets = frequent_itemsets[ frequent_itemsets['support'] <= maximum_support]
+
+
+    candidates = []
+    for cond in frequent_itemsets['itemsets']:
+        candidates.append({'skills': list(cond)})
+
+    return candidates
+
+
+def sequence_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None): # I think the same as collection so no additional needed.
+    """ Same as collection but does not have to be unique. """
+
+    data_attribute = subgroup[attribute]
+    uniques = list(data_attribute.explode().dropna().unique())
+
+    options = []
+    for u in uniques:
+        options += maximum_length * [u]
+
+    if len(options) <= 1:
+        # No variation in the data so no candidate is returned
+        return []
+
+    if maximum_length == None:
+        maximum_length = len(options) - 1 #Do not take into account the one with all options
+        
+    combs = []
+    for i in range(maximum_length):
+        combs += list(permutations(options, i+1))
+    
+    combs = list(set(combs)) # drop duplicates -> but it randomized I think!
+
+    candidates = []
+    for comb in combs:
+        candidates.append({attribute: comb})
+    
+    return candidates
+
+
+def subsequence_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None): # I think the same as sequence so no additional needed.
+    candidates = sequence_refinement(subgroup=subgroup, attribute=attribute, minimal_support=minimal_support, maximum_support=maximum_support, maximum_length=maximum_length) #improve later, basic version is still the same
+    return candidates
+
+
+def text_refinement(): #tbd future
+    return None
+
+
+
+
+# =========== DEPRECATED ============= #
+def naive_collection_refinement(subgroup=None, attribute=None, minimal_support=0.0, maximum_support=1.0, maximum_length=None):
     """
     Refinement of the collection attributes into the containments.
     The condition will look like: eventTypes includes [GIVEUP, EVALUATE], order does not matter.
@@ -153,39 +237,3 @@ def collection_refinement(subgroup=None, attribute=None, limit=None):
         candidates.append({attribute: comb})
 
     return candidates
-
-def sequence_refinement(subgroup=None, attribute=None, limit=None): # I think the same as collection so no additional needed.
-    """ Same as collection but does not have to be unique. """
-
-    data_attribute = subgroup[attribute]
-    uniques = list(data_attribute.explode().dropna().unique())
-
-    options = []
-    for u in uniques:
-        options += limit * [u]
-
-    if len(options) <= 1:
-        # No variation in the data so no candidate is returned
-        return []
-
-    if limit == None:
-        limit = len(options) - 1 #Do not take into account the one with all options
-        
-    combs = []
-    for i in range(limit):
-        combs += list(permutations(options, i+1))
-    
-    combs = list(set(combs)) # drop duplicates -> but it randomized I think!
-
-    candidates = []
-    for comb in combs:
-        candidates.append({attribute: comb})
-    
-    return candidates
-
-def subsequence_refinement(subgroup=None, attribute=None, limit=None): # I think the same as collection so no additional needed.
-    candidates = sequence_refinement(subgroup=subgroup, attribute=attribute, limit=limit) #improve later, basic version is still the same
-    return candidates
-
-def text_refinement(): #tbd future
-    return None

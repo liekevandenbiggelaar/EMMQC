@@ -2,6 +2,7 @@
 This file has the beam search strategy.
 """
 import numpy as np
+from datetime import datetime 
 
 import candidates as ca
 import priority_queue as pq
@@ -37,13 +38,14 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     # 11.   Get the new candidate queue, by refining all descriptions in the beam queue
     # 12. Return the result queue
 
+    start_time = datetime.now()
+    print(f"Search started at {start_time.now()}")
 
     # 1. Get the data ready -> Preprocessing and Split
     descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, targets=targets, ids=ids)
 
     # 2. Get the starting candidate descriptions
-    candidates_per_attribute, starting_candidates  = ca.get_candidates_per_attribute(descriptive_space=descriptive_space,  dtypes=descriptor_types, 
-                                                                                     numerical_bins=refinement_params['numerical_bins'], collection_limit=refinement_params['collection_limit'])
+    starting_candidates  = ca.get_candidates_per_attribute(descriptive_space=descriptive_space,  dtypes=descriptor_types, refinement_params=refinement_params)
     candidate_queue = starting_candidates 
 
     # 3. Get the population quality
@@ -54,7 +56,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
 
     # 5. For each level in until the maximum depth is reached, do:
     for level in range(1, beam_params['d'] + 1):
-        print(f"start on level {level}")
+        print(f"start on level {level} after {datetime.now() - start_time}")
         
 
     # 6.    Initialize the beam queue
@@ -62,7 +64,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
         candidates_satisfied = []
 
     # 7.    For each description in the candidate queue, do:
-        print(candidate_queue)
+        #print(candidate_queue)
         for description in candidate_queue:
             
 
@@ -91,18 +93,19 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
 
         # 10.   Get the new candidate queue, by refining all descriptions in the beam queue
         candidate_queue = []
-        print(beam_queue.get_descriptions())
+        #print(beam_queue.get_descriptions())
         for subgroup in beam_queue._queue:
             subgroup_indices = subgroup._indices
             temp_subgroup_descriptors = descriptive_space.iloc[subgroup_indices]
-            candidates_per_attribute, new_conditions  = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, 
-                                                                                     numerical_bins=refinement_params['numerical_bins'], collection_limit=refinement_params['collection_limit'])
+            new_conditions  = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, refinement_params=refinement_params)
             new_candidates = ca.add_condition(description=subgroup._description, candidates=new_conditions)
 
             candidate_queue += new_candidates
         
 
-        print(f"Last beam was {beam_queue}")
-        
+        #print(f"Last beam was {beam_queue}")
+    end_time = datetime.now()   
+
+    print(f"This search took {end_time - start_time}")    
     # 11. Return the result queue
     return result_set
