@@ -38,6 +38,8 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     # 11.   Get the new candidate queue, by refining all descriptions in the beam queue
     # 12. Return the result queue
 
+    data['representative_index'] = range(len(data))
+
     start_time = datetime.now()
     print(f"Search started at {start_time.now()}")
 
@@ -71,6 +73,11 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
             if not( rd.similar_description(sg_description=description, candidates_satisfied=candidates_satisfied) ):
     # 8.        Get the subgroup: indices, quality -> store as Subgroup Class if conditions hold
                 indices, subgroup_descriptors = ss.check_record_inclusion(descriptive_space=descriptive_space, dtypes=descriptor_types, candidate=description)
+
+                if subgroup_descriptors is None:
+                    for cond in description._conditions:
+                        print(cond._descriptor, cond._value, cond._datatype)
+
                 if len(indices) == 0:
                     continue #no valid subgroup
 
@@ -79,7 +86,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
                 # It should be sufficiently long and the descriptions should not exist in the beam queue in any form.
                 if len(unique_sessions) > constraint_params['minimum_size']:
                    
-                    subgroup_targets = target_space.iloc[indices]
+                    subgroup_targets = target_space[ target_space['representative_index'].isin(indices)]
 
                     subgroup_metrics = qm.subgroup_quality(subgroup_targets=subgroup_targets, population_targets=target_space, params=model_params, population_dct=population_finished_counts) #already compared to population
                     selected_subgroup = sub.Subgroup(model_params=model_params, description=description, indices=indices, metrics=subgroup_metrics)
@@ -95,12 +102,14 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
         candidate_queue = []
         #print(beam_queue.get_descriptions())
         for subgroup in beam_queue._queue:
-            subgroup_indices = subgroup._indices
-            temp_subgroup_descriptors = descriptive_space.iloc[subgroup_indices]
-            new_conditions  = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, refinement_params=refinement_params)
-            new_candidates = ca.add_condition(description=subgroup._description, candidates=new_conditions)
+            temp_subgroup_descriptors = descriptive_space[ descriptive_space['representative_index'].isin(subgroup._indices)] 
 
-            candidate_queue += new_candidates
+            # refine this condition further
+            new_conditions  = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, refinement_params=refinement_params)
+
+            for new_cond in new_conditions:
+                new_candidate = ca.add_condition(old_description=subgroup._description, new_condition=new_cond._conditions[0]) # there is only one condition here.
+                candidate_queue.append(new_candidate)
         
 
         #print(f"Last beam was {beam_queue}")

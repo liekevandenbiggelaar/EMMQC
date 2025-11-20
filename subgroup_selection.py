@@ -16,100 +16,107 @@ def check_record_inclusion(descriptive_space=None, dtypes=None, candidate=None):
 
     subgroup_descriptors = descriptive_space # in condition iteration, do include all again to save time.
 
-    for attribute in candidate.keys():
-        condition = candidate[attribute]
-        attr_type = [key for key, val in dtypes.items() if attribute in val][0]
+    for condition in candidate._conditions:
 
-        
+        attr_type = condition._datatype
+
         if attr_type == 'numerical' or attr_type == 'ordinal': #need to implement ordinal still
-            subgroup_descriptors = get_indices_numerical(subgroup_descriptors, attribute, condition)
+            subgroup_descriptors = get_indices_numerical(subgroup_descriptors, condition)
         
         elif attr_type == 'boolean':
-            subgroup_descriptors = get_indices_boolean(subgroup_descriptors, attribute, condition)
+            subgroup_descriptors = get_indices_boolean(subgroup_descriptors, condition)
 
-        elif attr_type == 'categorical':
-            subgroup_descriptors = get_indices_categorical(subgroup_descriptors, attribute, condition)
+        elif attr_type == 'nominal':
+            subgroup_descriptors = get_indices_categorical(subgroup_descriptors, condition)
 
         elif attr_type == 'collection':
-            subgroup_descriptors = get_indices_collection(subgroup_descriptors, attribute, condition)
+            subgroup_descriptors = get_indices_collection(subgroup_descriptors, condition)
         
         elif attr_type == 'sequence':
-            subgroup_descriptors = get_indices_sequence(subgroup_descriptors, attribute, condition)
+            subgroup_descriptors = get_indices_sequence(subgroup_descriptors, condition)
 
         elif attr_type == 'subsequence':
-            subgroup_descriptors = get_indices_subsequence(subgroup_descriptors, attribute, condition)
+            subgroup_descriptors = get_indices_subsequence(subgroup_descriptors, condition)
 
         else:
             return "ERROR -- Invalid attribute."
 
-    indices = list(subgroup_descriptors.index) # Keep updating each iteration.
+    if subgroup_descriptors is None or len(subgroup_descriptors) == 0:
+        indices = []
+    else:
+        indices = list(subgroup_descriptors['representative_index']) # Keep updating each iteration.
 
     return indices, subgroup_descriptors
 
 
-def get_indices_numerical(descriptive_space=None, attribute=None, condition=None):
+def get_indices_numerical(descriptive_space=None, condition=None):
     """
     Retrieve the indices of the records that are included in the range that is set in the condition.
     """
 
-    minimum = float(condition[0])
-    maximum = float(condition[1])
+    minimum = float(condition._value[0])
+    maximum = float(condition._value[1])
 
-    new_space = descriptive_space[ (descriptive_space[attribute] >= minimum) & (descriptive_space[attribute] <= maximum) ]
+    new_space = descriptive_space[ (descriptive_space[condition._descriptor] >= minimum) & (descriptive_space[condition._descriptor] <= maximum) ]
 
     return new_space
 
 
-def get_indices_boolean(descriptive_space=None, attribute=None, condition=None):
+def get_indices_boolean(descriptive_space=None, condition=None):
     """
     Retrieve the indices of the records that are either True or False depending on the condition.
     """
 
-    val = condition[0]
-    new_space = descriptive_space[ descriptive_space[attribute] == val ]
+    val = condition._value
+    new_space = descriptive_space[ descriptive_space[condition._descriptor] == val ]
         
     return new_space
 
 
-def get_indices_categorical(descriptive_space=None, attribute=None, condition=None):
+def get_indices_categorical(descriptive_space=None, condition=None):
     """
     Retrieve the indices of the records that either do or do not mention this category depending on the condition.
     """
 
-    sign = condition[0]
-    val = condition[1]
+    sign = condition._value[0]
+    val = condition._value[1]
 
     if sign == 0: # has not
-        new_space = descriptive_space[ descriptive_space[attribute] != val ]
+        new_space = descriptive_space[ descriptive_space[condition._descriptor] != val ]
 
     elif sign == 1: # has
-        new_space = descriptive_space[ descriptive_space[attribute] == val ]
+        new_space = descriptive_space[ descriptive_space[condition._descriptor] == val ]
         
     return new_space
 
 
-def get_indices_collection(descriptive_space=None, attribute=None, condition=None):
+def get_indices_collection(descriptive_space=None, condition=None, naive=False):
     """
     Retrieve the indices of the records that have the list of categories in the condition in their data, order is irrelevant.
     """
 
-    selection = set(condition)
+    if naive:
+        selection = condition._value
 
-    #check if the categories in the condition are all in the records' attribute list.
-    new_space = descriptive_space[ descriptive_space[attribute].apply(lambda x: isinstance(x, (list, set)) and set(selection).issubset(set(x))) ] 
+        #check if the categories in the condition are all in the records' attribute list.
+        new_space = descriptive_space[ descriptive_space[condition._descriptor].apply(lambda x: isinstance(x, (list, set)) and set(selection).issubset(set(x))) ] 
+    
+    else:
+        new_space = descriptive_space[ descriptive_space['representative_index'].isin(condition._indices)] 
         
     return new_space
 
-def get_indices_sequence(descriptive_space=None, attribute=None, condition=None): # not yet included, later if we use event and make it into a list.
+def get_indices_sequence(descriptive_space=None, condition=None): # not yet included, later if we use event and make it into a list.
     """
     Retrieve the indices of the records that have the sequence of categories in the condition in their data, order is relevant.
     """
 
-    selection = condition
+    selection = condition._value
     selected_records = []
 
     for i in range(len(descriptive_space)):
-        attr_collection = descriptive_space[attribute].iloc[i]
+        rp_idx = descriptive_space.iloc[i]['representative_index']
+        attr_collection = descriptive_space[condition._descriptor].iloc[rp_idx]
         #print(f" == collection of row {i} = {attr_collection}")
         #print(f" == we look for {selection}")
 
@@ -144,25 +151,26 @@ def get_indices_sequence(descriptive_space=None, attribute=None, condition=None)
                 
                 if select:
                     #print(f"SUCCESS! MATCH FOUND")
-                    selected_records.append(i)
+                    selected_records.append(rp_idx)
                     continue #no need to go over the other indices
 
 
             #print(f"ERROR! NO MATCH FOR FIRST VARIABLE")
-        new_space = descriptive_space.iloc[selected_records]
+        new_space = descriptive_space[ descriptive_space['representative_index'].isin(selected_records)]
 
         return new_space
 
-def get_indices_subsequence(descriptive_space=None, attribute=None, condition=None):
+def get_indices_subsequence(descriptive_space=None, condition=None):
     """
     Retrieve the indices of the records that have the sequence of categories in the condition in their data, order is relevant, but other values can come in between.
     """
 
-    selection = condition
+    selection = condition._value
     selected_records = []
 
     for i in range(len(descriptive_space)):
-        attr_collection = descriptive_space[attribute].iloc[i]
+        rp_idx = descriptive_space.iloc[i]['representative_index']
+        attr_collection = descriptive_space[condition._descriptor].iloc[rp_idx]
         #print(f" == collection of row {i} = {attr_collection}")
 
         select = True
@@ -191,9 +199,9 @@ def get_indices_subsequence(descriptive_space=None, attribute=None, condition=No
 
         if select:
             #print("SUCCESS! MATCH FOUND")
-            selected_records.append(i)
+            selected_records.append(rp_idx)
         
-    new_space = descriptive_space.iloc[selected_records]
+        new_space = descriptive_space[ descriptive_space['representative_index'].isin(selected_records)]
                 
     return new_space
 

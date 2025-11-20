@@ -2,6 +2,8 @@
 This file contains the class of the subgroup.
 """
 
+import candidates as ca
+
 class Subgroup():
     """
     This class contains all information that needs to be known for a Subgroup.
@@ -14,7 +16,7 @@ class Subgroup():
     - values (list[float])  : a list of all model values for each record.
     """
     
-    def __init__(self, model_params: dict, description: str, indices: list, metrics: dict):
+    def __init__(self, model_params: dict, description: ca.Description, indices: list, metrics: dict):
 
         self._model_params = model_params
         self._rank = None #added later if it is included in the top-k.
@@ -25,7 +27,11 @@ class Subgroup():
         self._quality = metrics['subgroup_quality']
 
     def __str__(self):
-        return f"This subgroup of size {self._size} has description {self._description} and a quality score of {self._quality}."
+        conds = self._description._conditions
+
+        summ_conds = " & ".join([cond.__str__() for cond in conds])
+
+        return f"Records with {summ_conds} have a quality score of {self._quality}."
     
     
     # Print the containments of the subgroup

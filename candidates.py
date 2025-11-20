@@ -5,6 +5,75 @@ import numpy as np
 
 import refinements as rf
 
+
+class Condition:
+
+    def __init__(self, descriptor, value, datatype):
+
+        self._descriptor = descriptor
+        self._value = value
+        self._datatype = datatype
+
+        self._indices = None # only has a value for Collection datatype
+
+    def add_indices(self, indices):
+
+        if self._datatype == 'collection':
+            self._indices = indices
+
+        else:
+            print("Descriptors of this datatype do not include indices.")
+
+    def __str__(self):
+        if self._datatype == 'boolean':
+            summary = f"{self._descriptor.upper()} is {self._value}"
+        
+        elif self._datatype == 'numerical':
+            summary = f"{self._descriptor.upper()} is between {self._value[0]} and {self._value[1]}"
+        
+        elif self._datatype == 'nominal':
+            if self._value[0] == 0:
+                summary = f"{self._descriptor.upper()} is not {self._value[1]}"     
+            elif self._value[0] == 1:
+                summary = f"{self._descriptor.upper()} is {self._value[1]}" 
+
+        elif self._datatype ==  'ordinal':
+            summary = f"{self._descriptor.upper()} is in {self._value}"
+
+        elif self._datatype == 'collection':
+            summary = f"{self._descriptor.upper()} contains at least {self._value}"                  
+
+        elif self._datatype == 'sequence':
+            summary = f"{self._descriptor.upper()} has {self._value} consecutively without interruptions"
+        
+        elif self._datatype == 'subsequence':
+            summary = f"{self._descriptor.upper()} has {self._value} consecutively with interruptions"
+
+        return summary
+
+
+class Description:
+
+    def __init__(self, conditions):
+
+        self._conditions = conditions # list of conditions, initialize as empty
+        self._descriptors = [cond._descriptor for cond in self._conditions] # list of descriptors in the conditions
+
+    
+    def get_condition(self, descriptor):
+        """ Get the condition that has this descriptor. """
+
+        if descriptor not in self._descriptors:
+            return f"{descriptor} is not in this Description"
+
+        else:
+            for cond in self._conditions:
+                if cond._descriptor == descriptor:
+                    return cond._value
+                else:
+                    continue
+
+
 def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
     """
     The original database gets split into the descriptive and target space, discarding all other columns that are not mentioned.
@@ -40,7 +109,7 @@ def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
 
 def manual_attribute_types():
 
-    dtypes = {'categorical': ['itemType'], 
+    dtypes = {'nominal': ['itemType'], 
               'boolean': ['interactionType'], 
               'numerical': [], 
               'ordinal': ['marksTotal', 'marksTotal_interaction', 'usedAttempts', 'marksPenalty', 'hintsRequested', 'mathErrors'],
@@ -83,9 +152,9 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
  
 
     # go over all categorical attributes
-    for att in dtypes['categorical']:
+    for att in dtypes['nominal']:
 
-        conditions = rf.categorical_refinement(subgroup=descriptive_space, attribute=att)
+        conditions = rf.nominal_refinement(subgroup=descriptive_space, attribute=att)
         candidates += conditions
 
 
@@ -100,38 +169,51 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
     # go over all sequence attributes
     for att in dtypes['sequence']:
         
-        conditions = rf.sequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_sequence'],
-                                              minimal_support=refinement_params['minimal_support_sequence'], maximum_support=refinement_params['maximum_support_sequence'])
+        conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
+                                              minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
+        
+        #rf.sequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_sequence'],
+        #                                      minimal_support=refinement_params['minimal_support_sequence'], maximum_support=refinement_params['maximum_support_sequence'])
+        
         candidates += conditions
 
 
     # go over all subsequence attributes
     for att in dtypes['subsequence']:
         
-        conditions = rf.subsequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_subsequence'],
-                                              minimal_support=refinement_params['minimal_support_subsequence'], maximum_support=refinement_params['maximum_support_subsequence'])
+        conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
+                                              minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
+        
+        # rf.subsequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_subsequence'],
+        #                                       minimal_support=refinement_params['minimal_support_subsequence'], maximum_support=refinement_params['maximum_support_subsequence'])
         candidates += conditions
 
 
     return candidates
 
 
-def add_condition(description=None, candidates=None):
+def add_condition(old_description: Description, new_condition: Condition):
     """
     Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
     If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
     """
 
-    new_candidates = []
+    new_description_conditions = []
 
-    for cand in candidates:
-        candidate_attribute = list(cand.keys())[0]
-        description_copy = description.copy()
+    for old_condition in old_description._conditions:
 
-        description_copy[candidate_attribute] = cand[candidate_attribute] #replaces if candidate attribute already in description, otherwise adds.
-        new_candidates.append(description_copy)
+        # we do not want to include this old condition, because we refine it further in the new_condition
+        if old_condition._descriptor == new_condition._descriptor:
+            continue 
 
-    return new_candidates
+        else:
+            new_description_conditions.append(old_condition)
+
+        new_description_conditions.append(new_condition)
+
+    new_description = Description(conditions=new_description_conditions)
+
+    return new_description
 
 
 def global_add_condition(description=None, starting_candidates=None):
@@ -152,6 +234,9 @@ def global_add_condition(description=None, starting_candidates=None):
     return new_candidates
 
 
+
+
+# ============= OLD ===============
 
 
 

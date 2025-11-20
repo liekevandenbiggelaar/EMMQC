@@ -3,11 +3,9 @@ import pandas as pd
 from collections import Counter
 from itertools import combinations
 
-def fpgrowth(descriptors=None, attribute_of_interest=None, ids=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None):
+def fpgrowth(subgroup=None, attribute_of_interest=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None):
 
-    atts = ids
-    atts.append(attribute_of_interest)
-    data = descriptors.copy()[atts]
+    data = subgroup.copy()
     
     # 1. Compute the frequency pattern set.
     frequency_pattern_set = compute_frequency_pattern_set(data=data, attribute_of_interest=attribute_of_interest, minimal_support=minimal_support)
@@ -212,7 +210,7 @@ class FPTree:
 
         for i in range(len(data_ordered_itemsets)):
             collection = data_ordered_itemsets.iloc[i]['ordered_item_set']
-            index = i
+            index = data_ordered_itemsets.iloc[i]['representative_index']
 
             self.add_collection(collection=collection, index=index)
 

@@ -9,6 +9,9 @@ from itertools import combinations, permutations
 from mlxtend.frequent_patterns import fpgrowth
 from mlxtend.preprocessing import TransactionEncoder
 
+import fpgrowth as fp
+import candidates as ca
+
 def numerical_refinement(subgroup=None, attribute=None, bins=None):
     """
     Refinement of the numerical attributes into b bins. This is able to deal with NaN values.
@@ -42,7 +45,7 @@ def numerical_refinement(subgroup=None, attribute=None, bins=None):
     # start at the minimum point
     start_value = min_value
     b = 1
-    candidates = []
+    new_candidates = []
 
     while b <= bins :
         if b == bins:
@@ -52,14 +55,15 @@ def numerical_refinement(subgroup=None, attribute=None, bins=None):
         
         # Get condition
         range = (start_value, end_value)
-        condition = {attribute: range}
-        candidates.append(condition)
+        condition = ca.Condition(descriptor=attribute, value=range, datatype='numerical')
+        description = ca.Description(conditions=[condition])
+        new_candidates.append(description)
 
         # Get ready for next iteration
         start_value = end_value
         b += 1
 
-    return candidates
+    return new_candidates
 
 
 def boolean_refinement(subgroup=None, attribute=None):
@@ -84,15 +88,18 @@ def boolean_refinement(subgroup=None, attribute=None):
     bool1 = data_attribute.dropna().unique()[0]
     bool2 = data_attribute.dropna().unique()[1]
 
-    condition1 = {attribute: bool1}
-    condition2 = {attribute: bool2}
+    condition1 = ca.Condition(descriptor=attribute, value=bool1, datatype='boolean')
+    condition2 = ca.Condition(descriptor=attribute, value=bool2, datatype='boolean')
+
+    description1 = ca.Description(conditions=[condition1])
+    description2 = ca.Description(conditions=[condition2])
         
-    candidates = [condition1, condition2]
+    new_candidates = [description1, description2]
 
-    return candidates
+    return new_candidates
 
 
-def categorical_refinement(subgroup=None, attribute=None):
+def nominal_refinement(subgroup=None, attribute=None):
     """
     Refinement of the categorical attributes into the options.
     The condition will look like: EventType.GIVEUP = 1 and EventType.GIVEUP = 0
@@ -112,19 +119,22 @@ def categorical_refinement(subgroup=None, attribute=None):
         # No variation in the data so no candidate is returned
         return []
     
-    candidates = []
+    new_candidates = []
 
     for cat in categories:
-        condition1 = {attribute: (1.0, cat)} # means =
-        condition2 = {attribute: (0.0, cat)} # means !=
+        condition1 = ca.Condition(descriptor=attribute, value=(1.0, cat), datatype='nominal') # means =
+        condition2 = ca.Condition(descriptor=attribute, value=(0.0, cat), datatype='nominal') # means !=
 
-        candidates.append(condition1)
-        candidates.append(condition2)
+        description1 = ca.Description(conditions=[condition1])
+        description2 = ca.Description(conditions=[condition2])
+        
+        new_candidates = [description1, description2]
 
-    return candidates
+    return new_candidates
 
 
-def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None):
+
+def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=3):
     """
     Refinement of the collection attributes into the containments.
     The condition will look like: eventTypes includes [GIVEUP, EVALUATE], order does not matter.
@@ -141,25 +151,31 @@ def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, m
     OUTPUT
     - candidates (list) : a list that has all possible conditions for that attribute, as many as there are unique combinations of the instances.
     """
+    data = subgroup[['representative_index', attribute]]
+    nr_records = len(data)
+
+    min_sup = round(nr_records * minimal_support)
+    max_sup = round(nr_records * maximum_support)
 
     # Gather a list of all collections
-    lst_te = [subgroup.iloc[i][attribute] for i in range(len(subgroup))]
+    frequent_itemsets = fp.fpgrowth(subgroup=data, attribute_of_interest=attribute, minimal_support=min_sup, maximum_support=max_sup, maximum_length=maximum_length)
 
-    # Transform it into a binary matrix whether the categories are or aren't included in the row
-    te = TransactionEncoder()
-    te_ary = te.fit(lst_te).transform(lst_te)
-    df_te = pd.DataFrame(te_ary, columns=te.columns_)
+    new_candidates = []
+    for fi in frequent_itemsets:
+        value = list(fi) #the value in the condition
+        indices = list(frequent_itemsets[fi]['indices'])
 
-    frequent_itemsets = fpgrowth(df_te, min_support = minimal_support, max_len=maximum_length, use_colnames=True)
-    frequent_itemsets = frequent_itemsets.sort_values(by='support', ascending=False)
-    frequent_itemsets = frequent_itemsets[ frequent_itemsets['support'] <= maximum_support]
+        cond = ca.Condition(descriptor=attribute, value=value, datatype='collection')
+        cond.add_indices(indices)
+
+        description = ca.Description(conditions=[cond])
+
+        # add condition to the list of candidates
+        new_candidates.append(description)
+
+    return new_candidates
 
 
-    candidates = []
-    for cond in frequent_itemsets['itemsets']:
-        candidates.append({'skills': list(cond)})
-
-    return candidates
 
 
 def sequence_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None): # I think the same as collection so no additional needed.
@@ -187,7 +203,9 @@ def sequence_refinement(subgroup=None, attribute=None, minimal_support=0.01, max
 
     candidates = []
     for comb in combs:
-        candidates.append({attribute: comb})
+        cond = ca.Condition(descriptor=attribute, value=comb, datatype='sequence')
+        desc = ca.Description(conditions=[cond])
+        candidates.append(desc)
     
     return candidates
 
@@ -234,6 +252,7 @@ def naive_collection_refinement(subgroup=None, attribute=None, minimal_support=0
 
     candidates = []
     for comb in combs:
-        candidates.append({attribute: comb})
+        condition = ca.Condition(descriptor=attribute, value=comb, datatype='collection')
+        candidates.append(condition)
 
     return candidates
