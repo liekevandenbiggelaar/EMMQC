@@ -20,11 +20,14 @@ def check_record_inclusion(descriptive_space=None, dtypes=None, candidate=None):
 
         attr_type = condition._datatype
 
-        if attr_type == 'numerical' or attr_type == 'ordinal': #need to implement ordinal still
+        if attr_type == 'numerical': 
             subgroup_descriptors = get_indices_numerical(subgroup_descriptors, condition)
         
         elif attr_type == 'boolean':
             subgroup_descriptors = get_indices_boolean(subgroup_descriptors, condition)
+        
+        elif attr_type == 'ordinal':
+            subgroup_descriptors = get_indices_ordinal(subgroup_descriptors, condition)
 
         elif attr_type == 'nominal':
             subgroup_descriptors = get_indices_categorical(subgroup_descriptors, condition)
@@ -70,6 +73,14 @@ def get_indices_boolean(descriptive_space=None, condition=None):
     val = condition._value
     new_space = descriptive_space[ descriptive_space[condition._descriptor] == val ]
         
+    return new_space
+
+
+def get_indices_ordinal(descriptive_space=None, condition=None):
+
+    val = condition._value
+    new_space = descriptive_space[ descriptive_space[condition._descriptor].isin(val)]
+
     return new_space
 
 

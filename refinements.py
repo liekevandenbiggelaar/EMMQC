@@ -48,6 +48,7 @@ def numerical_refinement(subgroup=None, attribute=None, bins=None):
     new_candidates = []
 
     while b <= bins :
+
         if b == bins:
             end_value = max_value
         else:
@@ -62,6 +63,8 @@ def numerical_refinement(subgroup=None, attribute=None, bins=None):
         # Get ready for next iteration
         start_value = end_value
         b += 1
+    
+    #print([cand.__str__() for cand in new_candidates])
 
     return new_candidates
 
@@ -96,6 +99,48 @@ def boolean_refinement(subgroup=None, attribute=None):
         
     new_candidates = [description1, description2]
 
+    return new_candidates
+
+def ordinal_refinement(subgroup=None, attribute=None):
+    """
+    Refinement of the ordinal attributes into two conditions per unique value.
+    The condition will look like: attribute <= val and attribute > val
+
+    INPUT
+    - subgroup          : the subgroup (or entire population) that has the wanted information in the descriptor space.
+    - attribute (str)   : the name of a ordinal-type attribute that needs to be refined.
+
+    OUTPUT
+    - candidates (list) : a list that has all possible conditions for that attribute
+    """
+
+    # 1. Get all unique values of the attribute in the subgroup
+    unique_vals = list(subgroup[attribute].dropna().unique())
+
+    # 2. Sort the unique values
+    # In our use case, reverse=False because: 0 = Best, higher = Worse
+    # Otherwise change to reverse=True
+    sorted_unique = sorted(unique_vals, reverse=False)
+
+    # 3. For each unique category, in order, add <= cat and > cat to the list of candidates
+    new_candidates = []
+    for cat in sorted_unique:
+        cat_index = sorted_unique.index(cat)
+
+        before = sorted_unique[:cat_index + 1]
+        after = sorted_unique[cat_index + 1:]
+
+        # only add if there is a value in the range
+        if len(before) != 0:
+            condition1 = ca.Condition(descriptor=attribute, value=before, datatype='ordinal')
+            description1 = ca.Description(conditions=[condition1])
+            new_candidates.append(description1)
+            
+        if len(after) != 0:
+            condition2 = ca.Condition(descriptor=attribute, value=after, datatype='ordinal')
+            description2 = ca.Description(conditions=[condition2])
+            new_candidates.append(description2)
+        
     return new_candidates
 
 

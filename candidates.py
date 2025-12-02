@@ -38,7 +38,7 @@ class Condition:
                 summary = f"{self._descriptor.upper()} is {self._value[1]}" 
 
         elif self._datatype ==  'ordinal':
-            summary = f"{self._descriptor.upper()} is in {self._value}"
+            summary = f"{self._descriptor.upper()} is between {self._value[0]} and {self._value[-1]}"
 
         elif self._datatype == 'collection':
             summary = f"{self._descriptor.upper()} contains at least {self._value}"                  
@@ -59,6 +59,13 @@ class Description:
         self._conditions = conditions # list of conditions, initialize as empty
         self._descriptors = [cond._descriptor for cond in self._conditions] # list of descriptors in the conditions
 
+    def __str__(self):
+        conds = self._conditions
+
+        summ_conds = " & ".join([cond.__str__() for cond in conds])
+
+        return f"Description: {summ_conds}."
+
     
     def get_condition(self, descriptor):
         """ Get the condition that has this descriptor. """
@@ -72,6 +79,8 @@ class Description:
                     return cond._value
                 else:
                     continue
+    
+
 
 
 def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
@@ -111,8 +120,8 @@ def manual_attribute_types():
 
     dtypes = {'nominal': ['itemType'], 
               'boolean': ['interactionType'], 
-              'numerical': [], 
-              'ordinal': ['marksTotal', 'marksTotal_interaction', 'usedAttempts', 'marksPenalty', 'hintsRequested', 'mathErrors'],
+              'numerical': ['marksPenalty'], 
+              'ordinal': ['marksTotal', 'marksTotal_interaction', 'usedAttempts', 'hintsRequested', 'mathErrors'],
               'collection': ['skills', 'positive_skills', 'negative_skills'],
               'sequence': ['event_types', 'event_evaluations'],
               'subsequence': ['stepTypes']}
@@ -148,6 +157,12 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
     for att in dtypes['boolean']:
 
         conditions = rf.boolean_refinement(subgroup=descriptive_space, attribute=att)
+        candidates += conditions
+    
+    # go over all ordinal attributes
+    for att in dtypes['ordinal']:
+
+        conditions = rf.ordinal_refinement(subgroup=descriptive_space, attribute=att)
         candidates += conditions
  
 

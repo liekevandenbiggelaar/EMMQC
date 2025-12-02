@@ -3,7 +3,7 @@ import pandas as pd
 from collections import Counter
 from itertools import combinations
 
-def fpgrowth(subgroup=None, attribute_of_interest=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None):
+def fpgrowth(subgroup=None, attribute_of_interest=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None, is_subgroup=False):
 
     data = subgroup.copy()
     
