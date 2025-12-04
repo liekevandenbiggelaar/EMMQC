@@ -156,8 +156,14 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
     # go over all boolean attributes
     for att in dtypes['boolean']:
 
-        conditions = rf.boolean_refinement(subgroup=descriptive_space, attribute=att)
-        candidates += conditions
+        # make sure that there are still two options in this attribute. Otherwise, we skip this.
+        if len(descriptive_space[att].unique()) > 1:
+            conditions = rf.boolean_refinement(subgroup=descriptive_space, attribute=att)
+            candidates += conditions
+        
+        # otherwise there are no unique new combination and we skip
+        else:
+            continue
     
     # go over all ordinal attributes
     for att in dtypes['ordinal']:
@@ -177,7 +183,8 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
     for att in dtypes['collection']:
 
         conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
-                                              minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
+                                              minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'], 
+                                              maximum_itemsets=refinement_params['maximum_itemsets'], stopping_criteria=refinement_params['stopping_criteria_collection'])
         candidates += conditions
 
 
@@ -215,19 +222,45 @@ def add_condition(old_description: Description, new_condition: Condition):
 
     new_description_conditions = []
 
+
     for old_condition in old_description._conditions:
 
         # we do not want to include this old condition, because we refine it further in the new_condition
         if old_condition._descriptor == new_condition._descriptor:
-            continue 
+            if new_condition._datatype == 'numerical' or new_condition._datatype == 'ordinal':
+                new_description_conditions.append(new_condition)
+            
+            elif new_condition._datatype == 'boolean':
+                new_description_conditions.append(old_condition) # keep the old one as this always holds (but it probably won't matter anyway because this should not be possible)
+
+            # in the case of nominal attributes, we should allow both.
+            elif new_condition._datatype == 'nominal':
+                new_description_conditions.append(old_condition)
+                new_description_conditions.append(new_condition)
+            
+            # aggregate these conditions as they always occur together and the indices are those of the new condition
+            elif new_condition._datatype == 'collection':
+                old_vals = old_condition._value
+                new_vals = new_condition._value
+
+                agg_vals = list(set(old_vals + new_vals))
+                agg_cond = Condition(descriptor=new_condition._descriptor, value=agg_vals, datatype='collection')
+                agg_cond.add_indices(indices=new_condition._indices)
+                new_description_conditions.append(agg_cond)
 
         else:
             new_description_conditions.append(old_condition)
-
+        
+    if not( new_condition._descriptor in [c._descriptor for c in new_description_conditions] ):
         new_description_conditions.append(new_condition)
-
+        
     new_description = Description(conditions=new_description_conditions)
+    # if len(old_description._descriptors) >= 2:
 
+    #     print(f"old descr: {old_description}")
+    #     print(f"new cond: {new_condition}")
+    #     print(f"new descr: {new_description}")
+    
     return new_description
 
 

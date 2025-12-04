@@ -96,11 +96,13 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
                     result_set.insert_subgroup(selected_subgroup)
                     candidates_satisfied.append(selected_subgroup)
 
-                    #print(f"{selected_subgroup} is added to the beam is now added to {beam_queue}")
-
         # 10.   Get the new candidate queue, by refining all descriptions in the beam queue
         candidate_queue = []
-        #print(beam_queue.get_descriptions())
+
+        # print current descriptions
+        # for descr in beam_queue._queue:
+        #     print(descr)
+
         for subgroup in beam_queue._queue:
             temp_subgroup_descriptors = descriptive_space[ descriptive_space['representative_index'].isin(subgroup._indices)] 
 

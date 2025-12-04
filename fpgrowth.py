@@ -3,7 +3,7 @@ import pandas as pd
 from collections import Counter
 from itertools import combinations
 
-def fpgrowth(subgroup=None, attribute_of_interest=None, minimal_support=0.01, maximum_support=1.0, maximum_length=None, is_subgroup=False):
+def fpgrowth(subgroup=None, attribute_of_interest=None, minimal_support=0.01, maximum_length=None, is_subgroup=False):
 
     data = subgroup.copy()
     
@@ -22,7 +22,7 @@ def fpgrowth(subgroup=None, attribute_of_interest=None, minimal_support=0.01, ma
     cpb = compute_conditional_pattern_base(fptree)
 
     # 5. Compute frequent patterns and filter them based on the conditions.
-    frequent_itemsets = compute_frequent_patterns(cpb, minimal_support, maximum_support, maximum_length)
+    frequent_itemsets = compute_frequent_patterns(cpb, minimal_support, maximum_length)
 
     return frequent_itemsets
 
@@ -261,7 +261,7 @@ def compute_conditional_pattern_base(fptree):
     return cpb
 
 
-def compute_frequent_patterns(cpb, minimal_support=0.01, maximum_support=1.0, maximum_length=None):
+def compute_frequent_patterns(cpb, minimal_support=0.01, maximum_length=None):
 
     frequent_patterns = {}
 
@@ -300,7 +300,7 @@ def compute_frequent_patterns(cpb, minimal_support=0.01, maximum_support=1.0, ma
     # Lastly, only keep the conditions that satisfy the constraints: minimal support, maximum support and maximum length.
     # we don't want too frequent itemsets, but also not too unique ones, and not long, uninterpretable ones.
     for i in list(frequent_patterns.keys()):
-        if frequent_patterns[i]['frequency'] < minimal_support or frequent_patterns[i]['frequency'] > maximum_support or len(i) > maximum_length:
+        if frequent_patterns[i]['frequency'] < minimal_support or len(i) > maximum_length:
             frequent_patterns.pop(i) #remove if it does not satisfy
 
     return frequent_patterns

@@ -179,7 +179,7 @@ def nominal_refinement(subgroup=None, attribute=None):
 
 
 
-def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=3):
+def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=3, maximum_itemsets=20, stopping_criteria=None):
     """
     Refinement of the collection attributes into the containments.
     The condition will look like: eventTypes includes [GIVEUP, EVALUATE], order does not matter.
@@ -203,21 +203,61 @@ def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, m
     max_sup = round(nr_records * maximum_support)
 
     # Gather a list of all collections
-    frequent_itemsets = fp.fpgrowth(subgroup=data, attribute_of_interest=attribute, minimal_support=min_sup, maximum_support=max_sup, maximum_length=maximum_length)
+    frequent_itemsets = fp.fpgrowth(subgroup=data, attribute_of_interest=attribute, minimal_support=min_sup, maximum_length=maximum_length)
 
     new_candidates = []
-    for fi in frequent_itemsets:
-        value = list(fi) #the value in the condition
-        indices = list(frequent_itemsets[fi]['indices'])
+    if stopping_criteria == 'frequency':
+        
+        for fi in frequent_itemsets.keys():
 
-        cond = ca.Condition(descriptor=attribute, value=value, datatype='collection')
-        cond.add_indices(indices)
+            if frequent_itemsets[fi]['frequency'] <= max_sup:
+                value = list(fi) #the value in the condition
+                indices = list(frequent_itemsets[fi]['indices'])
 
-        description = ca.Description(conditions=[cond])
+                cond = ca.Condition(descriptor=attribute, value=value, datatype='collection')
+                cond.add_indices(indices)
 
-        # add condition to the list of candidates
-        new_candidates.append(description)
+                description = ca.Description(conditions=[cond])
 
+                # add condition to the list of candidates
+                new_candidates.append(description)
+            else:
+                continue
+        
+    elif stopping_criteria == 'itemsets':
+
+        sorted_frequent_itemsets = sorted(frequent_itemsets.items(), key=lambda x: x[1]['frequency'], reverse=True)
+        select_itemsets = min(len(sorted_frequent_itemsets), maximum_itemsets)
+
+        selected_frequent_itemsets = dict(sorted_frequent_itemsets[:select_itemsets])
+
+        for fi in selected_frequent_itemsets.keys():
+
+            value = list(fi)
+            indices = list(selected_frequent_itemsets[fi]['indices'])
+
+            cond = ca.Condition(descriptor=attribute, value=value, datatype='collection')
+            cond.add_indices(indices)
+
+            description = ca.Description(conditions=[cond])
+
+            # add condition to the list of candidates
+            new_candidates.append(description)            
+
+    # otherwise, we assume there is no stopping criteria
+    else:
+        for fi in frequent_itemsets.keys():
+
+            value = list(fi)
+            indices = list(frequent_itemsets[fi]['indices'])
+
+            cond = ca.Condition(descriptor=attribute, value=value, datatype='collection')
+            cond.add_indices(indices)
+
+            description = ca.Description(conditions=[cond])
+
+            # add condition to the list of candidates
+            new_candidates.append(description)     
     return new_candidates
 
 
