@@ -1,14 +1,15 @@
 import numpy as np
 import pandas as pd
-from collections import Counter
+from collections import Counter, defaultdict
 from itertools import combinations
+import copy
 
-def fpgrowth(subgroup=None, attribute_of_interest=None, minimal_support=0.01, maximum_length=None, is_subgroup=False):
+def fpgrowth(subgroup=None, attribute_of_interest=None, closed=True):
 
     data = subgroup.copy()
     
     # 1. Compute the frequency pattern set.
-    frequency_pattern_set = compute_frequency_pattern_set(data=data, attribute_of_interest=attribute_of_interest, minimal_support=minimal_support)
+    frequency_pattern_set = compute_frequency_pattern_set(data=data, attribute_of_interest=attribute_of_interest, minimal_support=1)
 
     # 2. Add the ordered-item-set into the database.
     ois = compute_ordered_item_sets(data=data, attribute_of_interest=attribute_of_interest, frequency_pattern_set=frequency_pattern_set)
@@ -19,12 +20,44 @@ def fpgrowth(subgroup=None, attribute_of_interest=None, minimal_support=0.01, ma
     fptree.create_full_FPTree(data)
 
     # 4. Construct the Conditional Pattern Base
-    cpb = compute_conditional_pattern_base(fptree)
+    cpb = compute_conditional_pattern_base(fptree, subgroup)
 
     # 5. Compute frequent patterns and filter them based on the conditions.
-    frequent_itemsets = compute_frequent_patterns(cpb, minimal_support, maximum_length)
+    frequent_itemsets = compute_frequent_patterns(cpb, minimal_support=1, maximum_support=len(data))
 
-    return frequent_itemsets
+    # 6. Optionally, postprocess to only the closed itemsets
+    if closed:
+        closed_frequent_itemsets = compute_closed_patterns(frequent_itemsets)
+        return closed_frequent_itemsets
+
+    else:
+        return frequent_itemsets
+
+def prune_frequent_itemsets(FI=None, sg_indices=None, closed=True):
+
+    FI_subgroup = copy.deepcopy(FI)
+    ID_subgroup = set(sg_indices)
+
+    for itemset in FI.keys():
+        ID_i = set(FI[itemset]['indices'])
+        ID_i_subgroup = ID_subgroup.intersection(ID_i)
+        frequency_i_subgroup = len(ID_i_subgroup)
+
+        # if the itemset is still true for one of the records
+        # keep and decrease frequency and change indices
+        if frequency_i_subgroup >= 1:
+            FI_subgroup[itemset]['frequency'] = frequency_i_subgroup
+            FI_subgroup[itemset]['indices'] = ID_i_subgroup
+        
+        # otherwise, it does not occur and we can remove it from the list.
+        else:
+            FI_subgroup.pop(itemset)
+        
+    # if we wanted only closed, this needs to be recomputed at this step.
+    if closed:
+        FI_subgroup = compute_closed_patterns(FI_subgroup)
+
+    return FI_subgroup
 
 # ================================
 # Preprocessing before the FP-Tree
@@ -53,7 +86,6 @@ def compute_frequency_pattern_set(data=None, attribute_of_interest=None, minimal
     sorted_freq_dict = dict(sorted(freq_dict.items(), key=lambda val: val[1], reverse=True))
     # remove all keys that do not pass the minimal support
     filtered_freq_dict = {key: val for key, val in sorted_freq_dict.items() if val >= minimal_support}
-
 
     return filtered_freq_dict
 
@@ -88,6 +120,53 @@ def compute_ordered_item_sets(data=None, attribute_of_interest=None, frequency_p
     return ordered_item_sets
 
 
+# def prune_FPTree(FPTree: None, sg_indices: None):
+#     """
+#     This pruned the FP Tree to only contain the nodes that cover any of the indices in the list of indices inputted.
+
+#     INPUT
+#     * FPTree : the FP tree that we started with.
+#     * sg_indices: the indices of the subgroup that we are only interested in.
+#     """
+
+#     subgroup_FP = copy.deepcopy(FPTree)
+#     # subgroup_FP._firstinstances = {}
+#     set_sg_idx = set(sg_indices)
+
+#     to_visit = []
+
+#     for value, node in subgroup_FP._root._children.items():
+#         to_visit.append(node)
+
+#     for child in to_visit:
+#         set_child_idx = set(child._indices)
+
+#         # Check if any of the items in the sg_indices has the element in the node (so is in the _indices list)
+#         overlapping_idx = set_sg_idx.intersection(set_child_idx)
+#         child.alter_indices(overlapping_idx)
+#         child.alter_frequency(len(overlapping_idx))
+
+#         # in both subgroup and the child node in the FP tree.
+#         if child._frequency <= 0:
+#             child.remove_from_parent()
+#             child.rebuild_links(subgroup_FP)
+
+#         # If not, the children of this value are also not interesting, so we remove the child from its parent and thereby all its children too.
+#         else:
+#             for child_value, child_children in child._children.items():
+#                 to_visit.append(child_children)
+            
+#             # OLD, should be fixed when removing.
+#             # if child._value in subgroup_FP._firstinstances.keys():
+#             #     #not sure if this is correct...
+#             #     if child._frequency > subgroup_FP._firstinstances[child._value]._frequency:
+#             #         subgroup_FP._firstinstances[child._value] = child
+#             # else:
+#             #     subgroup_FP._firstinstances[child._value] = child
+
+
+#     return subgroup_FP
+
 # ================================
 # Building the FP-Tree
 
@@ -105,6 +184,7 @@ class Node:
         self._indices = set() #the indices of the records that have been included in the _frequency count, no duplicates
         self._children = {} #a dictionary of the child _value (key) and the child Node (item)
         self._link = None #the last found previous node with the same _value
+        self._next = None #the next found node with the same _value (if any, added later)
 
     def add_child(self, child):
         """
@@ -118,6 +198,52 @@ class Node:
         # Otherwise we do nothing (if all is right, this could already be checked in the Tree.)
         if child._value not in self._children:
             self._children[child._value] = child
+
+    # def remove_from_parent(self):
+    #     # 1. remove itself from the parents list of children.
+
+    #     parent = self._parent
+    #     if self == parent._children[self._value]:
+    #         parent._children.pop(self._value)
+
+
+    # def rebuild_links(self, FP):
+    #     """
+    #     This removes itself from the FP tree and rebuilds all links. 
+
+    #     INPUT
+    #     * child (Node) : the child that occurs in relation to this one and needs to be removed.
+    #     """
+
+    #     # recursively.
+    #     # 2. for itself and all its children (and their children, i.e. all removed nodes)
+    #     #       a. if it is in _firstinstances, replace if possible by self._next, otherwise remove key from list
+    #     #       b. for prevnode in self._link, replace prevnode._next = self._next and for nextnode in self._next, replace nextnode._link = self._link -> Done?
+
+    #     prevnode = self._link
+    #     nextnode = self._next
+        
+    #     # remove m2 from example row: m2 <- m1 <- m3
+    #     if prevnode is None:
+    #         # replace in FI, except if nextnode is also None.
+    #         if nextnode is None: # m2 only appearance.
+    #             FP._firstinstances.pop(self._value)
+            
+    #         else:
+    #             FP._firstinstances[self._value] = nextnode
+    #             nextnode._link = prevnode # = None 
+
+    #     # remove m2 from example row: m1 <- m3 <- m2
+    #     elif nextnode is None:
+    #         prevnode._next = nextnode # = None 
+
+    #     else: # remove m2 from example row: m1 <- m2 <- m3
+    #         prevnode._next = nextnode
+    #         nextnode._link = prevnode
+
+    #     for _, child in self._children.items():
+    #         child.rebuild_links(FP)
+
     
     def add_indices(self, index):
         """
@@ -136,6 +262,8 @@ class Node:
         """
 
         self._link = node
+        node._next = self #add self to the node's next list.
+    
 
         
     def increase_frequency(self):
@@ -144,6 +272,12 @@ class Node:
         """
 
         self._frequency += 1
+    
+    def alter_frequency(self, frequency):
+        self._frequency = frequency
+    
+    def alter_indices(self, indices):
+        self._indices = indices
 
 
 class FPTree:
@@ -218,10 +352,11 @@ class FPTree:
 # =======================================
 # Extracting information from the FP-Tree
 
-def compute_conditional_pattern_base(fptree):
+def compute_conditional_pattern_base(fptree, subgroup):
 
     # start at the first instances in the FP-Tree
     FI = fptree._firstinstances
+    subgroup_indices = set(subgroup['representative_index'])
 
     cpb = {}
     for val in FI.keys():
@@ -233,10 +368,13 @@ def compute_conditional_pattern_base(fptree):
 
         # as long as our current node (i.e. parents) is not None
         while current_node is not None:
+            all_indices = set(current_node._indices)
+            fitting_indices = subgroup_indices.intersection(all_indices)
             val_collect = {}
-            val_collect['frequency'] = current_node._frequency
-            val_collect['indices'] = current_node._indices
+            val_collect['frequency'] = len(fitting_indices)
+            val_collect['indices'] = fitting_indices
             val_collect['pattern'] = []
+
 
             parent_node = current_node._parent
 
@@ -260,8 +398,7 @@ def compute_conditional_pattern_base(fptree):
 
     return cpb
 
-
-def compute_frequent_patterns(cpb, minimal_support=0.01, maximum_length=None):
+def compute_frequent_patterns(cpb, minimal_support=None, maximum_support=None):
 
     frequent_patterns = {}
 
@@ -297,11 +434,24 @@ def compute_frequent_patterns(cpb, minimal_support=0.01, maximum_length=None):
                     frequent_patterns[frozen_pattern] = {'frequency': pb['frequency'],
                                                         'indices': pb['indices']}
 
-    # Lastly, only keep the conditions that satisfy the constraints: minimal support, maximum support and maximum length.
-    # we don't want too frequent itemsets, but also not too unique ones, and not long, uninterpretable ones.
-    for i in list(frequent_patterns.keys()):
-        if frequent_patterns[i]['frequency'] < minimal_support or len(i) > maximum_length:
-            frequent_patterns.pop(i) #remove if it does not satisfy
-
     return frequent_patterns
 
+def compute_closed_patterns(frequent_patterns):
+
+    groups = defaultdict(list)
+
+    for pattern, data in frequent_patterns.items():
+        groups[frozenset(data['indices'])].append((pattern, data))
+
+    closed_patterns = {}
+
+    for group in groups.values():
+
+        # only keep largest pattern per identical indices
+        max_len = max(len(pattern) for pattern, _ in group)
+
+        for pattern, data in group:
+            if len(pattern) == max_len:
+                closed_patterns[pattern] = data
+
+    return closed_patterns

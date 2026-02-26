@@ -38,8 +38,6 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     # 11.   Get the new candidate queue, by refining all descriptions in the beam queue
     # 12. Return the result queue
 
-    data['representative_index'] = range(len(data))
-
     start_time = datetime.now()
     print(f"Search started at {start_time.now()}")
 
@@ -47,7 +45,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, targets=targets, ids=ids)
 
     # 2. Get the starting candidate descriptions
-    starting_candidates  = ca.get_candidates_per_attribute(descriptive_space=descriptive_space,  dtypes=descriptor_types, refinement_params=refinement_params)
+    starting_candidates   = ca.get_candidates_per_attribute(descriptive_space=descriptive_space,  dtypes=descriptor_types, refinement_params=refinement_params)
     candidate_queue = starting_candidates 
 
     # 3. Get the population quality
@@ -107,7 +105,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
             temp_subgroup_descriptors = descriptive_space[ descriptive_space['representative_index'].isin(subgroup._indices)] 
 
             # refine this condition further
-            new_conditions  = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, refinement_params=refinement_params)
+            new_conditions = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, refinement_params=refinement_params, parent=subgroup)
 
             for new_cond in new_conditions:
                 new_candidate = ca.add_condition(old_description=subgroup._description, new_condition=new_cond._conditions[0]) # there is only one condition here.
@@ -120,3 +118,6 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     print(f"This search took {end_time - start_time}")    
     # 11. Return the result queue
     return result_set
+
+
+

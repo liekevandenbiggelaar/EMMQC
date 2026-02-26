@@ -12,7 +12,7 @@ from mlxtend.preprocessing import TransactionEncoder
 import fpgrowth as fp
 import candidates as ca
 
-def numerical_refinement(subgroup=None, attribute=None, bins=None):
+def numerical_refinement(subgroup=None, attribute=None, bins=None, parent=None):
     """
     Refinement of the numerical attributes into b bins. This is able to deal with NaN values.
     The condition will look like: marksEarned in (0.0, 1.0)
@@ -57,7 +57,7 @@ def numerical_refinement(subgroup=None, attribute=None, bins=None):
         # Get condition
         range = (start_value, end_value)
         condition = ca.Condition(descriptor=attribute, value=range, datatype='numerical')
-        description = ca.Description(conditions=[condition])
+        description = ca.Description(conditions=[condition], parent=parent)
         new_candidates.append(description)
 
         # Get ready for next iteration
@@ -69,7 +69,7 @@ def numerical_refinement(subgroup=None, attribute=None, bins=None):
     return new_candidates
 
 
-def boolean_refinement(subgroup=None, attribute=None):
+def boolean_refinement(subgroup=None, attribute=None, parent=None):
     """
     Refinement of the boolean attributes into the two option.
     The condition will look like: finished = True and finished = False
@@ -94,14 +94,14 @@ def boolean_refinement(subgroup=None, attribute=None):
     condition1 = ca.Condition(descriptor=attribute, value=bool1, datatype='boolean')
     condition2 = ca.Condition(descriptor=attribute, value=bool2, datatype='boolean')
 
-    description1 = ca.Description(conditions=[condition1])
-    description2 = ca.Description(conditions=[condition2])
+    description1 = ca.Description(conditions=[condition1], parent=parent)
+    description2 = ca.Description(conditions=[condition2], parent=parent)
         
     new_candidates = [description1, description2]
 
     return new_candidates
 
-def ordinal_refinement(subgroup=None, attribute=None):
+def ordinal_refinement(subgroup=None, attribute=None, parent=None):
     """
     Refinement of the ordinal attributes into two conditions per unique value.
     The condition will look like: attribute <= val and attribute > val
@@ -133,18 +133,18 @@ def ordinal_refinement(subgroup=None, attribute=None):
         # only add if there is a value in the range
         if len(before) != 0:
             condition1 = ca.Condition(descriptor=attribute, value=before, datatype='ordinal')
-            description1 = ca.Description(conditions=[condition1])
+            description1 = ca.Description(conditions=[condition1], parent=parent)
             new_candidates.append(description1)
             
         if len(after) != 0:
             condition2 = ca.Condition(descriptor=attribute, value=after, datatype='ordinal')
-            description2 = ca.Description(conditions=[condition2])
+            description2 = ca.Description(conditions=[condition2], parent=parent)
             new_candidates.append(description2)
         
     return new_candidates
 
 
-def nominal_refinement(subgroup=None, attribute=None):
+def nominal_refinement(subgroup=None, attribute=None, parent=None):
     """
     Refinement of the categorical attributes into the options.
     The condition will look like: EventType.GIVEUP = 1 and EventType.GIVEUP = 0
@@ -170,8 +170,8 @@ def nominal_refinement(subgroup=None, attribute=None):
         condition1 = ca.Condition(descriptor=attribute, value=(1.0, cat), datatype='nominal') # means =
         condition2 = ca.Condition(descriptor=attribute, value=(0.0, cat), datatype='nominal') # means !=
 
-        description1 = ca.Description(conditions=[condition1])
-        description2 = ca.Description(conditions=[condition2])
+        description1 = ca.Description(conditions=[condition1], parent=parent)
+        description2 = ca.Description(conditions=[condition2], parent=parent)
         
         new_candidates = [description1, description2]
 
@@ -179,52 +179,52 @@ def nominal_refinement(subgroup=None, attribute=None):
 
 
 
-def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_length=3, maximum_itemsets=20, stopping_criteria=None):
+def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, maximum_support=1.0, maximum_itemsets=None, closed_itemsets=True, parent=None, store=False):
     """
     Refinement of the collection attributes into the containments.
     The condition will look like: eventTypes includes [GIVEUP, EVALUATE], order does not matter.
     It is based on Frequent Itemset Theory's FP-Growth: we extract frequent itemsets from the data's collections.
-    It eliminates the most frequent and not frequent itemsets.
+    It eliminates the most frequent and infrequent itemsets.
 
     INPUT: no restrictions is the basis
     - subgroup                      : the subgroup (or entire population) that has the wanted information in the descriptor space.
     - attribute (str)               : the name of a list-type attribute that needs to be refined.
-    - minimal_support (0.01; float)  : the minimal support that the itemset must have in the entire subgroup (or population). 
+    - minimal_support (0.01; float) : the minimal support that the itemset must have in the entire subgroup (or population). 
     - maximum_support (1.0; float)  : the maximum support that the itemset is allowed to have in the entire subgroup (or population)
     - maximum_length (int)          : a limit to the number of categories in the collection.
+    - maximum_itemsets (int)        : the number of itemsets we want to include (or None if we want all)
+    - closed_itemsets (bool)        : indicator if we want the closed itemset property to hold
 
     OUTPUT
     - candidates (list) : a list that has all possible conditions for that attribute, as many as there are unique combinations of the instances.
     """
-    data = subgroup[['representative_index', attribute]]
-    nr_records = len(data)
 
-    min_sup = round(nr_records * minimal_support)
-    max_sup = round(nr_records * maximum_support)
+    data = subgroup[['representative_index', attribute]]
+    minsup = round( len(data) * minimal_support, 0)
+    maxsup = round( len(data) * maximum_support, 0)
 
     # Gather a list of all collections
-    frequent_itemsets = fp.fpgrowth(subgroup=data, attribute_of_interest=attribute, minimal_support=min_sup, maximum_length=maximum_length)
+
+    # If we do store, extract the FIs from the parent node.
+    if store:
+        frequent_itemsets = parent._FIs[attribute]
+
+    # Otherwise, redo FP-growth and extract new FIs
+    else:
+        frequent_itemsets = fp.fpgrowth(subgroup=data, attribute_of_interest=attribute, closed=closed_itemsets)
+
+    # Lastly, only keep the conditions that satisfy the constraints: minimal support and maximum support
+    # we don't want too frequent itemsets, but also not too unique ones, and not long, uninterpretable ones.
+
+    for i in list(frequent_itemsets.keys()):
+        # print(frequent_patterns[i]['frequency'], i)
+        if frequent_itemsets[i]['frequency'] < minsup or frequent_itemsets[i]['frequency'] > maxsup:# or len(i) > maximum_length:
+            frequent_itemsets.pop(i) #remove if it does not satisfy
 
     new_candidates = []
-    if stopping_criteria == 'frequency':
         
-        for fi in frequent_itemsets.keys():
-
-            if frequent_itemsets[fi]['frequency'] <= max_sup:
-                value = list(fi) #the value in the condition
-                indices = list(frequent_itemsets[fi]['indices'])
-
-                cond = ca.Condition(descriptor=attribute, value=value, datatype='collection')
-                cond.add_indices(indices)
-
-                description = ca.Description(conditions=[cond])
-
-                # add condition to the list of candidates
-                new_candidates.append(description)
-            else:
-                continue
-        
-    elif stopping_criteria == 'itemsets':
+    if maximum_itemsets is not None:
+        # Keep the top-... most frequent itemsets as descriptors.
 
         sorted_frequent_itemsets = sorted(frequent_itemsets.items(), key=lambda x: x[1]['frequency'], reverse=True)
         select_itemsets = min(len(sorted_frequent_itemsets), maximum_itemsets)
@@ -239,12 +239,12 @@ def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, m
             cond = ca.Condition(descriptor=attribute, value=value, datatype='collection')
             cond.add_indices(indices)
 
-            description = ca.Description(conditions=[cond])
+            description = ca.Description(conditions=[cond], parent=parent)
 
             # add condition to the list of candidates
             new_candidates.append(description)            
 
-    # otherwise, we assume there is no stopping criteria
+    # otherwise, we want to keep all found itemsets
     else:
         for fi in frequent_itemsets.keys():
 
@@ -254,11 +254,52 @@ def collection_refinement(subgroup=None, attribute=None, minimal_support=0.01, m
             cond = ca.Condition(descriptor=attribute, value=value, datatype='collection')
             cond.add_indices(indices)
 
-            description = ca.Description(conditions=[cond])
+            description = ca.Description(conditions=[cond], parent=parent)
 
             # add condition to the list of candidates
             new_candidates.append(description)     
     return new_candidates
+
+
+
+
+
+# =========== DEPRECATED ============= #
+def naive_collection_refinement(subgroup=None, attribute=None, minimal_support=0.0, maximum_support=1.0, maximum_length=None):
+    """
+    Refinement of the collection attributes into the containments.
+    The condition will look like: eventTypes includes [GIVEUP, EVALUATE], order does not matter.
+
+    INPUT
+    - subgroup          : the subgroup (or entire population) that has the wanted information in the descriptor space.
+    - attribute (str)   : the name of a list-type attribute that needs to be refined.
+    - limit (str)       : a limit to the number of categories in the collection.
+
+    OUTPUT
+    - candidates (list) : a list that has all possible conditions for that attribute, as many as there are unique combinations of the instances.
+    """
+
+    data_attribute = subgroup[attribute]
+    options = list(data_attribute.explode().dropna().unique())
+
+    if len(options) <= 1:
+        # No variation in the data so no candidate is returned
+        return []
+
+    if limit == None:
+        limit = len(options) - 1 #Do not take into account the one with all options
+    
+    combs = []
+    for i in range(limit):
+        combs += list(combinations(options, i+1))
+
+    candidates = []
+    for comb in combs:
+        condition = ca.Condition(descriptor=attribute, value=comb, datatype='collection')
+        candidates.append(condition)
+
+    return candidates
+
 
 
 
@@ -302,42 +343,3 @@ def subsequence_refinement(subgroup=None, attribute=None, minimal_support=0.01, 
 
 def text_refinement(): #tbd future
     return None
-
-
-
-
-# =========== DEPRECATED ============= #
-def naive_collection_refinement(subgroup=None, attribute=None, minimal_support=0.0, maximum_support=1.0, maximum_length=None):
-    """
-    Refinement of the collection attributes into the containments.
-    The condition will look like: eventTypes includes [GIVEUP, EVALUATE], order does not matter.
-
-    INPUT
-    - subgroup          : the subgroup (or entire population) that has the wanted information in the descriptor space.
-    - attribute (str)   : the name of a list-type attribute that needs to be refined.
-    - limit (str)       : a limit to the number of categories in the collection.
-
-    OUTPUT
-    - candidates (list) : a list that has all possible conditions for that attribute, as many as there are unique combinations of the instances.
-    """
-
-    data_attribute = subgroup[attribute]
-    options = list(data_attribute.explode().dropna().unique())
-
-    if len(options) <= 1:
-        # No variation in the data so no candidate is returned
-        return []
-
-    if limit == None:
-        limit = len(options) - 1 #Do not take into account the one with all options
-    
-    combs = []
-    for i in range(limit):
-        combs += list(combinations(options, i+1))
-
-    candidates = []
-    for comb in combs:
-        condition = ca.Condition(descriptor=attribute, value=comb, datatype='collection')
-        candidates.append(condition)
-
-    return candidates

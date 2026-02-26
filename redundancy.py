@@ -7,7 +7,7 @@ import priority_queue as pq
 import subgroups as sub
 
 
-# ====== BEFORE COPMUTING THE QUALITY ======= #
+# ====== BEFORE COMPUTING THE QUALITY ======= #
 def similar_description(sg_description=None, candidates_satisfied=None):
 
     for candidate in candidates_satisfied:
@@ -90,25 +90,7 @@ def compare_two_descs(old_description=None, new_description=None):
 
         items_exist_in_old_desc = [item in old_items for item in new_items]
         if np.all(items_exist_in_old_desc):
-            best_descr = 'new'    
-
-        # items_exist_in_old_desc = []
-        # new_conditions = new_description._condition
-        # old_conditions = old_description._condition
-
-        # for new_cond in new_conditions:
-
-        #     condition_in_old = []
-        #     for old_cond in old_conditions:
-        #         if new_cond._descriptor == old_cond._descriptor and new_cond._value == old_cond._value:
-        #             condition_in_old.append(True)
-        #         else:
-        #             condition_in_old.append(False)
-            
-        #     items_exist_in_old_desc.append(np.any(condition_in_old))
-
-        # if np.all(items_exist_in_old_desc):
-        #     best_descr = 'new'
+            best_descr = 'new'
 
     # old_desc is smaller than new_desc
     # same procedure
@@ -121,24 +103,6 @@ def compare_two_descs(old_description=None, new_description=None):
         items_exist_in_new_desc = [item in new_items for item in old_items]
         if np.all(items_exist_in_new_desc):
             best_descr = 'old'    
-
-        # items_exist_in_new_desc = []
-        # new_conditions = new_description._condition
-        # old_conditions = old_description._condition
-
-        # for old_cond in old_conditions:
-
-        #     condition_in_new = []
-        #     for new_cond in new_conditions:
-        #         if old_cond._descriptor == new_cond._descriptor and old_cond._value == new_cond._value:
-        #             condition_in_new.append(True)
-        #         else:
-        #             condition_in_new.append(False)
-            
-        #     items_exist_in_new_desc.append(np.any(condition_in_new))
-
-        # if np.all(items_exist_in_new_desc):
-        #     best_descr = 'old'
 
     # check difference
     # if two or more keys are different, both can be kept

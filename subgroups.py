@@ -21,10 +21,17 @@ class Subgroup():
         self._model_params = model_params
         self._rank = None #added later if it is included in the top-k.
         self._description = description
+        
         self._indices = indices
-        self._size = metrics['exercise_count'] #size of the subgroup
+        self._FIs = {} #the frequent itemsets still at play for the records in this subgroup
+
         self._metrics = metrics
-        self._quality = metrics['subgroup_quality']
+        if len(metrics.keys()) == 0:
+            self._size = None
+            self._quality = None
+        else:
+            self._size = metrics['exercise_count'] #size of the subgroup
+            self._quality = metrics['subgroup_quality']
 
     def __str__(self):
         conds = self._description._conditions
@@ -32,7 +39,10 @@ class Subgroup():
         summ_conds = " & ".join([cond.__str__() for cond in conds])
 
         return f"Records with {summ_conds} have a quality score of {self._quality}."
-    
+
+    def add_FIs(self, FPs):
+        for key, val in FPs.items():
+            self._FIs[key] = val
     
     # Print the containments of the subgroup
     def print_model(self):

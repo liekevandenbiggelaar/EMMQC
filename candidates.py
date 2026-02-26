@@ -43,21 +43,22 @@ class Condition:
         elif self._datatype == 'collection':
             summary = f"{self._descriptor.upper()} contains at least {self._value}"                  
 
-        elif self._datatype == 'sequence':
-            summary = f"{self._descriptor.upper()} has {self._value} consecutively without interruptions"
+        # elif self._datatype == 'sequence':
+        #     summary = f"{self._descriptor.upper()} has {self._value} consecutively without interruptions"
         
-        elif self._datatype == 'subsequence':
-            summary = f"{self._descriptor.upper()} has {self._value} consecutively with interruptions"
+        # elif self._datatype == 'subsequence':
+        #     summary = f"{self._descriptor.upper()} has {self._value} consecutively with interruptions"
 
         return summary
 
 
 class Description:
 
-    def __init__(self, conditions):
+    def __init__(self, conditions, parent=None):
 
         self._conditions = conditions # list of conditions, initialize as empty
         self._descriptors = [cond._descriptor for cond in self._conditions] # list of descriptors in the conditions
+        self._parent = parent
 
     def __str__(self):
         conds = self._conditions
@@ -79,6 +80,7 @@ class Description:
                     return cond._value
                 else:
                     continue
+    
     
 
 
@@ -122,13 +124,14 @@ def manual_attribute_types():
               'boolean': ['interactionType'], 
               'numerical': ['marksPenalty'], 
               'ordinal': ['marksTotal', 'marksTotal_interaction', 'usedAttempts', 'hintsRequested', 'mathErrors'],
-              'collection': ['skills', 'positive_skills', 'negative_skills'],
-              'sequence': ['event_types', 'event_evaluations'],
-              'subsequence': ['stepTypes']}
+              'collection': ['skills', 'positive_skills', 'negative_skills', 'event_types', 'event_evaluations', 'stepTypes']}
+    
+            #   'sequence': ['event_types', 'event_evaluations'],
+            #   'subsequence': ['stepTypes']}
 
     return dtypes
 
-def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement_params=None):
+def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement_params=None, parent=None, store=False):
     """
     This performs the refinement on all attributes in the type dictionary. It returns a dictionary with the possible conditions stored per attribute.
     
@@ -149,7 +152,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
     # go over all numerical attributes
     for att in dtypes['numerical']:
 
-        conditions = rf.numerical_refinement(subgroup=descriptive_space, attribute=att, bins=refinement_params['numerical_bins'])
+        conditions = rf.numerical_refinement(subgroup=descriptive_space, attribute=att, bins=refinement_params['numerical_bins'], parent=parent)
         candidates += conditions
  
 
@@ -158,7 +161,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
 
         # make sure that there are still two options in this attribute. Otherwise, we skip this.
         if len(descriptive_space[att].unique()) > 1:
-            conditions = rf.boolean_refinement(subgroup=descriptive_space, attribute=att)
+            conditions = rf.boolean_refinement(subgroup=descriptive_space, attribute=att, parent=parent)
             candidates += conditions
         
         # otherwise there are no unique new combination and we skip
@@ -168,53 +171,53 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
     # go over all ordinal attributes
     for att in dtypes['ordinal']:
 
-        conditions = rf.ordinal_refinement(subgroup=descriptive_space, attribute=att)
+        conditions = rf.ordinal_refinement(subgroup=descriptive_space, attribute=att, parent=parent)
         candidates += conditions
  
 
     # go over all categorical attributes
     for att in dtypes['nominal']:
 
-        conditions = rf.nominal_refinement(subgroup=descriptive_space, attribute=att)
+        conditions = rf.nominal_refinement(subgroup=descriptive_space, attribute=att, parent=parent)
         candidates += conditions
 
 
     # go over all collection attributes
     for att in dtypes['collection']:
 
-        conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
+        conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, parent=parent, store=store,
                                               minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'], 
-                                              maximum_itemsets=refinement_params['maximum_itemsets'], stopping_criteria=refinement_params['stopping_criteria_collection'])
+                                              maximum_itemsets=refinement_params['maximum_itemsets'], closed_itemsets=refinement_params['closed_itemsets'])
         candidates += conditions
 
 
-    # go over all sequence attributes
-    for att in dtypes['sequence']:
+    # # go over all sequence attributes
+    # for att in dtypes['sequence']:
         
-        conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
-                                              minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
+    #     conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
+    #                                           minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
         
-        #rf.sequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_sequence'],
-        #                                      minimal_support=refinement_params['minimal_support_sequence'], maximum_support=refinement_params['maximum_support_sequence'])
+    #     #rf.sequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_sequence'],
+    #     #                                      minimal_support=refinement_params['minimal_support_sequence'], maximum_support=refinement_params['maximum_support_sequence'])
         
-        candidates += conditions
+    #     candidates += conditions
 
 
-    # go over all subsequence attributes
-    for att in dtypes['subsequence']:
+    # # go over all subsequence attributes
+    # for att in dtypes['subsequence']:
         
-        conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
-                                              minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
+    #     conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
+    #                                           minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
         
-        # rf.subsequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_subsequence'],
-        #                                       minimal_support=refinement_params['minimal_support_subsequence'], maximum_support=refinement_params['maximum_support_subsequence'])
-        candidates += conditions
+    #     # rf.subsequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_subsequence'],
+    #     #                                       minimal_support=refinement_params['minimal_support_subsequence'], maximum_support=refinement_params['maximum_support_subsequence'])
+    #     candidates += conditions
 
 
     return candidates
 
 
-def add_condition(old_description: Description, new_condition: Condition):
+def add_condition(old_description: Description, new_condition: Condition, parent=None):
     """
     Take from the dictionary, we will not further refine numericals because this risks the numerical ranges to get too large, especially with fewer instances as here.
     If the condition does not change anything, do not add it. But this is in the subgroup selection and redundancy reduction phase.
@@ -254,7 +257,7 @@ def add_condition(old_description: Description, new_condition: Condition):
     if not( new_condition._descriptor in [c._descriptor for c in new_description_conditions] ):
         new_description_conditions.append(new_condition)
         
-    new_description = Description(conditions=new_description_conditions)
+    new_description = Description(conditions=new_description_conditions, parent=parent)
     # if len(old_description._descriptors) >= 2:
 
     #     print(f"old descr: {old_description}")
