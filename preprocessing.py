@@ -5,14 +5,135 @@ import ast
 import pandas as pd
 import numpy as np
 
-def transform_jsons(data_path='Data/private_data/sessionInfo'):
+# def transform_jsons(data_path='Data/private_data/sessionInfo'):
+#     library_dict = open_library(data_path)
+#     df_library = exercise_dataframe(library_dict)
+
+#     #df_library = additional_columns(df_library)
+
+#     df_library.to_csv("algebrakit_firstbatch_2.csv", index=False)
+
+def open_file(eID: str, iID: str, sID: str, data_path = 'Data/public_algebrakit/sessionInfo'):
+    """ 
+    Opens the JSON file of one session of an exercise.
+
+    INPUT PARAMETERS
+    * eID: Unique Exercise ID in string format.
+    * sID: Unique Session ID in string format.
+    * data_path: Directory path where the data is stored.
+
+    OUTPUT PARAMETERS
+    * data: the opened JSON file in str-dict format.
+    """
+
+    with open(f'{data_path}/{eID}/{iID}/{sID}.json', 'r') as file:
+        data = json.load(file)
+
+    return data
+
+def open_exercise_sessions(eID: str, data_path = 'Data/public_algebrakit/sessionInfo'):
+    """
+    Opens the JSON files of all sessions for one exercise. 
+    
+    INPUT PARAMETERS
+    * eID: Unique Exercise ID in string format. 
+    * data_path: Directory path where the data is stored.
+    
+    OUTPUT PARAMETERS
+    * exercise_dict: Dictionary with the data of a session stored per session key.
+    """
+    exercise_dict = {}
+
+    # eIDs = []
+    # iIDs = []
+    # sIDs = []
+
+    interactions = os.listdir(f'{data_path}/{eID}')
+
+    for iID in interactions:
+
+        sessions = os.listdir(f'{data_path}/{eID}/{iID}')
+        sessions = [sID.replace(".json", "") for sID in sessions]
+
+        for sID in sessions:
+            data_sID = open_file(eID, iID, sID, data_path)
+            exercise_dict[sID] = data_sID
+            # iIDs.append(iID)
+            # sIDs.append(sID)
+            # eIDs.append(eID)
+
+
+    return exercise_dict #, eIDs, iIDs, sIDs   
+
+def open_library(data_path = 'Data/public_algebrakit/sessionInfo'):
+    """
+    Opens the JSON files of all sessions of all exercises (library) and stores them into one long dictionary.
+    
+    INPUT PARAMETERS
+    * data_path: Directory path where the data is stored.
+    
+    OUTPUT PARAMETERS
+    * library_dict: Dictionary with the data of all sessions stored per session per exercise.
+    """
+
+    # df = pd.DataFrame()
+
+    # eIDs = []
+    # iIDs = []
+    # sIDs = []
+
+    library_dict = {}
+
+    exercises = os.listdir(f'{data_path}')
+
+    for eID in exercises:
+        #exercise_dict, eIDs_temp, iIDs_temp, sIDs_temp = open_exercise_sessions_AKpractice(eID, data_path)
+        exercise_dict = open_exercise_sessions(eID, data_path)
+        library_dict[eID] = exercise_dict
+    #     eIDs.extend(eIDs_temp)
+    #     iIDs.extend(iIDs_temp)
+    #     sIDs.extend(sIDs_temp)
+    
+    # print(len(eIDs), len(iIDs), len(sIDs))
+    # print("start on dataframe")
+    # df['exericseID'] = eIDs
+    # df['interactionID'] = iIDs
+    # df['sessionID'] = sIDs
+
+    return library_dict #, df 
+
+def transform_jsons(data_path='Data/public_algebrakit/sessionInfo'):
     library_dict = open_library(data_path)
+    print(f"start with dataframe")
     df_library = exercise_dataframe(library_dict)
+
+    print(f"get arrangements")
+    students = []
+    df_arrangements = pd.read_excel('Data/public_algebrakit/Copy of AK Practice - Arrangements.xlsx', 'Results')[['StudentName', 'SessionId']]
+
+    print(f"Start with student name matching")
+    unknown_counter = 0
+    for i in range(len(df_library)):
+
+        if i % 1000 == 0:
+            print(f"we are at {i} / {len(df_library)}")
+
+        sessionID = df_library.iloc[i]['sessionID']
+        if sessionID in list(df_arrangements['SessionId']):
+            name = list(df_arrangements[df_arrangements['SessionId'] == sessionID ]['StudentName'])[0]
+        else:
+            name = 'unknown' + str(unknown_counter)
+            unknown_counter += 1
+        
+        students.append(name)
+        
+    df_library['studentName'] = students
 
     #df_library = additional_columns(df_library)
 
-    df_library.to_csv("algebrakit_firstbatch_2.csv", index=False)
-    
+    df_library.to_csv("algebrakit_practice.csv", index=False)
+
+
 
 def clean_data_algebrakit(unfilterd_data=None, filter_type=None):
 
@@ -68,67 +189,67 @@ def clean_data_algebrakit(unfilterd_data=None, filter_type=None):
     return filtered_data
     
 # ================== OPEN ALL FILES AS ONE DICTIONARY =================== #
-def open_file(eID: str, sID: str, data_path = 'Data/private_data/sessionInfo'):
-    """ 
-    Opens the JSON file of one session of an exercise.
+# def open_file(eID: str, sID: str, data_path = 'Data/private_data/sessionInfo'):
+#     """ 
+#     Opens the JSON file of one session of an exercise.
 
-    INPUT PARAMETERS
-    * eID: Unique Exercise ID in string format.
-    * sID: Unique Session ID in string format.
-    * data_path: Directory path where the data is stored.
+#     INPUT PARAMETERS
+#     * eID: Unique Exercise ID in string format.
+#     * sID: Unique Session ID in string format.
+#     * data_path: Directory path where the data is stored.
 
-    OUTPUT PARAMETERS
-    * data: the opened JSON file in str-dict format.
-    """
+#     OUTPUT PARAMETERS
+#     * data: the opened JSON file in str-dict format.
+#     """
 
-    with open(f'{data_path}/{eID}/{sID}.json', 'r') as file:
-        data = json.load(file)
+#     with open(f'{data_path}/{eID}/{sID}.json', 'r') as file:
+#         data = json.load(file)
 
-    return data
+#     return data
 
 
-def open_exercise_sessions(eID: str, data_path = 'Data/private_data/sessionInfo'):
-    """
-    Opens the JSON files of all sessions for one exercise. 
+# def open_exercise_sessions(eID: str, data_path = 'Data/private_data/sessionInfo'):
+#     """
+#     Opens the JSON files of all sessions for one exercise. 
     
-    INPUT PARAMETERS
-    * eID: Unique Exercise ID in string format. 
-    * data_path: Directory path where the data is stored.
+#     INPUT PARAMETERS
+#     * eID: Unique Exercise ID in string format. 
+#     * data_path: Directory path where the data is stored.
     
-    OUTPUT PARAMETERS
-    * exercise_dict: Dictionary with the data of a session stored per session key.
-    """
-    exercise_dict = {}
+#     OUTPUT PARAMETERS
+#     * exercise_dict: Dictionary with the data of a session stored per session key.
+#     """
+#     exercise_dict = {}
 
-    sessions = os.listdir(f'{data_path}/{eID}')
-    sessions = [sID.replace(".json", "") for sID in sessions] # removing .json
+#     sessions = os.listdir(f'{data_path}/{eID}')
+#     sessions = [sID.replace(".json", "") for sID in sessions] # removing .json
 
-    for sID in sessions:
-        data_sID = open_file(eID, sID, data_path)
-        exercise_dict[sID] = data_sID
+#     for sID in sessions:
+#         data_sID = open_file(eID, sID, data_path)
+#         exercise_dict[sID] = data_sID
 
-    return exercise_dict
+#     return exercise_dict
 
 
-def open_library(data_path = 'Data/private_data/sessionInfo'):
-    """
-    Opens the JSON files of all sessions of all exercises (library) and stores them into one long dictionary.
+# def open_library(data_path = 'Data/private_data/sessionInfo'):
+#     """
+#     Opens the JSON files of all sessions of all exercises (library) and stores them into one long dictionary.
     
-    INPUT PARAMETERS
-    * data_path: Directory path where the data is stored.
+#     INPUT PARAMETERS
+#     * data_path: Directory path where the data is stored.
     
-    OUTPUT PARAMETERS
-    * library_dict: Dictionary with the data of all sessions stored per session per exercise.
-    """
-    library_dict = {}
+#     OUTPUT PARAMETERS
+#     * library_dict: Dictionary with the data of all sessions stored per session per exercise.
+#     """
+#     library_dict = {}
 
-    exercises = os.listdir(f'{data_path}')
+#     exercises = os.listdir(f'{data_path}')
 
-    for eID in exercises:
-        exercise_dict = open_exercise_sessions(eID, data_path)
-        library_dict[eID] = exercise_dict
+#     for eID in exercises:
+#         exercise_dict = open_exercise_sessions(eID, data_path)
+#         library_dict[eID] = exercise_dict
 
-    return library_dict
+#     return library_dict
 
 
 # ================== DATA AGGREGATIONS AND PREPROCESSING =================== #
@@ -171,7 +292,10 @@ def exercise_dataframe(library_dict):
     unique_exercises = list(library_dict.keys())
 
     all_exercises = []
+    eNR = 0
     for ex in unique_exercises:
+        eNR += 1
+        print(f"started on exercise {eNR} of {len(unique_exercises)}")
         session = pd.DataFrame.from_dict(library_dict[ex]).T.reset_index().rename(columns={'index': 'sessionID'})
         session['exerciseID'] = len(session) * [ex]
         session = session[['exerciseID'] + [c for c in session.columns if c != 'exerciseID']]
@@ -260,9 +384,13 @@ def interaction_dataframe(data):
     
     items = pd.concat(all_items)
     items = pd.merge(data, items, on=['sessionID', 'questionID'], how='outer')
-    items['content'] = [s.replace('$', '') for s in items['content']]
-    items['solution'] = [s.replace('$', '') for s in items['solution']]
-    items.drop(['items', 'derivation'], axis=1, inplace=True) #derivation is too complex
+    # items['content'] = [s.replace('$', '') for s in items['content']]
+    # if 'solution' not in items.keys():
+    #     print(items)
+    # items['solution'] = [s.replace('$', '') for s in items['solution']]
+    items.drop(['items'], axis=1, inplace=True) #derivation is too complex
+    if 'derivation' in items.columns:
+        items.drop(['derivation'], axis=1, inplace=True) #derivation is too complex
     
 
     # Cleaning the strings
@@ -300,10 +428,10 @@ def aggregate_results(df):
         pos, neg = [], []
 
         for t in tags:
-            if t['weight'] > 0:
-                pos.append(t['id'])
-            elif t['weight'] < 0:
+            if 'weight' in t.keys():
                 neg.append(t['id'])
+            else:
+                pos.append(t['id'])
             
         pos_tags_all.append(pos)
         neg_tags_all.append(neg)

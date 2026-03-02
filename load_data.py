@@ -24,6 +24,24 @@ def open_file(eID: str, sID: str, data_path = 'Data/private_data/sessionInfo'):
 
     return data
 
+def open_file_AKpractice(eID: str, iID: str, sID: str, data_path = 'Data/public_algebrakit/sessionInfo'):
+    """ 
+    Opens the JSON file of one session of an exercise.
+
+    INPUT PARAMETERS
+    * eID: Unique Exercise ID in string format.
+    * sID: Unique Session ID in string format.
+    * data_path: Directory path where the data is stored.
+
+    OUTPUT PARAMETERS
+    * data: the opened JSON file in str-dict format.
+    """
+
+    with open(f'{data_path}/{eID}/{iID}/{sID}.json', 'r') as file:
+        data = json.load(file)
+
+    return data
+
 
 def open_exercise_sessions(eID: str, data_path = 'Data/private_data/sessionInfo'):
     """
@@ -47,6 +65,40 @@ def open_exercise_sessions(eID: str, data_path = 'Data/private_data/sessionInfo'
 
     return exercise_dict
 
+def open_exercise_sessions_AKpractice(eID: str, data_path = 'Data/public_algebrakit/sessionInfo'):
+    """
+    Opens the JSON files of all sessions for one exercise. 
+    
+    INPUT PARAMETERS
+    * eID: Unique Exercise ID in string format. 
+    * data_path: Directory path where the data is stored.
+    
+    OUTPUT PARAMETERS
+    * exercise_dict: Dictionary with the data of a session stored per session key.
+    """
+    exercise_dict = {}
+
+    # eIDs = []
+    # iIDs = []
+    # sIDs = []
+
+    interactions = os.listdir(f'{data_path}/{eID}')
+
+    for iID in interactions:
+
+        sessions = os.listdir(f'{data_path}/{eID}/{iID}')
+        sessions = [sID.replace(".json", "") for sID in sessions]
+
+        for sID in sessions:
+            data_sID = open_file_AKpractice(eID, iID, sID, data_path)
+            exercise_dict[sID] = data_sID
+            # iIDs.append(iID)
+            # sIDs.append(sID)
+            # eIDs.append(eID)
+
+
+    return exercise_dict #, eIDs, iIDs, sIDs
+
 
 def open_library(data_path = 'Data/private_data/sessionInfo'):
     """
@@ -67,6 +119,45 @@ def open_library(data_path = 'Data/private_data/sessionInfo'):
         library_dict[eID] = exercise_dict
 
     return library_dict
+
+
+def open_library_AKpractice(data_path = 'Data/public_algebrakit/sessionInfo'):
+    """
+    Opens the JSON files of all sessions of all exercises (library) and stores them into one long dictionary.
+    
+    INPUT PARAMETERS
+    * data_path: Directory path where the data is stored.
+    
+    OUTPUT PARAMETERS
+    * library_dict: Dictionary with the data of all sessions stored per session per exercise.
+    """
+
+    # df = pd.DataFrame()
+
+    # eIDs = []
+    # iIDs = []
+    # sIDs = []
+
+    library_dict = {}
+
+    exercises = os.listdir(f'{data_path}')
+
+    for eID in exercises:
+        #exercise_dict, eIDs_temp, iIDs_temp, sIDs_temp = open_exercise_sessions_AKpractice(eID, data_path)
+        exercise_dict = open_exercise_sessions_AKpractice(eID, data_path)
+        library_dict[eID] = exercise_dict
+    #     eIDs.extend(eIDs_temp)
+    #     iIDs.extend(iIDs_temp)
+    #     sIDs.extend(sIDs_temp)
+    
+    # print(len(eIDs), len(iIDs), len(sIDs))
+    # print("start on dataframe")
+    # df['exericseID'] = eIDs
+    # df['interactionID'] = iIDs
+    # df['sessionID'] = sIDs
+
+    return library_dict #, df
+
 
 def event_dataframes(event_dict: str, interactionID: str):
     """
@@ -176,7 +267,11 @@ def handle_skills(df_session):
         df_skills['sessionID'] = len(df_skills) * [session['sessionID']]
         skill_frames.append(df_skills)
     
-    df_skills = pd.concat(skill_frames).reset_index().drop(['index', 'descr'], axis=1)
+
+    df_skills = pd.concat(skill_frames).reset_index()
+    if 'descr' in df_skills.columns:
+        df_skills = df_skills.drop(['descr'], axis=1)
+    df_skills = df_skills.drop(['index'], axis=1)
     df_skills = df_skills.groupby(['sessionID']).agg(list).reset_index().rename(columns={'index': 'sessionID'})
     
     return df_skills
@@ -384,3 +479,12 @@ def transform_jsons(data_path='Data/private_data/sessionInfo'):
     #df_library = additional_columns(df_library)
 
     df_library.to_csv("algebrakit_firstbatch_2.csv", index=False)
+
+
+def transform_jsons_AKpractice(data_path='Data/public_algebrakit/sessionInfo'):
+    library_dict = open_library_AKpractice(data_path)
+    df_library = exercise_dataframes(library_dict)
+
+    #df_library = additional_columns(df_library)
+
+    df_library.to_csv("algebrakit_practice.csv", index=False)
