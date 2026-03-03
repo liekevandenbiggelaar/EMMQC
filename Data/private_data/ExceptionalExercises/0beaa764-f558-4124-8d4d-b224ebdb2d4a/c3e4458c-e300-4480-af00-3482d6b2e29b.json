@@ -1,0 +1,850 @@
+{
+  "success": true,
+  "creationTimestamp": 1736325261,
+  "elements": [
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "JnpZV",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1736325371137,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$f=3x+3$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1736325372790,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Bereken de richtingscoëfficiënt."
+                  }
+                ]
+              },
+              {
+                "timestamp": 1736325392369,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$f+3+3x$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1736325392470,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 1,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$y =3 x - 10$$",
+          "derivation": [
+            {
+              "result": "$$a =3$$",
+              "description": "Bereken de richtingscoëfficiënt.",
+              "derivation": [
+                {
+                  "expression": "$$3$$"
+                },
+                {
+                  "result": "$$a =3$$"
+                }
+              ]
+            },
+            {
+              "result": "$$b =\\text{-}10$$",
+              "description": "Bereken het startgetal.",
+              "derivation": [
+                {
+                  "expression": "$$\\text{-}4=2 a + b $$"
+                },
+                {
+                  "result": "$$\\text{-}4=3\\times 2+ b $$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$\\text{-}4=6+ b $$",
+                  "description": "Reken uit:  $3\\times 2$"
+                },
+                {
+                  "result": "$$b =\\text{-}10$$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $6$  eraf."
+                }
+              ]
+            },
+            {
+              "result": "$$y =3 x - 10$$",
+              "description": "Geef de formule voor lijn  $p $ .",
+              "derivation": [
+                {
+                  "expression": "$$y =a  x + b $$"
+                },
+                {
+                  "result": "$$y =3 x - 10$$",
+                  "description": "Vul de bekende waarden in"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "Thm0S",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1736325540806,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Lees de coördinaten van twee roosterpunten af en stel een formule op van lijn  $q $  door die twee punten."
+                  }
+                ]
+              },
+              {
+                "timestamp": 1736325547072,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Bereken de richtingscoëfficiënt."
+                  }
+                ]
+              },
+              {
+                "timestamp": 1736325601092,
+                "event": "HINT",
+                "tags": [],
+                "annotations": []
+              },
+              {
+                "timestamp": 1736325681944,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$4x$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1736325685428,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Vul de bekende waarden in",
+                    "sub": "Gebruik  $toename\\ y =\\text{-}4\\text{ en } toename\\ x =4$",
+                    "expr": "$$a =\\frac{toename\\ y }{toename\\ x }$$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1736325738219,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-1$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.5,
+                "inputStatus": "FINISHED"
+              },
+              {
+                "timestamp": 1736325765845,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Bereken nu het startgetal."
+                  }
+                ]
+              },
+              {
+                "timestamp": 1736326243881,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$x=2\\ en\\ y=4$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.5,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1736326243978,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 5,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$y =\\text{-}x + 6$$",
+          "derivation": [
+            {
+              "result": "$$a =\\text{-}1$$",
+              "description": "Bereken de richtingscoëfficiënt.",
+              "derivation": [
+                {
+                  "expression": "$$a =\\frac{toename\\ y }{toename\\ x }$$"
+                },
+                {
+                  "result": "$$a =\\text{-}\\frac{4}{4}$$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$a =\\text{-}1$$",
+                  "description": "Reken uit:  $\\text{-}\\frac{4}{4}$"
+                }
+              ]
+            },
+            {
+              "result": "$$b =6$$",
+              "description": "Bereken het startgetal.",
+              "derivation": [
+                {
+                  "expression": "$$4=2 a + b $$"
+                },
+                {
+                  "result": "$$4=\\text{-}2+ b $$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$b =6$$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Tel links en rechts  $2$  erbij op."
+                }
+              ]
+            },
+            {
+              "result": "$$y =\\text{-}x + 6$$",
+              "description": "Geef de formule voor lijn  $q $ .",
+              "derivation": [
+                {
+                  "expression": "$$y =a  x + b $$"
+                },
+                {
+                  "result": "$$y =\\text{-}x + 6$$",
+                  "description": "Vul de bekende waarden in"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "kQg05",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1736326310268,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$balansmethode$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen vergelijking.",
+                    "sub": "Je invoer moet een '='-teken bevatten.",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup \\mathrm{balansmethode}\\endgroup\\endgroup$$",
+                    "gapIndex": 0
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0
+              },
+              {
+                "timestamp": 1736326335343,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$de\\ balansmethode$",
+                    "gapIndex": 0
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0
+              },
+              {
+                "timestamp": 1736326335428,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": false,
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.5,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              }
+            }
+          },
+          "content": "De vergelijking waarmee je de  $$x $$ -coördinaat van het snijpunt kunt berekenen, is  <gap></gap> &nbsp;",
+          "solution": "De vergelijking waarmee je de  $$x $$ -coördinaat van het snijpunt kunt berekenen, is  <gap></gap> &nbsp;"
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "aEDsA",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1736326366795,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$3x-10=-x+6$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "EquationsBalanceMethodArrangeTerms",
+                  "EquationsOperationsAdd",
+                  "AlgebraAddingLikeTerms",
+                  "EquationsBalanceMethodArrangeTerms",
+                  "EquationsOperationsAdd",
+                  "EquationsBalanceMethodDivideCoefficient",
+                  "EquationsOperationsMultiply"
+                ]
+              },
+              {
+                "timestamp": 1736326383017,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$4x-10=6$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "EquationsBalanceMethodArrangeTerms",
+                  "EquationsOperationsAdd",
+                  "EquationsBalanceMethodDivideCoefficient",
+                  "EquationsOperationsMultiply"
+                ]
+              },
+              {
+                "timestamp": 1736326414013,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "NumberArithmeticAddConcept",
+                    "weight": -100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$4x=4$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt de balansmethode niet goed toegepast.",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 4 x =4\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1736326430680,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$4x=16$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "EquationsBalanceMethodDivideCoefficient",
+                  "EquationsOperationsMultiply"
+                ]
+              },
+              {
+                "timestamp": 1736326436994,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "EquationsBalanceMethodArrangeTerms",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsOperationsAdd",
+                    "weight": 100
+                  },
+                  {
+                    "id": "AlgebraAddingLikeTerms",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsBalanceMethodArrangeTerms",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsOperationsAdd",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsBalanceMethodDivideCoefficient",
+                    "weight": 100
+                  },
+                  {
+                    "id": "EquationsOperationsMultiply",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$x=4$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "NumberArithmeticAddConcept",
+                "weight": -100
+              },
+              {
+                "id": "EquationsBalanceMethodArrangeTerms",
+                "weight": 100
+              },
+              {
+                "id": "EquationsOperationsAdd",
+                "weight": 100
+              },
+              {
+                "id": "AlgebraAddingLikeTerms",
+                "weight": 100
+              },
+              {
+                "id": "EquationsBalanceMethodArrangeTerms",
+                "weight": 100
+              },
+              {
+                "id": "EquationsOperationsAdd",
+                "weight": 100
+              },
+              {
+                "id": "EquationsBalanceMethodDivideCoefficient",
+                "weight": 100
+              },
+              {
+                "id": "EquationsOperationsMultiply",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0.75,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.25,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$x =4$$",
+          "derivation": [
+            {
+              "expression": "$$3 x - 10=\\text{-}x + 6$$"
+            },
+            {
+              "result": "$$3 x + x - 10=6$$",
+              "skills": [
+                "EquationsBalanceMethodArrangeTerms",
+                "EquationsOperationsAdd"
+              ],
+              "description": "Balansmethode: tel er links en rechts  $x $  bij op"
+            },
+            {
+              "result": "$$4 x - 10=6$$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Neem de gelijksoortige termen samen"
+            },
+            {
+              "result": "$$4 x =16$$",
+              "skills": [
+                "EquationsBalanceMethodArrangeTerms",
+                "EquationsOperationsAdd"
+              ],
+              "description": "Balansmethode: Tel links en rechts  $10$  erbij op."
+            },
+            {
+              "result": "$$x =4$$",
+              "skills": [
+                "EquationsBalanceMethodDivideCoefficient",
+                "EquationsOperationsMultiply"
+              ],
+              "description": "Deel links en rechts door  $4$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q7",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = 3x - 10$$"
+        },
+        {
+          "id": "HuaWk",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1736326530000,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Vul de waarde bij de functie in",
+                    "sub": "Bereken de waarde van  $y =3 x - 10$  voor  $x =4$",
+                    "expr": "$$y =3 x - 10$$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1736326566621,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=3\\cdot4-10$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.8,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1736326578933,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=12-10$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.8,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1736326587465,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=2$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0.9,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.1,
+                "hintsRequested": 1,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$y =2$$",
+          "derivation": [
+            {
+              "expression": "$$y =3 x - 10$$"
+            },
+            {
+              "result": "$$y =2$$",
+              "description": "Vul de waarde bij de functie in"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q8",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = - x + 6$$"
+        },
+        {
+          "id": "lwOZO",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1736326666261,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=-1\\cdot4+6$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.8,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1736326676599,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=-4+6$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.8,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1736326684842,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=2$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$y =2$$",
+          "derivation": [
+            {
+              "expression": "$$y =\\text{-}x + 6$$"
+            },
+            {
+              "result": "$$y =2$$",
+              "description": "Vul de waarde bij de functie in"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "EquationsBalanceMethodArrangeTerms": {
+      "descr": {
+        "nl": "Termen met de variabele naar links en andere termen naar rechts halen."
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsOperationsAdd": {
+      "descr": {
+        "nl": "Termen optellen of aftrekken via de balansmethode"
+      },
+      "stepType": "STRATEGY"
+    },
+    "AlgebraAddingLikeTerms": {
+      "descr": {
+        "nl": "Gelijksoortige termen optellen"
+      },
+      "stepType": "ALGEBRA"
+    },
+    "EquationsBalanceMethodDivideCoefficient": {
+      "descr": {
+        "nl": "Delen door de coëfficiënt voor de variabele om de oplossing te krijgen."
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsOperationsMultiply": {
+      "descr": {
+        "nl": "Vermenigvuldigen of delen van een vergelijking via de balansmethode"
+      },
+      "stepType": "STRATEGY"
+    },
+    "NumberArithmeticAddConcept": {
+      "descr": {
+        "nl": "Optellen en aftrekken begrijpen"
+      },
+      "stepType": "CONCEPT"
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 2.65,
+    "marksTotal": 6
+  }
+}

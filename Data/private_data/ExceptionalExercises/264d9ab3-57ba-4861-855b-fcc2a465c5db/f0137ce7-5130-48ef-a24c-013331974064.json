@@ -1,0 +1,368 @@
+{
+  "success": true,
+  "creationTimestamp": 1726038018,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$c = 10- {0,\\!5} f $$"
+        },
+        {
+          "id": "gqhmr",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1726038271666,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$c=\\ 10-0,5\\ \\times10=95$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "$10- {0,\\!5} \\times 10$  is niet gelijk aan  $95$ .",
+                    "expr": "$$10- {0,\\!5} \\times 10=95$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "FALSE_EXPRESSION"
+              },
+              {
+                "timestamp": 1726038304323,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$c=10-0,5\\cdot10$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.8,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1726038330941,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$5$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $c =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 5\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.8,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1726038331031,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$c =5$$",
+          "derivation": [
+            {
+              "expression": "$$c =10- {0,\\!5}  f $$"
+            },
+            {
+              "result": "$$c =5$$",
+              "description": "Vul de waarde bij de functie in"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "FQZxN",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1726038580738,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$6$",
+                    "gapIndex": 0
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": true,
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "Mert heeft het cijfer  <gap></gap> &nbsp;gekregen",
+          "solution": "Mert heeft het cijfer  <gap></gap> &nbsp;gekregen"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "meT9Q",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1726038617633,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$0,5$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Let op, er gaat telkens een half punt AF.",
+                    "expr": "$${0,\\!5} $$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$10$",
+                    "gapIndex": 1
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.5
+              },
+              {
+                "timestamp": 1726038623317,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-0,5$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$10$",
+                    "gapIndex": 1
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": true,
+              "marksEarned": 0.75,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.25,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "Het <strong>hellingsgetal</strong> van de formule is  <gap></gap> &nbsp;en het <strong>startgetal</strong> is  <gap></gap> &nbsp;",
+          "solution": "Het <strong>hellingsgetal</strong> van de formule is  <gap></gap> &nbsp;en het <strong>startgetal</strong> is  <gap></gap> &nbsp;"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "M99Gb",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1726038765367,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Bereken het aantal fouten."
+                  }
+                ]
+              },
+              {
+                "timestamp": 1726038783879,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$9\\cdot0,5=4,5$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "TRUE_EXPRESSION"
+              },
+              {
+                "timestamp": 1726038836506,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$5,5\\div0,5$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen vergelijking.",
+                    "sub": "Je invoer moet een '='-teken bevatten.",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup \\frac{{5,\\!5} }{{0,\\!5} }\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1726038856268,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$9\\ fouten$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen vergelijking.",
+                    "sub": "Je invoer moet een '='-teken bevatten.",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 9\\;\\mathrm{fouten}\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1726038856528,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 1,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$f =9$$",
+          "derivation": [
+            {
+              "result": "$$f =9$$",
+              "description": "Bereken het aantal fouten.",
+              "derivation": [
+                {
+                  "expression": "$$c =10- {0,\\!5}  f $$"
+                },
+                {
+                  "result": "$${5,\\!5} =10- {0,\\!5}  f $$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$\\text{-}{4,\\!5} =\\text{-}{0,\\!5}  f $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $10$  eraf."
+                },
+                {
+                  "result": "$$f =9$$",
+                  "skills": [
+                    "EquationsBalanceMethodDivideCoefficient",
+                    "EquationsOperationsMultiply"
+                  ],
+                  "description": "Deel links en rechts door  $\\text{-}{0,\\!5} $"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {},
+  "scoring": {
+    "finished": false,
+    "marksEarned": 1.75,
+    "marksTotal": 4
+  }
+}

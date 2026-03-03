@@ -1,0 +1,892 @@
+{
+  "success": true,
+  "creationTimestamp": 1746096615,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{5x }{2}$$"
+        },
+        {
+          "id": "yORNE",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1746097142352,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "$y = \\frac{5x }{2}= \\frac{5}{2}\\times \\frac{x }{1}= \\text{.}\\text{.}\\text{.}$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1746097150965,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{5x}{10}$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1746097173025,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{1}{1}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1746097252181,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{ww}{23}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1746097679835,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\times weet\\ ik\\ niet$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1746098012717,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{5}{2}\\cdot\\frac{x}{1}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticMultiplicationProper",
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098029511,
+                "event": "HINT",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticMultiplicationProper",
+                    "weight": 100,
+                    "source": "HINT"
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Vermenigvuldig de breuken",
+                    "sub": "Vermenigvuldig de tellers met elkaar en vermenigvuldig ook de noemers met elkaar",
+                    "expr": "$$y =\\begingroup\\color{#336699}\\begingroup \\frac{5}{2}\\endgroup\\endgroup\\times \\begingroup\\color{#336699}\\begingroup \\frac{x }{1}\\endgroup\\endgroup$$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1746098088178,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{5}{2}x$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098116789,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{5}{2}\\cdot\\frac{x}{1}=\\frac{5}{2}x$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098162086,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{5}{2}\\cdot\\frac{x}{1}=\\frac{5x}{2}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098179562,
+                "event": "HINT",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimilarImproperToMixed",
+                    "weight": 100,
+                    "source": "HINT"
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Vereenvoudig de breuk door de helen eruit te halen",
+                    "expr": "$$y =\\begingroup\\color{#336699}\\begingroup \\frac{5}{2}\\endgroup\\endgroup x $$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1746098255020,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$1\\frac{1}{2}x$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 1\\frac{1}{2} x \\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1746098255150,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [
+              {
+                "id": "FractionArithmeticMultiplicationProper",
+                "weight": 100,
+                "source": "HINT"
+              },
+              {
+                "id": "FractionArithmeticSimilarImproperToMixed",
+                "weight": 100,
+                "source": "HINT"
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 3,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$y =2\\frac{1}{2} x $$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{5}{2} x $$"
+            },
+            {
+              "result": "$$y =2\\frac{1}{2} x $$",
+              "skills": [
+                "FractionArithmeticSimilarImproperToMixed"
+              ],
+              "description": "Vereenvoudig de breuk door de helen eruit te halen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{13x }{10}$$"
+        },
+        {
+          "id": "UtP6t",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1746097220629,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{3}{343}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup \\frac{3}{343}\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1746098391273,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{13}{10}\\cdot\\frac{x}{1}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticMultiplicationProper",
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098419797,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{13}{10}x$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098457084,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=1\\frac{3}{10}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "hier zit een fout.",
+                    "expr": "$$y =\\begingroup\\color{darkred}\\begingroup 1\\frac{3}{10}\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1746098481826,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimilarImproperToMixed",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=1\\frac{3}{10}x$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "FractionArithmeticSimilarImproperToMixed",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0.5,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.5,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$y =1\\frac{3}{10} x $$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{13}{10} x $$"
+            },
+            {
+              "result": "$$y =1\\frac{3}{10} x $$",
+              "skills": [
+                "FractionArithmeticSimilarImproperToMixed"
+              ],
+              "description": "Vereenvoudig de breuk door de helen eruit te halen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{18x }{24}$$"
+        },
+        {
+          "id": "rUSdG",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1746097220711,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{1}{1}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup \\frac{1}{1}\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1746098544552,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{18}{24}\\cdot\\frac{x}{1}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticMultiplicationProper",
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1746098566494,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{18}{24}x$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1746098577331,
+                "event": "HINT",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimplifyProper",
+                    "weight": 100,
+                    "source": "HINT"
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Vereenvoudig de breuk",
+                    "sub": "Je kunt teller en noemer door  $6$  delen.",
+                    "expr": "$$y =\\begingroup\\color{#336699}\\begingroup \\frac{18}{24}\\endgroup\\endgroup x $$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1746098602892,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimplifyProper",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{3}{4}x$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "FractionArithmeticSimplifyProper",
+                "weight": 100,
+                "source": "HINT"
+              },
+              {
+                "id": "FractionArithmeticSimplifyProper",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0.65,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.35,
+                "hintsRequested": 1,
+                "mathErrors": 1
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$y =\\frac{3}{4} x $$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{18}{24} x $$"
+            },
+            {
+              "result": "$$y =\\frac{3}{4} x $$",
+              "skills": [
+                "FractionArithmeticSimplifyProper"
+              ],
+              "description": "Vereenvoudig de breuk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{20x }{6}$$"
+        },
+        {
+          "id": "FpSYm",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1746097220830,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{23}{43}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup \\frac{23}{43}\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1746098651478,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{20}{6}\\cdot\\frac{x}{1}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticMultiplicationProper",
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098684476,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{20}{6}x$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098688107,
+                "event": "HINT",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimplifyProper",
+                    "weight": 100,
+                    "source": "HINT"
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Vereenvoudig de breuk",
+                    "sub": "Je kunt teller en noemer door  $2$  delen.",
+                    "expr": "$$y =\\begingroup\\color{#336699}\\begingroup \\frac{20}{6}\\endgroup\\endgroup x $$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1746098727178,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticEquivalentConcept",
+                    "weight": -100,
+                    "errors": [
+                      "EquivalentNumeratorDenominator"
+                    ]
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{10}{6}x$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "De breuken  $\\frac{20}{6}$  en  $\\frac{10}{6}$  zijn niet gelijkwaardig.",
+                    "expr": "$$y =\\begingroup\\color{darkred}\\begingroup \\frac{10}{6}\\endgroup\\endgroup x $$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1746098745370,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=\\frac{10}{3}x$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimilarImproperToMixed"
+                ]
+              },
+              {
+                "timestamp": 1746098747182,
+                "event": "HINT",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimilarImproperToMixed",
+                    "weight": 100,
+                    "source": "HINT"
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Vereenvoudig de breuk door de helen eruit te halen",
+                    "expr": "$$y =\\begingroup\\color{#336699}\\begingroup \\frac{10}{3}\\endgroup\\endgroup x $$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1746098802719,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimilarImproperToMixed",
+                    "weight": -100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=1\\frac{1}{3}x$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "$\\frac{10}{3}$  is niet gelijk aan  $1\\frac{1}{3}$ .",
+                    "expr": "$$y =\\begingroup\\color{darkred}\\begingroup 1\\frac{1}{3}\\endgroup\\endgroup x $$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1746098830209,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=3\\frac{1}{3}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "hier zit een fout.",
+                    "expr": "$$y =\\begingroup\\color{darkred}\\begingroup 3\\frac{1}{3}\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1746098845155,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimplifyProper",
+                    "weight": 100
+                  },
+                  {
+                    "id": "FractionArithmeticSimilarImproperToMixed",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=3\\frac{1}{3}x$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "FractionArithmeticSimplifyProper",
+                "weight": 100,
+                "source": "HINT"
+              },
+              {
+                "id": "FractionArithmeticEquivalentConcept",
+                "weight": -100,
+                "errors": [
+                  "EquivalentNumeratorDenominator"
+                ]
+              },
+              {
+                "id": "FractionArithmeticSimilarImproperToMixed",
+                "weight": 100,
+                "source": "HINT"
+              },
+              {
+                "id": "FractionArithmeticSimilarImproperToMixed",
+                "weight": -100
+              },
+              {
+                "id": "FractionArithmeticSimplifyProper",
+                "weight": 100
+              },
+              {
+                "id": "FractionArithmeticSimilarImproperToMixed",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 1,
+                "hintsRequested": 2,
+                "mathErrors": 4
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 4,
+              "failed": true
+            }
+          },
+          "solution": "$$y =3\\frac{1}{3} x $$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{20}{6} x $$"
+            },
+            {
+              "result": "$$y =\\frac{10}{3} x $$",
+              "skills": [
+                "FractionArithmeticSimplifyProper"
+              ],
+              "description": "Vereenvoudig de breuk"
+            },
+            {
+              "result": "$$y =3\\frac{1}{3} x $$",
+              "skills": [
+                "FractionArithmeticSimilarImproperToMixed"
+              ],
+              "description": "Vereenvoudig de breuk door de helen eruit te halen"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "FractionArithmeticSimilarImproperToMixed": {
+      "descr": {
+        "nl": "Een onechte breuk schrijven als een gemengde breuk"
+      },
+      "stepType": "CALCULATE"
+    },
+    "FractionArithmeticSimplifyProper": {
+      "descr": {
+        "nl": "Een breuk vereenvoudigen"
+      },
+      "stepType": "CALCULATE"
+    },
+    "FractionArithmeticMultiplicationProper": {
+      "descr": {
+        "nl": "Echte breuken vermenigvuldigen"
+      },
+      "stepType": "CALCULATE"
+    },
+    "FractionArithmeticEquivalentConcept": {
+      "descr": {
+        "nl": "Begrijpen dat breuken gelijkwaardig kunnen zijn"
+      },
+      "stepType": "CONCEPT",
+      "errors": [
+        {
+          "id": "EquivalentNumeratorDenominator",
+          "type": [
+            "MISCONCEPTION"
+          ],
+          "descr": {
+            "nl": "De relatie tussen teller en noemer niet begrijpen bij het vergelijken van breuken"
+          }
+        }
+      ]
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 1.15,
+    "marksTotal": 4
+  }
+}

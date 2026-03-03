@@ -1,0 +1,890 @@
+{
+  "success": true,
+  "creationTimestamp": 1742389855,
+  "elements": [
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{5x }{7}- \\frac{4x }{7}$$"
+        },
+        {
+          "id": "Q265s",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1742389866980,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "AlgebraAddingLikeTerms",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{x}{7\\ }$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "AlgebraAddingLikeTerms",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{1}{7} x $$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{5}{7} x - \\frac{4}{7} x $$"
+            },
+            {
+              "result": "$$\\frac{1}{7} x $$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Neem de gelijksoortige termen samen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{2x }{3}+ \\frac{3x }{5}$$"
+        },
+        {
+          "id": "n7JAv",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1742389895618,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{2x\\cdot5}{3\\cdot5}+\\frac{3x\\cdot3}{5\\cdot3}\\ $"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "AlgebraAddingLikeTerms",
+                  "AlgebraAddingLikeTerms"
+                ]
+              },
+              {
+                "timestamp": 1742389919347,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{10x}{15}+\\frac{9x}{\\ 15}\\ $"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "AlgebraAddingLikeTerms"
+                ]
+              },
+              {
+                "timestamp": 1742389928296,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "AlgebraAddingLikeTerms",
+                    "weight": 100
+                  },
+                  {
+                    "id": "AlgebraAddingLikeTerms",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{19x}{15\\ }$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "AlgebraAddingLikeTerms",
+                "weight": 100
+              },
+              {
+                "id": "AlgebraAddingLikeTerms",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{19}{15} x $$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{2}{3} x + \\frac{3}{5} x $$"
+            },
+            {
+              "result": "$$\\frac{10}{15} x + \\frac{9}{15} x $$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Maak de breuken gelijknamig"
+            },
+            {
+              "result": "$$\\frac{19}{15} x $$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Neem de gelijksoortige termen samen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{3}{4}+ \\frac{2x }{8}$$"
+        },
+        {
+          "id": "tpygH",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1742389997609,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{3\\cdot0,5}{4\\cdot0,5}+\\frac{2x\\cdot0,25\\ }{8\\cdot0,25}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1742390026489,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{1,5}{2}+\\frac{0,5x\\ }{2}\\ $"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742390050581,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{1,5+0,5x}{2\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742390062278,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{2x}{\\ 2\\ }$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "hier zit een fout.",
+                    "expr": "$$\\frac{\\begingroup\\color{darkred}\\begingroup 2 x \\endgroup\\endgroup}{2}$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742390090742,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{1,5+0,5x}{2\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742390153667,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{0,75+0,25x}{1\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742390196383,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{3+x}{4}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0.75,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.25,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{3+ x }{4}$$",
+          "derivation": []
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{7}{4x }- \\frac{11}{4x }$$"
+        },
+        {
+          "id": "x7gWI",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1742390257548,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-\\frac{4}{4x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.625,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1742390280847,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-\\frac{1}{1\\ }$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je ben factor  $x $  vergeten uit de noemer.",
+                    "expr": "$$\\text{-}\\frac{1}{1}$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.625,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742390288334,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-\\frac{1}{1x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.875,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742390410531,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-\\frac{0,5}{0,5x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.875,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742390440875,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-\\frac{0,25}{0,25x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.875,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742390462131,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-\\frac{0,05}{0,05x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.875,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742390479875,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-\\frac{0,01}{0,01x\\ }\\ $"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.875,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742390495441,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{6x+7}{14x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.875,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1742390495537,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$\\text{-}\\frac{1}{x }$$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{7}{4 x }- \\frac{11}{4 x }$$"
+            },
+            {
+              "result": "$$\\text{-}\\frac{4}{4 x }$$",
+              "description": "Herleid."
+            },
+            {
+              "result": "$$\\text{-}\\frac{1}{x }$$",
+              "skills": [
+                "FractionArithmeticSimplifyProper"
+              ],
+              "description": "Vereenvoudig de breuk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{3}{7}+ \\frac{1}{2x }$$"
+        },
+        {
+          "id": "nYWhX",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1742390535962,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{3\\cdot2x}{7\\cdot2x}+\\frac{1\\cdot7}{2x\\cdot7}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742390553200,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{3\\cdot2x}{14x}+\\frac{1\\cdot7}{14x}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742390565089,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{6x+7}{14x}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{6 x + 7}{14 x }$$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{3}{7}+ \\frac{1}{2 x }$$"
+            },
+            {
+              "result": "$$\\frac{6 x + 7}{14 x }$$",
+              "description": "Maak de breuken gelijknamig"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{5}{4x }+ \\frac{2}{6x }$$"
+        },
+        {
+          "id": "wB9Gr",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1742390585775,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{5\\cdot6}{4x\\cdot6}+\\frac{2\\cdot4}{6x\\cdot4}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742390602902,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{38}{24x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.7142857142857143,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1742390800593,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{4,75}{3x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.8571428571428571,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742391040092,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{5}{4x}+\\frac{2\\cdot1,5}{6x\\cdot1,5}\\ $"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742391062314,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "NumberArithmeticMultiplicationDecimal",
+                    "weight": -100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{5}{4x}+\\frac{3}{\\ 4x}\\ $"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Rekenfout:  ${1,\\!5} \\times 6$  is niet gelijk aan  $4$ .",
+                    "expr": "$$\\frac{5}{4 x }+ \\frac{3}{\\begingroup\\color{darkred}\\begingroup 4\\endgroup\\endgroup x }$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742391103814,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{5}{4x}+\\frac{3}{\\ 9\\ x}\\ $"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742391145439,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{5\\cdot1,5}{4x\\cdot1,5}+\\frac{2}{\\ 6x}\\ $"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742391163716,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{7,5}{6x}\\ +\\frac{2}{\\ 6x}\\ $"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1742391179537,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{9,5}{6x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.8571428571428571,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1742391345325,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimplifyProper",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{19}{12x\\ }$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "NumberArithmeticMultiplicationDecimal",
+                "weight": -100
+              },
+              {
+                "id": "FractionArithmeticSimplifyProper",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0.75,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.25,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{19}{12 x }$$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{5}{4 x }+ \\frac{2}{6 x }$$"
+            },
+            {
+              "result": "$$\\frac{5}{4 x }+ \\frac{1}{3 x }$$",
+              "skills": [
+                "FractionArithmeticSimplifyProper"
+              ],
+              "description": "Vereenvoudig de breuk"
+            },
+            {
+              "result": "$$\\frac{19}{12 x }$$",
+              "description": "Maak de breuken gelijknamig"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "AlgebraAddingLikeTerms": {
+      "descr": {
+        "nl": "Gelijksoortige termen optellen"
+      },
+      "stepType": "ALGEBRA"
+    },
+    "FractionArithmeticSimplifyProper": {
+      "descr": {
+        "nl": "Een breuk vereenvoudigen"
+      },
+      "stepType": "CALCULATE"
+    },
+    "FractionArithmeticAddProperCommonDenominator": {
+      "descr": {
+        "nl": "Gelijknamige echte breuken optellen"
+      },
+      "stepType": "CALCULATE"
+    },
+    "NumberArithmeticMultiplicationDecimal": {
+      "descr": {
+        "nl": "Decimale getallen vermenigvuldigen"
+      },
+      "stepType": "CALCULATE"
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 4.5,
+    "marksTotal": 6
+  }
+}

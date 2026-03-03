@@ -1,0 +1,312 @@
+{
+  "success": true,
+  "creationTimestamp": 1750110909,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{5x }{2}$$"
+        },
+        {
+          "id": "yORNE",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "CORRECT",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1750110944015,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$y=1\\frac{1x}{2}$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1750110969690,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$s$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$y =2\\frac{1}{2} x $$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{5}{2} x $$"
+            },
+            {
+              "result": "$$y =2\\frac{1}{2} x $$",
+              "skills": [
+                "FractionArithmeticSimilarImproperToMixed"
+              ],
+              "description": "Vereenvoudig de breuk door de helen eruit te halen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{13x }{10}$$"
+        },
+        {
+          "id": "UtP6t",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "ERROR",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1750110969822,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$s$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup s \\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$y =1\\frac{3}{10} x $$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{13}{10} x $$"
+            },
+            {
+              "result": "$$y =1\\frac{3}{10} x $$",
+              "skills": [
+                "FractionArithmeticSimilarImproperToMixed"
+              ],
+              "description": "Vereenvoudig de breuk door de helen eruit te halen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{18x }{24}$$"
+        },
+        {
+          "id": "rUSdG",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "ERROR",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1750110969960,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$s$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup s \\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$y =\\frac{3}{4} x $$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{18}{24} x $$"
+            },
+            {
+              "result": "$$y =\\frac{3}{4} x $$",
+              "skills": [
+                "FractionArithmeticSimplifyProper"
+              ],
+              "description": "Vereenvoudig de breuk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{20x }{6}$$"
+        },
+        {
+          "id": "FpSYm",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "ERROR",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1750110970077,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$s$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup s \\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$y =3\\frac{1}{3} x $$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{20}{6} x $$"
+            },
+            {
+              "result": "$$y =\\frac{10}{3} x $$",
+              "skills": [
+                "FractionArithmeticSimplifyProper"
+              ],
+              "description": "Vereenvoudig de breuk"
+            },
+            {
+              "result": "$$y =3\\frac{1}{3} x $$",
+              "skills": [
+                "FractionArithmeticSimilarImproperToMixed"
+              ],
+              "description": "Vereenvoudig de breuk door de helen eruit te halen"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "FractionArithmeticSimilarImproperToMixed": {
+      "descr": {
+        "nl": "Een onechte breuk schrijven als een gemengde breuk"
+      },
+      "stepType": "CALCULATE"
+    },
+    "FractionArithmeticSimplifyProper": {
+      "descr": {
+        "nl": "Een breuk vereenvoudigen"
+      },
+      "stepType": "CALCULATE"
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 0,
+    "marksTotal": 4
+  }
+}

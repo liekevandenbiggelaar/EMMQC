@@ -1,0 +1,393 @@
+{
+  "success": true,
+  "creationTimestamp": 1740575211,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$n = 4\\cdot c \\cdot c \\cdot c $$"
+        },
+        {
+          "id": "Ex8wE",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1740575294507,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$n=4^{c}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "hier zit een fout.",
+                    "expr": "$$n =\\begingroup\\color{darkred}\\begingroup 4^{c }\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1740575676433,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$n=c^{4}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "hier zit een fout.",
+                    "expr": "$$n =\\begingroup\\color{darkred}\\begingroup c ^{4}\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1740575676537,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$n =4 c ^{3}$$",
+          "derivation": [
+            {
+              "expression": "$$n =4 c \\times c \\times c $$"
+            },
+            {
+              "result": "$$n =4 c ^{3}$$",
+              "description": "Schrijf de herhaalde vermenigvuldiging als een macht"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$u = t \\cdot t \\cdot t \\cdot \\frac{2}{5}\\cdot \\frac{2}{5}$$"
+        },
+        {
+          "id": "gBslt",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1740575774364,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$u=t^{3}\\cdot\\left(\\frac{2}{5}\\right)^{2}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1740575786233,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Pas het kwadraat toe op teller en noemer",
+                    "expr": "$$u =t ^{3}\\times \\begingroup\\color{#336699}\\begingroup \\left(\\frac{2}{5}\\right)^{2}\\endgroup\\endgroup$$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1740575800100,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "NumberArithmeticPower",
+                    "weight": -100,
+                    "errors": [
+                      "MultiplyVsPower"
+                    ]
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$u=t^{3}\\cdot\\frac{4}{5}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt vermenigvuldigd met  $2$ , maar je moet kwadrateren",
+                    "sub": "$\\left(\\frac{2}{5}\\right)^{2}=\\frac{2}{5}\\times \\frac{2}{5}$",
+                    "expr": "$$u =t ^{3}\\times \\begingroup\\color{darkred}\\begingroup \\frac{4}{5}\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1740575881394,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$u=t^{3}\\cdot\\frac{4}{25}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "NumberArithmeticPower",
+                "weight": -100,
+                "errors": [
+                  "MultiplyVsPower"
+                ]
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0.65,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.35,
+                "hintsRequested": 1,
+                "mathErrors": 1
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$u =\\frac{4}{25} t ^{3}$$",
+          "derivation": [
+            {
+              "expression": "$$u =\\frac{2}{5}\\times \\frac{2}{5} t \\times t \\times t $$"
+            },
+            {
+              "result": "$$u =\\left(\\frac{2}{5}\\right)^{2} t ^{3}$$",
+              "description": "Schrijf de herhaalde vermenigvuldiging als een macht"
+            },
+            {
+              "result": "$$u =\\frac{2^{2}}{5^{2}} t ^{3}$$",
+              "description": "Pas het kwadraat toe op teller en noemer"
+            },
+            {
+              "result": "$$u =\\frac{4}{25} t ^{3}$$",
+              "description": "Bereken de macht door herhaald te vermenigvuldigen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$p = v \\cdot 16\\cdot v \\cdot v \\cdot 3$$"
+        },
+        {
+          "id": "OPqyZ",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1740575950426,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$p=v^{3}\\cdot48$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$p =48 v ^{3}$$",
+          "derivation": [
+            {
+              "expression": "$$p =16\\times 3 v \\times v \\times v $$"
+            },
+            {
+              "result": "$$p =48 v \\times v \\times v $$",
+              "description": "Reken uit:  $16\\times 3$"
+            },
+            {
+              "result": "$$p =48 v ^{3}$$",
+              "description": "Schrijf de herhaalde vermenigvuldiging als een macht"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$z = 5\\cdot w \\cdot w \\cdot \\frac{1}{7}\\cdot w $$"
+        },
+        {
+          "id": "IakQk",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1740575978218,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticMultiplicationProper",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$z=w^{3}\\cdot\\frac{5}{7}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "FractionArithmeticMultiplicationProper",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$z =\\frac{5}{7} w ^{3}$$",
+          "derivation": [
+            {
+              "expression": "$$z =5\\times \\frac{1}{7} w \\times w \\times w $$"
+            },
+            {
+              "result": "$$z =\\frac{5}{7} w \\times w \\times w $$",
+              "skills": [
+                "FractionArithmeticMultiplicationProper"
+              ],
+              "description": "Vermenigvuldig  $\\frac{1}{7}\\times 5$"
+            },
+            {
+              "result": "$$z =\\frac{5}{7} w ^{3}$$",
+              "description": "Schrijf de herhaalde vermenigvuldiging als een macht"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "FractionArithmeticMultiplicationProper": {
+      "descr": {
+        "nl": "Echte breuken vermenigvuldigen"
+      },
+      "stepType": "CALCULATE"
+    },
+    "NumberArithmeticPower": {
+      "descr": {
+        "nl": "Het concept machtsverheffen begrijpen"
+      },
+      "stepType": "CONCEPT",
+      "errors": [
+        {
+          "id": "MultiplyVsPower",
+          "type": [
+            "MISCONCEPTION"
+          ],
+          "descr": {
+            "nl": "Het grondtal en de exponent vermenigvuldigen in plaats van machtsverheffen."
+          }
+        }
+      ]
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 2.65,
+    "marksTotal": 4
+  }
+}

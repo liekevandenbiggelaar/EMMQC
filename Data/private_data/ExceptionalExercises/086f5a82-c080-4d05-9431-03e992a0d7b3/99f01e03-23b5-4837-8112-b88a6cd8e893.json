@@ -1,0 +1,628 @@
+{
+  "success": true,
+  "creationTimestamp": 1744634311,
+  "elements": [
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{5x }{7}- \\frac{4x }{7}$$"
+        },
+        {
+          "id": "Q265s",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1744634353144,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "AlgebraAddingLikeTerms",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{x}{7}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "AlgebraAddingLikeTerms",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{1}{7} x $$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{5}{7} x - \\frac{4}{7} x $$"
+            },
+            {
+              "result": "$$\\frac{1}{7} x $$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Neem de gelijksoortige termen samen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{2x }{3}+ \\frac{3x }{5}$$"
+        },
+        {
+          "id": "n7JAv",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1744634389536,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{10x}{15}+\\frac{9x}{15}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "AlgebraAddingLikeTerms"
+                ]
+              },
+              {
+                "timestamp": 1744634398383,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "AlgebraAddingLikeTerms",
+                    "weight": 100
+                  },
+                  {
+                    "id": "AlgebraAddingLikeTerms",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{19x}{15}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "AlgebraAddingLikeTerms",
+                "weight": 100
+              },
+              {
+                "id": "AlgebraAddingLikeTerms",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{19}{15} x $$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{2}{3} x + \\frac{3}{5} x $$"
+            },
+            {
+              "result": "$$\\frac{10}{15} x + \\frac{9}{15} x $$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Maak de breuken gelijknamig"
+            },
+            {
+              "result": "$$\\frac{19}{15} x $$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Neem de gelijksoortige termen samen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{3}{4}+ \\frac{2x }{8}$$"
+        },
+        {
+          "id": "tpygH",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1744634429557,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{6}{8}+\\frac{2x}{8}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1744634441486,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{6+2x}{8}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1744634467291,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{8x}{8}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "hier zit een fout.",
+                    "expr": "$$\\frac{\\begingroup\\color{darkred}\\begingroup 8 x \\endgroup\\endgroup}{8}$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1744634525276,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{3+x}{4}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0.75,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.25,
+                "hintsRequested": 0,
+                "mathErrors": 1
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 1,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{3+ x }{4}$$",
+          "derivation": []
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{7}{4x }- \\frac{11}{4x }$$"
+        },
+        {
+          "id": "x7gWI",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1744634537528,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{-4}{4x}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.625,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1744634556433,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{1}{x}$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt uit teller en noemer ongelijke factoren weggedeeld.",
+                    "sub": "De factored  $\\text{-}4$  in de teller en  $4$  in de noemer vallen niet tegen elkaar weg.",
+                    "expr": "$$\\frac{1}{x }$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.625,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1744634564207,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{1}{-x}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.875,
+                "inputStatus": "CORRECT"
+              },
+              {
+                "timestamp": 1744634704161,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-1$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je ben factor  $x $  vergeten uit de noemer.",
+                    "expr": "$$\\text{-}1$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0.875,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1744634704297,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$\\text{-}\\frac{1}{x }$$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{7}{4 x }- \\frac{11}{4 x }$$"
+            },
+            {
+              "result": "$$\\text{-}\\frac{4}{4 x }$$",
+              "description": "Herleid."
+            },
+            {
+              "result": "$$\\text{-}\\frac{1}{x }$$",
+              "skills": [
+                "FractionArithmeticSimplifyProper"
+              ],
+              "description": "Vereenvoudig de breuk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{3}{7}+ \\frac{1}{2x }$$"
+        },
+        {
+          "id": "nYWhX",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1744634769747,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{6x}{14x}+\\frac{7}{14x}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1744634787481,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{6x+7}{14x}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{6 x + 7}{14 x }$$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{3}{7}+ \\frac{1}{2 x }$$"
+            },
+            {
+              "result": "$$\\frac{6 x + 7}{14 x }$$",
+              "description": "Maak de breuken gelijknamig"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$\\frac{5}{4x }+ \\frac{2}{6x }$$"
+        },
+        {
+          "id": "wB9Gr",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1744634828137,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{30}{24x}+\\frac{8}{24x}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticSimplifyProper",
+                  "FractionArithmeticAddProperCommonDenominator"
+                ]
+              },
+              {
+                "timestamp": 1744634843586,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{38}{24x}$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0.7142857142857143,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "FractionArithmeticSimplifyProper"
+                ]
+              },
+              {
+                "timestamp": 1744634874261,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "FractionArithmeticSimplifyProper",
+                    "weight": 100
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\frac{19}{12x}$"
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1,
+                "inputStatus": "FINISHED"
+              }
+            ],
+            "tags": [
+              {
+                "id": "FractionArithmeticSimplifyProper",
+                "weight": 100
+              }
+            ],
+            "scoring": {
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              },
+              "finished": true,
+              "maxAttempts": 2,
+              "usedAttempts": 0,
+              "failed": false
+            }
+          },
+          "solution": "$$\\frac{19}{12 x }$$",
+          "derivation": [
+            {
+              "expression": "$$\\frac{5}{4 x }+ \\frac{2}{6 x }$$"
+            },
+            {
+              "result": "$$\\frac{5}{4 x }+ \\frac{1}{3 x }$$",
+              "skills": [
+                "FractionArithmeticSimplifyProper"
+              ],
+              "description": "Vereenvoudig de breuk"
+            },
+            {
+              "result": "$$\\frac{19}{12 x }$$",
+              "description": "Maak de breuken gelijknamig"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "AlgebraAddingLikeTerms": {
+      "descr": {
+        "nl": "Gelijksoortige termen optellen"
+      },
+      "stepType": "ALGEBRA"
+    },
+    "FractionArithmeticSimplifyProper": {
+      "descr": {
+        "nl": "Een breuk vereenvoudigen"
+      },
+      "stepType": "CALCULATE"
+    },
+    "FractionArithmeticAddProperCommonDenominator": {
+      "descr": {
+        "nl": "Gelijknamige echte breuken optellen"
+      },
+      "stepType": "CALCULATE"
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 4.75,
+    "marksTotal": 6
+  }
+}

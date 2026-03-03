@@ -1,0 +1,442 @@
+{
+  "success": true,
+  "creationTimestamp": 1727810769,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$c = 10- {0,\\!5} f $$"
+        },
+        {
+          "id": "gqhmr",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1727810831183,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$5$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1727810835569,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$DDD$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1727810837624,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$E11$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1727810839031,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$1$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1727810841020,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$111$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1727810844585,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$020=211$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "$20$  is niet gelijk aan  $211$ .",
+                    "expr": "$$20=211$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "FALSE_EXPRESSION"
+              },
+              {
+                "timestamp": 1727810849475,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$1=0392-11$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "$1$  is niet gelijk aan  $392- 11$ .",
+                    "expr": "$$1=392- 11$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "FALSE_EXPRESSION"
+              },
+              {
+                "timestamp": 1727810849580,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$c =5$$",
+          "derivation": [
+            {
+              "expression": "$$c =10- {0,\\!5}  f $$"
+            },
+            {
+              "result": "$$c =5$$",
+              "description": "Vul de waarde bij de functie in"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "FQZxN",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1727810939457,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$6$",
+                    "gapIndex": 0
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": true,
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "Mert heeft het cijfer  <gap></gap> &nbsp;gekregen",
+          "solution": "Mert heeft het cijfer  <gap></gap> &nbsp;gekregen"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "meT9Q",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1727810967540,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$10$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt het hellingsgetal en het startgetal omgedraaid.",
+                    "expr": "$$10$$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$0,5$",
+                    "gapIndex": 1
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0
+              },
+              {
+                "timestamp": 1727810970512,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Het startgetal is het punt dat je krijgt bij  $0$ &nbsp;fouten."
+                  }
+                ]
+              },
+              {
+                "timestamp": 1727810971175,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$10$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt het hellingsgetal en het startgetal omgedraaid.",
+                    "expr": "$$10$$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$0,5AA$",
+                    "gapIndex": 1
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0
+              },
+              {
+                "timestamp": 1727810971271,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": false,
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 1,
+                "hintsRequested": 1,
+                "mathErrors": 2
+              }
+            }
+          },
+          "content": "Het <strong>hellingsgetal</strong> van de formule is  <gap></gap> &nbsp;en het <strong>startgetal</strong> is  <gap></gap> &nbsp;",
+          "solution": "Het <strong>hellingsgetal</strong> van de formule is  <gap></gap> &nbsp;en het <strong>startgetal</strong> is  <gap></gap> &nbsp;"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "M99Gb",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1727810776404,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$9$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1727810781135,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$???$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Deze invoer kan niet worden nagekeken.",
+                    "expr": "$$\\text{Ongeldige invoer}$$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "PARSE_ERROR"
+              },
+              {
+                "timestamp": 1727810785442,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$KIWI20022$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "UNKNOWN_STEP"
+              },
+              {
+                "timestamp": 1727810787647,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$22$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1727810787741,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$f =9$$",
+          "derivation": [
+            {
+              "result": "$$f =9$$",
+              "description": "Bereken het aantal fouten.",
+              "derivation": [
+                {
+                  "expression": "$$c =10- {0,\\!5}  f $$"
+                },
+                {
+                  "result": "$${5,\\!5} =10- {0,\\!5}  f $$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$\\text{-}{4,\\!5} =\\text{-}{0,\\!5}  f $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $10$  eraf."
+                },
+                {
+                  "result": "$$f =9$$",
+                  "skills": [
+                    "EquationsBalanceMethodDivideCoefficient",
+                    "EquationsOperationsMultiply"
+                  ],
+                  "description": "Deel links en rechts door  $\\text{-}{0,\\!5} $"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {},
+  "scoring": {
+    "finished": false,
+    "marksEarned": 1,
+    "marksTotal": 4
+  }
+}

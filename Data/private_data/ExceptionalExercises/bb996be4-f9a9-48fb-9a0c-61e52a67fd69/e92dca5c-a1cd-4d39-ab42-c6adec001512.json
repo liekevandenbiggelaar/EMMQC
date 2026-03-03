@@ -1,0 +1,257 @@
+{
+  "success": true,
+  "creationTimestamp": 1728035248,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$12x - 19= 9x + 5$$"
+        },
+        {
+          "id": "f2s2X",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1728035334712,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$+19$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen vergelijking.",
+                    "sub": "Je invoer moet een '='-teken bevatten.",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup 19\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1728035488382,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$3x=-14\\ :3\\ =x=3\\frac{2}{3}$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1728035488503,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$x =8$$",
+          "derivation": [
+            {
+              "expression": "$$12 x - 19=9 x + 5$$"
+            },
+            {
+              "result": "$$12 x - 9 x - 19=5$$",
+              "skills": [
+                "EquationsBalanceMethodArrangeTerms",
+                "EquationsOperationsAdd"
+              ],
+              "description": "Balansmethode: haal links en rechts er  $9 x $  van af"
+            },
+            {
+              "result": "$$3 x - 19=5$$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Neem de gelijksoortige termen samen"
+            },
+            {
+              "result": "$$3 x =24$$",
+              "skills": [
+                "EquationsBalanceMethodArrangeTerms",
+                "EquationsOperationsAdd"
+              ],
+              "description": "Balansmethode: Tel links en rechts  $19$  erbij op."
+            },
+            {
+              "result": "$$x =8$$",
+              "skills": [
+                "EquationsBalanceMethodDivideCoefficient",
+                "EquationsOperationsMultiply"
+              ],
+              "description": "Deel links en rechts door  $3$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "KFnB9",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1728035559466,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\left(77,8\\right)$",
+                    "gapIndex": 0
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0
+              },
+              {
+                "timestamp": 1728035562961,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$77$",
+                    "gapIndex": 0
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": true,
+              "marksEarned": 0.75,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0.25,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "De  $$y $$ -coördinaat van punt  $$S $$ &nbsp;is&nbsp; <gap></gap> &nbsp;",
+          "solution": "De  $$y $$ -coördinaat van punt  $$S $$ &nbsp;is&nbsp; <gap></gap> &nbsp;"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "AzU9H",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1728035641806,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$\\left(8,77\\right)$",
+                    "gapIndex": 0
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": true,
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "De coördinaten van het snijpunt  $$S $$ &nbsp;zijn  <gap></gap> &nbsp;",
+          "solution": "De coördinaten van het snijpunt  $$S $$ &nbsp;zijn  <gap></gap> &nbsp;"
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "EquationsBalanceMethodArrangeTerms": {
+      "descr": {
+        "nl": "Termen met de variabele naar links en andere termen naar rechts halen."
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsOperationsAdd": {
+      "descr": {
+        "nl": "Termen optellen of aftrekken via de balansmethode"
+      },
+      "stepType": "STRATEGY"
+    },
+    "AlgebraAddingLikeTerms": {
+      "descr": {
+        "nl": "Gelijksoortige termen optellen"
+      },
+      "stepType": "ALGEBRA"
+    },
+    "EquationsBalanceMethodDivideCoefficient": {
+      "descr": {
+        "nl": "Delen door de coëfficiënt voor de variabele om de oplossing te krijgen."
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsOperationsMultiply": {
+      "descr": {
+        "nl": "Vermenigvuldigen of delen van een vergelijking via de balansmethode"
+      },
+      "stepType": "STRATEGY"
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 1.75,
+    "marksTotal": 3
+  }
+}

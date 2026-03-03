@@ -1,0 +1,354 @@
+{
+  "success": true,
+  "creationTimestamp": 1726051782,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$c = 10- {0,\\!5} f $$"
+        },
+        {
+          "id": "gqhmr",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1726051787935,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Vul voor  $f $ &nbsp;het getal  $10$ &nbsp;in."
+                  }
+                ]
+              },
+              {
+                "timestamp": 1726051792457,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$f-10$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1726051795030,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$f=10$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1726051795137,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 1,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$c =5$$",
+          "derivation": [
+            {
+              "expression": "$$c =10- {0,\\!5}  f $$"
+            },
+            {
+              "result": "$$c =5$$",
+              "description": "Vul de waarde bij de functie in"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "FQZxN",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1726051835944,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$6$",
+                    "gapIndex": 0
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": true,
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "Mert heeft het cijfer  <gap></gap> &nbsp;gekregen",
+          "solution": "Mert heeft het cijfer  <gap></gap> &nbsp;gekregen"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "meT9Q",
+          "itemType": "INTERACTION",
+          "interactionType": "FILL_IN_THE_BLANKS",
+          "result": {
+            "status": "FINISHED",
+            "progress": 1,
+            "events": [
+              {
+                "timestamp": 1726051846849,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$-0,5$",
+                    "gapIndex": 0
+                  },
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$10$",
+                    "gapIndex": 1
+                  }
+                ],
+                "exerciseStatus": "FINISHED",
+                "progress": 1
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "finished": true,
+              "marksEarned": 1,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 0
+              }
+            }
+          },
+          "content": "Het <strong>hellingsgetal</strong> van de formule is  <gap></gap> &nbsp;en het <strong>startgetal</strong> is  <gap></gap> &nbsp;",
+          "solution": "Het <strong>hellingsgetal</strong> van de formule is  <gap></gap> &nbsp;en het <strong>startgetal</strong> is  <gap></gap> &nbsp;"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "type": "QUESTION",
+      "items": [
+        {
+          "id": "M99Gb",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1726051910992,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$c=10-0,5f$"
+                  }
+                ],
+                "exerciseStatus": "CORRECT",
+                "progress": 0,
+                "inputStatus": "CORRECT",
+                "skillsTodo": [
+                  "EquationsBalanceMethodArrangeTerms",
+                  "EquationsOperationsAdd",
+                  "EquationsBalanceMethodDivideCoefficient",
+                  "EquationsOperationsMultiply",
+                  "EquationsBalanceMethodDivideCoefficient",
+                  "EquationsOperationsMultiply"
+                ]
+              },
+              {
+                "timestamp": 1726051923275,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$c=5$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "NO_MATCH"
+              },
+              {
+                "timestamp": 1726051926168,
+                "event": "EVALUATE",
+                "tags": [
+                  {
+                    "id": "EquationsOperationsAdd",
+                    "weight": -10
+                  }
+                ],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$f=10$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Je hebt de balansmethode niet goed toegepast.",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup f =10\\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1726051926354,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [
+              {
+                "id": "EquationsOperationsAdd",
+                "weight": -10
+              }
+            ],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 0,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$f =9$$",
+          "derivation": [
+            {
+              "result": "$$f =9$$",
+              "description": "Bereken het aantal fouten.",
+              "derivation": [
+                {
+                  "expression": "$$c =10- {0,\\!5}  f $$"
+                },
+                {
+                  "result": "$${5,\\!5} =10- {0,\\!5}  f $$",
+                  "description": "Vul de bekende waarden in"
+                },
+                {
+                  "result": "$$\\text{-}{4,\\!5} =\\text{-}{0,\\!5}  f $$",
+                  "skills": [
+                    "EquationsBalanceMethodArrangeTerms",
+                    "EquationsOperationsAdd"
+                  ],
+                  "description": "Balansmethode: Haal links en rechts  $10$  eraf."
+                },
+                {
+                  "result": "$$f =9$$",
+                  "skills": [
+                    "EquationsBalanceMethodDivideCoefficient",
+                    "EquationsOperationsMultiply"
+                  ],
+                  "description": "Deel links en rechts door  $\\text{-}{0,\\!5} $"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "EquationsBalanceMethodArrangeTerms": {
+      "descr": {
+        "nl": "Termen met de variabele naar links en andere termen naar rechts halen."
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsOperationsAdd": {
+      "descr": {
+        "nl": "Termen optellen of aftrekken via de balansmethode"
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsBalanceMethodDivideCoefficient": {
+      "descr": {
+        "nl": "Delen door de coëfficiënt voor de variabele om de oplossing te krijgen."
+      },
+      "stepType": "STRATEGY"
+    },
+    "EquationsOperationsMultiply": {
+      "descr": {
+        "nl": "Vermenigvuldigen of delen van een vergelijking via de balansmethode"
+      },
+      "stepType": "STRATEGY"
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 2,
+    "marksTotal": 4
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "success": true,
+  "creationTimestamp": 1742751632,
+  "elements": [
+    {
+      "id": "Q1",
+      "type": "QUESTION",
+      "items": [
+        {
+          "itemType": "TEXT",
+          "content": "$$y = \\frac{3^{6x }\\cdot 3^{5}}{\\left ( 3^{2}\\right ) ^{x }}$$"
+        },
+        {
+          "id": "yORNE",
+          "itemType": "INTERACTION",
+          "interactionType": "MULTISTEP",
+          "result": {
+            "status": "GIVEUP",
+            "progress": 0,
+            "events": [
+              {
+                "timestamp": 1742751663413,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Bij vermenigvuldigen van machten met hetzelfde grondtal kun je de exponenten optellen",
+                    "expr": "$$y =\\frac{\\begingroup\\color{#336699}\\begingroup 3^{6 x }\\endgroup\\endgroup\\times \\begingroup\\color{#336699}\\begingroup 3^{5}\\endgroup\\endgroup}{\\left(3^{2}\\right)^{x }}$$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1742751669202,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup b \\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742751670724,
+                "event": "HINT",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "HINT",
+                    "main": "Bij vermenigvuldigen van machten met hetzelfde grondtal kun je de exponenten optellen",
+                    "expr": "$$y =\\frac{\\begingroup\\color{#336699}\\begingroup 3^{6 x }\\endgroup\\endgroup\\times \\begingroup\\color{#336699}\\begingroup 3^{5}\\endgroup\\endgroup}{\\left(3^{2}\\right)^{x }}$$"
+                  }
+                ]
+              },
+              {
+                "timestamp": 1742751672939,
+                "event": "EVALUATE",
+                "tags": [],
+                "annotations": [
+                  {
+                    "type": "INPUT_EXPRESSION",
+                    "expr": "$b$"
+                  },
+                  {
+                    "type": "ERROR_FEEDBACK",
+                    "main": "Dit is geen formule.",
+                    "sub": "Schrijf  $y =\\ldots$",
+                    "expr": "$$\\begingroup\\color{darkred}\\begingroup b \\endgroup\\endgroup$$"
+                  }
+                ],
+                "exerciseStatus": "ERROR",
+                "progress": 0,
+                "inputStatus": "ERROR"
+              },
+              {
+                "timestamp": 1742751673057,
+                "event": "GIVEUP",
+                "tags": [],
+                "annotations": []
+              }
+            ],
+            "tags": [],
+            "scoring": {
+              "marksEarned": 0,
+              "marksTotal": 1,
+              "penalties": {
+                "marksPenalty": 0,
+                "hintsRequested": 2,
+                "mathErrors": 2
+              },
+              "finished": false,
+              "maxAttempts": 2,
+              "usedAttempts": 2,
+              "failed": true
+            }
+          },
+          "solution": "$$y =3^{4 x + 5}$$",
+          "derivation": [
+            {
+              "expression": "$$y =\\frac{3^{5}\\times 3^{6 x }}{\\left(3^{2}\\right)^{x }}$$"
+            },
+            {
+              "result": "$$y =\\frac{3^{6 x + 5}}{\\left(3^{2}\\right)^{x }}$$",
+              "description": "Bij vermenigvuldigen van machten met hetzelfde grondtal kun je de exponenten optellen"
+            },
+            {
+              "result": "$$y =\\frac{3^{6 x + 5}}{3^{2 x }}$$",
+              "description": "Herhaald machtsverheffen: vermenigvuldig de exponenten"
+            },
+            {
+              "result": "$$y =3^{6 x + 5- 2 x }$$",
+              "description": "Deel  $3^{2 x }$  weg uit teller en noemer"
+            },
+            {
+              "result": "$$y =3^{4 x + 5}$$",
+              "skills": [
+                "AlgebraAddingLikeTerms"
+              ],
+              "description": "Neem de gelijksoortige termen samen"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tagDescriptions": {
+    "AlgebraAddingLikeTerms": {
+      "descr": {
+        "nl": "Gelijksoortige termen optellen"
+      },
+      "stepType": "ALGEBRA"
+    }
+  },
+  "scoring": {
+    "finished": false,
+    "marksEarned": 0,
+    "marksTotal": 1
+  }
+}
