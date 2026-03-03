@@ -41,6 +41,8 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     start_time = datetime.now()
     print(f"Search started at {start_time.now()}")
 
+    # Write something to check that branch making went allright
+
     # 1. Get the data ready -> Preprocessing and Split
     descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, targets=targets, ids=ids)
 
