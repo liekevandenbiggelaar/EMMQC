@@ -13,7 +13,7 @@ import redundancy as rd
 import fpgrowth as fp
 
 
-def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_params={}, beam_params={}, constraint_params={}, model_params={}):
+def beam_search(data=None, descriptors=None, descriptor_dtypes=None,targets=None, ids=None, refinement_params={}, beam_params={}, constraint_params={}, model_params={}):
     """
     k : top-k subgroups extracted.
     d : maximum depth of the beam.
@@ -40,10 +40,11 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     # 12. Return the result queue
 
     start_time = datetime.now()
-    print(f"Search started at {start_time.now()}")
+    #print(f"Search started at {start_time.now()}")
 
     # 1. Get the data ready -> Preprocessing and Split
-    descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, targets=targets, ids=ids)
+    descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, descriptor_dtypes=descriptor_dtypes,targets=targets, ids=ids)
+    #print(descriptor_types)
 
     population_FIs = {}
 
@@ -68,8 +69,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
 
     # 5. For each level in until the maximum depth is reached, do:
     for level in range(1, beam_params['d'] + 1):
-        print(f"start on level {level} after {datetime.now() - start_time}")
-        
+        #print(f"start on level {level} after {datetime.now() - start_time}")        
 
     # 6.    Initialize the beam queue
         beam_queue = pq.PriorityQueue(queue = [], max_length = beam_params['w'])
@@ -78,7 +78,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     # 7.    For each description in the candidate queue, do:
         #print(candidate_queue)
         for description in candidate_queue:
-            
+            #print(description)
 
             if not( rd.similar_description(sg_description=description, candidates_satisfied=candidates_satisfied) ):
     # 8.        Get the subgroup: indices, quality -> store as Subgroup Class if conditions hold
@@ -97,14 +97,20 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
                 if len(unique_sessions) > constraint_params['minimum_size']:
                    
                     subgroup_targets = target_space[ target_space['representative_index'].isin(indices)]
-
+                    #print(description)
                     subgroup_metrics = qm.subgroup_quality(subgroup_targets=subgroup_targets, population_targets=target_space, params=model_params, population_dct=population_finished_counts) #already compared to population
+                    
                     selected_subgroup = sub.Subgroup(model_params=model_params, description=description, indices=indices, metrics=subgroup_metrics)
-
+                    #print(selected_subgroup)
         # 9.        Insert the subgroup in the beam queue if all constraints are met and into the result set.
                     beam_queue.insert_subgroup(selected_subgroup)
                     result_set.insert_subgroup(selected_subgroup)
                     candidates_satisfied.append(selected_subgroup)
+
+                    #print(subgroup_metrics)
+                    #print(selected_subgroup.print_description())
+                    #print(selected_subgroup.print_quality())
+                    #print(selected_subgroup.print_metrics())
 
         # 10.   Get the new candidate queue, by refining all descriptions in the beam queue
         candidate_queue = []
@@ -138,13 +144,13 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
                 new_candidate = ca.add_condition(old_description=subgroup._description, new_condition=new_cond._conditions[0], parent=subgroup) # there is only one condition here.
                 candidate_queue.append(new_candidate)
         
-
         #print(f"Last beam was {beam_queue}")
-    end_time = datetime.now()   
+    end_time = datetime.now()  
+    runtime = end_time - start_time 
 
-    print(f"This search took {end_time - start_time}")    
+    #print(f"This search took {end_time - start_time}")    
     # 11. Return the result queue
-    return result_set
+    return result_set, runtime
 
 
 

@@ -1,7 +1,7 @@
 """
 This file contains all code related to the quality measure.
 """
-
+import pandas as pd
 import numpy as np
 import math
 
@@ -21,7 +21,7 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, params={}, 
         * beta (int)            : [1] only important when function is F_beta. Automatically set to 1 for the F1 score.
     * population_dct (dict) : [{}] a dictionary with the finished and unfinished counts per exercise
     """
-
+    #print(subgroup_targets)
     # Start the loop and calculate the score for each unique exercise in the subgroup
     subgroup_dct, session_counts = finished_rates(target_space = subgroup_targets)
 
@@ -34,6 +34,7 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, params={}, 
 
                 'session_counts': session_counts,
                 'exercise_count': 0,
+                'session_count': [],
 
                 'goodness_weights': [],
                 'fail rates': [],
@@ -42,7 +43,9 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, params={}, 
                 'F_beta': [],
                 'beta': params['beta']}
 
+    #print(subgroup_dct)
     for eID in subgroup_dct.keys():
+
         pop_fail = population_dct[eID][False] #positive -> we want to capture these
         pop_pass = population_dct[eID][True]  #negative -> and leave these in the complement.
 
@@ -85,16 +88,40 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, params={}, 
         # store for post analysis
         metrics['exercise_qualities'].append(exercise_quality)
         metrics['exercise_count'] += 1
+        #print(sg_fail)
+        #print(sg_pass)
+        nr_sg_sessions = sg_fail + sg_pass
+        #print(nr_sg_sessions)
+        metrics['session_count'].append(nr_sg_sessions)
 
         metrics['total_quality'] += exercise_quality # the higher the better
 
-    entropy = entropy_function(subgroup=subgroup_targets, population=population_targets, level=params['entropy level'])
-    metrics['entropy'] = entropy
-    exercise_count_correction = 1 / metrics['exercise_count']
-    metrics['subgroup_quality'] = entropy * exercise_count_correction * metrics['total_quality']
-    
-    return metrics
+    if params['apply_averaging']: 
+        exercise_count_correction = 1 / metrics['exercise_count']
+        metrics['averaged_quality'] = exercise_count_correction * metrics['total_quality']
+    else:
+        metrics['averaged_quality'] = metrics['total_quality']
+        
+    if params['apply_entropy']:
+        #print('we are here')
+        entropy = entropy_function(subgroup=subgroup_targets, population=population_targets, level=params['entropy level'])
+        #print('entropy', entropy)
+        metrics['entropy'] = entropy 
+        metrics['subgroup_quality'] = entropy * metrics['averaged_quality']
+    else:
+        metrics['entropy'] = 0 
+        metrics['subgroup_quality'] = metrics['averaged_quality']
+            
 
+    #entropy = entropy_function(subgroup=subgroup_targets, population=population_targets, level=params['entropy level'])
+    #metrics['entropy'] = entropy
+    #metrics['entropy'] = 1
+    #exercise_count_correction = 1 / metrics['exercise_count']
+    #metrics['subgroup_quality'] = entropy * exercise_count_correction * metrics['total_quality']
+    #metrics['subgroup_quality'] = metrics['F_beta'][0]
+
+    #print(metrics) 
+    return metrics
 
 def finished_rates(target_space=None):
     """
@@ -106,15 +133,34 @@ def finished_rates(target_space=None):
     # Group the data on unique exercise and session pairs. 
     # As the "finished" parameter is recorded on the highest level (session), we can just take the last, first, anyone of them.
     target_grouped = target_space.copy()
+
+    # change label names from 1 and 0 to True and False in target_grouped
+    target_grouped['finished'] = np.where(target_grouped['finished'] == 0, True, False)
+    
+    #with pd.option_context("future.no_silent_downcasting", True):
+    #    target_grouped = target_grouped.replace({0: True, 1: False}).infer_objects(copy=False)
+    #print(target_grouped)
+    #target_grouped = target_grouped.replace({1: True, 0: False}).infer_objects(copy=False)
     target_grouped = target_grouped.groupby(['exerciseID', 'sessionID']).last()
+    #print(target_grouped)
 
     # Get all unique exercises and get the finished counts for them
     exerciseIDs = list(target_grouped.index.levels[0].unique())
+    #print(exerciseIDs)
     finished_dct = {}
     sessions_count = []
 
     for ex in exerciseIDs:
-        ex_dct = target_grouped.loc[ex]['finished'].value_counts().reindex([False, True], fill_value=0).to_dict()
+        #ex_dct = target_grouped.loc[ex]['finished'].value_counts().reindex([False, True], fill_value=0).to_dict()
+        ex_dct = target_grouped.loc[ex]['finished'].value_counts().to_dict()
+
+        if not True in ex_dct:
+            ex_dct[True] = 0
+        if not False in ex_dct:
+            ex_dct[False] = 0  
+
+        #print(ex_dct)
+
         finished_dct[ex] = ex_dct
         nr_sessions = len(list(target_grouped.loc[ex].index.unique()))
         sessions_count.append(nr_sessions)
@@ -189,10 +235,14 @@ def entropy_function(subgroup=None, population=None, level=None):
         return entropy
 
     wanted_ID = level + 'ID'
+    #print(wanted_ID)
     
     n_subgroup = len( list(subgroup[wanted_ID].unique()) ) # count all unique values on "level" in the subgroup
     n_population = len( list(population[wanted_ID].unique()) )
     n_complement = n_population - n_subgroup 
+
+    #print(n_subgroup)
+    #print(n_complement)
 
     if n_subgroup == 0 or n_complement == 0:
         entropy = 0 #one is empty so we select the entire dataset -> give 0 to remove from the top-k list
@@ -201,7 +251,11 @@ def entropy_function(subgroup=None, population=None, level=None):
     p_subgroup = n_subgroup / n_population
     p_complement = n_complement / n_population
 
+    #print(p_subgroup)
+    #print(p_complement)
+
     entropy = -p_subgroup * math.log(p_subgroup) + p_complement * math.log(p_complement)
+    #print('entropy', entropy)
 
     return entropy
 

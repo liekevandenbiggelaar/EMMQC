@@ -81,11 +81,10 @@ class Description:
                 else:
                     continue
     
-    
+ 
 
 
-
-def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
+def split_spaces(data=None, descriptors=[], descriptor_dtypes=None, targets=[], ids=[]):
     """
     The original database gets split into the descriptive and target space, discarding all other columns that are not mentioned.
 
@@ -109,8 +108,12 @@ def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
     # all other attributes will be skipped
     skipped = list( set(data.columns) - set(descriptors) - set(targets) - set(ids))
 
+    #print(descriptive_space)
+    #print(target_space)
+
     # get all data types of the descriptive attributes, necessary for refinement
-    descriptor_types = manual_attribute_types()
+    descriptor_types = descriptor_dtypes
+    #descriptor_types = manual_attribute_types()
     #descriptor_types = get_attribute_types(descriptive_space, ids)
 
     # store relevant information on attribute placements

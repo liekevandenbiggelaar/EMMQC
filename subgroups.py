@@ -52,8 +52,9 @@ class Subgroup():
         return f"The rank is {self._rank}."
     
     def print_description(self):
-        return f"The subgroup description is {self._description}." 
-    
+        #return f"The subgroup description is {self._description}." 
+        return self._description
+
     def print_quality(self):
         return f"The quality of the subgroup compared to population is {self._quality}."
     
@@ -64,4 +65,5 @@ class Subgroup():
         return f"The subgroup size is {self._size}."
     
     def print_metrics(self):
-        return f"The metrics in the subgroup are {self._metrics}."
+        #return f"The metrics in the subgroup are {self._metrics}."
+        return self._metrics

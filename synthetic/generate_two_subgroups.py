@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import random as r
 
-import generate_synthetic_data as gsd
+import synthetic.generate_synthetic_data as gsd
 
 def two_exercises_with_2_subgroups(params=None):
         
@@ -12,7 +12,7 @@ def two_exercises_with_2_subgroups(params=None):
     params[7] = {'a1': 1, 'a2': 1} # true description 1
     params = tuple(params)
 
-    dataset1_temp, cov_names, covs, true_description, target_att_name = \
+    dataset1_temp, cov_names, covs, cov_names_types, true_description, target_att_name = \
             gsd.dataset_for_one_exercise(params=params)
         
     # then create second subgroup
@@ -29,14 +29,15 @@ def two_exercises_with_2_subgroups(params=None):
     dataset1_fixed = gsd.generate_one_true_subgroup(dataset=dataset1_temp, params=params, mask=mask1, target_att_name=target_att_name)
     
     # add indicator column
-    dataset1_fixed['eID'] = 1
+    dataset1_fixed['exerciseID'] = 1
+    dataset1_fixed['e1'] = 'a'
         
     # make second dataset with pop fail rate = 0.6
     params = list(params)
     params[3] = 0.6
     params[7] = {'a1': 1, 'a2': 1}
     params = tuple(params)
-    dataset2_temp, cov_names2, covs2, true_description2, target_att_name2 = \
+    dataset2_temp, cov_names2, covs2, cov_names_types2, true_description2, target_att_name2 = \
             gsd.dataset_for_one_exercise(params=params)
         
     # then create second subgroup
@@ -47,12 +48,16 @@ def two_exercises_with_2_subgroups(params=None):
     mask1 = gsd.determine_mask(df=dataset2_temp, true_description=true_description)        
     dataset2_fixed = gsd.generate_one_true_subgroup(dataset=dataset2_temp, params=params, mask=mask1, target_att_name=target_att_name)
     
-    dataset2_fixed['eID'] = 2
+    dataset2_fixed['exerciseID'] = 2
+    dataset1_fixed['e1'] = 'b'
         
     dataset = pd.concat([dataset1_fixed, dataset2_fixed], ignore_index=True)
 
-    print(dataset.groupby(['eID'])[target_att_name].value_counts())
-    print(dataset.groupby(['eID', 'a1', 'a2'])[target_att_name].value_counts())    
-    print(dataset.groupby(['eID', 'a1', 'a2', 'a3'])[target_att_name].value_counts())
+    #print(dataset.groupby(['exerciseID'])[target_att_name].value_counts())
+    #print(dataset.groupby(['exerciseID', 'a1', 'a2'])[target_att_name].value_counts())    
+    #print(dataset.groupby(['exerciseID', 'a1', 'a2', 'a3'])[target_att_name].value_counts())
 
-    return dataset, cov_names, covs, {'a1':1, 'a2':1}, target_att_name
+    cov_names_types['nominal'] = ['e1']
+    cov_names = cov_names + ['e1']
+
+    return dataset, cov_names, covs, cov_names_types, {'a1':1, 'a2':1}, target_att_name

@@ -3,48 +3,47 @@ import pandas as pd
 import random as r
 import itertools as it
 
-import generate_item_descriptors as gid
-import generate_two_subgroups as gts
+import synthetic.generate_item_descriptors as gid
+import synthetic.generate_multiple_exercises as gme
 
 def generate_dataset(params=None):
 
-    # if pop_fail_rate is None, create scenario 3
-    if params[3] is None:
-        params_temp = params
-        dataset, cov_names, covs, true_description, target_att_name = gts.two_exercises_with_2_subgroups(params=params_temp)
-
-        # calculate these metrics once extra for second sg
-        TP, FP, FN, TN = calculate_confusion_matrix(df=dataset, true_description={'a3':0}, target_att_name=target_att_name)
-        print(TP,FP,FN,TN)
-        precision, recall, F1 = calculate_metrics(TP=TP, FP=FP, FN=FN, TN=TN)
-        print(precision, recall, F1)
+    # if nr_exercises > 1, create data with multiple exercises
+    if params[12] > 1:
+        dataset, cov_names, covs, cov_names_types, true_description, target_att_name, array_with_pop_fail_rate = gme.multiple_exercises(params=params)
+        #print(dataset.head(20))
 
     # otherwise just create 1 dataset with 1 subgroup
     else: 
-        dataset, cov_names, covs, true_description, target_att_name = dataset_for_one_exercise(params=params)
+        dataset, cov_names, covs, cov_names_types, true_description, target_att_name = dataset_for_one_exercise(params=params)
+        array_with_pop_fail_rate = None
+        dataset['exerciseID'] = 1
     
     # calculate precision, recall and F1 for the true subgroup description
     TP, FP, FN, TN = calculate_confusion_matrix(df=dataset, true_description=true_description, target_att_name=target_att_name)
-    print(TP,FP,FN,TN)
+    #print(TP,FP,FN,TN)
     precision, recall, F1 = calculate_metrics(TP=TP, FP=FP, FN=FN, TN=TN)
-    print(precision, recall, F1)
+    #print(precision, recall, F1)
 
-    return dataset, cov_names, covs, true_description, target_att_name, precision, recall, F1
+    return dataset, cov_names, covs, cov_names_types, true_description, target_att_name, precision, recall, F1, array_with_pop_fail_rate
 
 def dataset_for_one_exercise(params=None):
 
     # sample descriptive space
-    covs, cov_names = sample_covs(N=params[0], ncovs=params[1], p=params[2])
+    covs, cov_names, cov_names_types = sample_covs(N=params[0], ncovs=params[1], p=params[2])
     
     # possibly sample item descriptors
     if params[5] > 0:
         covs, item_descriptor_names = gid.sample_item_descriptors(covs=covs, params=params)
         cov_names = cov_names + item_descriptor_names 
+        cov_names_types['collection'] = item_descriptor_names
+        #print(cov_names_types)
 
     # sample target space
     dataset = covs.copy()
     pop_fail_rate=params[3]
-    target_att_name = 'l' + str(1)
+    #target_att_name = 'l' + str(1)
+    target_att_name = 'finished'
     dataset[target_att_name] = create_target_values(pop_fail_rate=pop_fail_rate, size=params[0])
 
     # generate one true subgroup
@@ -52,16 +51,17 @@ def dataset_for_one_exercise(params=None):
     true_description = params[7]
     # determine mask
     mask = determine_mask(df=dataset, true_description=true_description)
-    print(np.sum(mask), "out of", len(mask), "records in the subgroup") # check how many records are in the subgroup
+    #print(np.sum(mask), "out of", len(mask), "records in the subgroup") # check how many records are in the subgroup
     #dataset['mask'] = mask
 
     # change target values for subgroup
     dataset = generate_one_true_subgroup(dataset=dataset, params=params, mask=mask, target_att_name=target_att_name)
 
     # add session ID
-    dataset['sID'] = np.random.randint(1, 1000, size=len(dataset))
+    dataset['sessionID'] = np.arange(1,len(dataset)+1)
+    dataset['representative_index'] = np.arange(1,len(dataset)+1)
     
-    return dataset, cov_names, covs, true_description, target_att_name
+    return dataset, cov_names, covs, cov_names_types, true_description, target_att_name
 
 def generate_one_true_subgroup(dataset=None, params=None, mask=None, target_att_name=None):
 
@@ -78,7 +78,7 @@ def generate_one_true_subgroup(dataset=None, params=None, mask=None, target_att_
     # and do the reserve for the complement values, to maintain the same number of 1s and 0s in the entire dataset
     dataset = change_0s_and_1s(dataset=dataset, mask=mask, target_att_name=target_att_name, required_ones=required_ones)
     # count 0s and 1s for dataset target attribute
-    print(dataset[target_att_name].value_counts())
+    #print(dataset[target_att_name].value_counts())
 
     return dataset
     
@@ -92,7 +92,11 @@ def change_0s_and_1s(dataset=None, mask=None, target_att_name=None, required_one
         df.loc[indices_to_change, target_att_name] = 1
         # we need to change some 1s to 0s in the complement
         complement_indices = df.loc[~mask & (df[target_att_name] == 1)].index
-        complement_indices_to_change = r.sample(list(complement_indices), required_ones)
+        if len(complement_indices) < required_ones:
+            print("Warning: not enough records in the complement to change from 1 to 0, changing all of them")
+            complement_indices_to_change = complement_indices
+        else:
+            complement_indices_to_change = r.sample(list(complement_indices), required_ones)
         df.loc[complement_indices_to_change, target_att_name] = 0
     elif required_ones < 0:
         # we need to change some 1s to 0s
@@ -104,7 +108,8 @@ def change_0s_and_1s(dataset=None, mask=None, target_att_name=None, required_one
         if len(complement_indices) < abs(required_ones):
             print("Warning: not enough records in the complement to change from 0 to 1, changing all of them")
             complement_indices_to_change = complement_indices
-        complement_indices_to_change = r.sample(list(complement_indices), abs(required_ones))   
+        else:
+            complement_indices_to_change = r.sample(list(complement_indices), abs(required_ones))   
         df.loc[complement_indices_to_change, target_att_name] = 1
     else:
         # we are already at the desired number of 1s, so we don't need to change anything
@@ -175,4 +180,10 @@ def sample_covs(N=None, ncovs=None, p=None):
 
     cov_names = ['a' + str(k) for k in np.arange(1,ncovs+1)]
 
-    return covs, cov_names
+    cov_names_types = {'nominal': [], 
+                       'boolean': cov_names, 
+                       'numerical': [], 
+                       'ordinal': [],
+                       'collection': []}
+
+    return covs, cov_names, cov_names_types

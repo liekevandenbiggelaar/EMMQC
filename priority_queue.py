@@ -31,6 +31,7 @@ class PriorityQueue():
             redundancy_found, best_descr, idx_descr = re.remove_redundant_descriptions(queue=self._queue, subgroup=subgroup)
 
             if redundancy_found:
+                #print('redun found')
                 if best_descr == 'new':
                     self._queue[idx_descr] = subgroup
                     

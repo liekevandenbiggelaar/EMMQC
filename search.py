@@ -12,7 +12,7 @@ import quality_measure as qm
 import redundancy as rd
 
 
-def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_params={}, beam_params={}, constraint_params={}, model_params={}):
+def beam_search(data=None, descriptors=None, descriptor_dtypes=None, targets=None, ids=None, refinement_params={}, beam_params={}, constraint_params={}, model_params={}):
     """
     k : top-k subgroups extracted.
     d : maximum depth of the beam.
@@ -39,16 +39,20 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     # 12. Return the result queue
 
     start_time = datetime.now()
-    print(f"Search started at {start_time.now()}")
+    #print(f"Search started at {start_time.now()}")
 
     # Write something to check that branch making went allright
 
     # 1. Get the data ready -> Preprocessing and Split
-    descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, targets=targets, ids=ids)
+    descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, descriptor_dtypes=descriptor_dtypes, targets=targets, ids=ids)
+
+    #print(descriptive_space)
 
     # 2. Get the starting candidate descriptions
-    starting_candidates   = ca.get_candidates_per_attribute(descriptive_space=descriptive_space,  dtypes=descriptor_types, refinement_params=refinement_params)
+    starting_candidates = ca.get_candidates_per_attribute(descriptive_space=descriptive_space,  dtypes=descriptor_types, refinement_params=refinement_params)
     candidate_queue = starting_candidates 
+
+    #print(starting_candidates)
 
     # 3. Get the population quality
     population_finished_counts, _ = qm.finished_rates(target_space=target_space)
@@ -58,7 +62,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
 
     # 5. For each level in until the maximum depth is reached, do:
     for level in range(1, beam_params['d'] + 1):
-        print(f"start on level {level} after {datetime.now() - start_time}")
+        #print(f"start on level {level} after {datetime.now() - start_time}")
         
 
     # 6.    Initialize the beam queue
@@ -116,10 +120,11 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
 
         #print(f"Last beam was {beam_queue}")
     end_time = datetime.now()   
+    runtime = end_time - start_time
 
-    print(f"This search took {end_time - start_time}")    
+    #print(f"This search took {end_time - start_time}")    
     # 11. Return the result queue
-    return result_set
+    return result_set, runtime
 
 
 

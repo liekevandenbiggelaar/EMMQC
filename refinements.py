@@ -6,8 +6,8 @@ The refinements are now done for one attribute, based on the data in the subgrou
 import numpy as np
 import pandas as pd
 from itertools import combinations, permutations
-from mlxtend.frequent_patterns import fpgrowth
-from mlxtend.preprocessing import TransactionEncoder
+#from mlxtend.frequent_patterns import fpgrowth
+#from mlxtend.preprocessing import TransactionEncoder
 
 import fpgrowth as fp
 import candidates as ca
@@ -156,7 +156,7 @@ def nominal_refinement(subgroup=None, attribute=None, parent=None):
     OUTPUT
     - candidates (list) : a list that has all possible conditions for that attribute, as many as there are unique instances.
     """
-
+    #print(subgroup)
     data_attribute = subgroup[attribute]
     categories = list(data_attribute.dropna().unique())
 
