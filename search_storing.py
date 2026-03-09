@@ -98,6 +98,7 @@ def beam_search(data=None, descriptors=None, descriptor_dtypes=None,targets=None
                    
                     subgroup_targets = target_space[ target_space['representative_index'].isin(indices)]
                     #print(description)
+                    #print(subgroup_targets.shape)
                     subgroup_metrics = qm.subgroup_quality(subgroup_targets=subgroup_targets, population_targets=target_space, params=model_params, population_dct=population_finished_counts) #already compared to population
                     
                     selected_subgroup = sub.Subgroup(model_params=model_params, description=description, indices=indices, metrics=subgroup_metrics)

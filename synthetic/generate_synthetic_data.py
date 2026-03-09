@@ -19,6 +19,8 @@ def generate_dataset(params=None):
         array_with_pop_fail_rate = None
         dataset['exerciseID'] = 1
     
+    dataset['representative_index'] = np.arange(1,len(dataset)+1)
+    
     # calculate precision, recall and F1 for the true subgroup description
     TP, FP, FN, TN = calculate_confusion_matrix(df=dataset, true_description=true_description, target_att_name=target_att_name)
     #print(TP,FP,FN,TN)
@@ -59,8 +61,7 @@ def dataset_for_one_exercise(params=None):
 
     # add session ID
     dataset['sessionID'] = np.arange(1,len(dataset)+1)
-    dataset['representative_index'] = np.arange(1,len(dataset)+1)
-    
+        
     return dataset, cov_names, covs, cov_names_types, true_description, target_att_name
 
 def generate_one_true_subgroup(dataset=None, params=None, mask=None, target_att_name=None):

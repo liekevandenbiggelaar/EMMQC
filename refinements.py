@@ -159,6 +159,7 @@ def nominal_refinement(subgroup=None, attribute=None, parent=None):
     #print(subgroup)
     data_attribute = subgroup[attribute]
     categories = list(data_attribute.dropna().unique())
+    #print(categories)
 
     if len(categories) <= 1:
         # No variation in the data so no candidate is returned
@@ -174,6 +175,7 @@ def nominal_refinement(subgroup=None, attribute=None, parent=None):
         description2 = ca.Description(conditions=[condition2], parent=parent)
         
         new_candidates = [description1, description2]
+        #print(new_candidates)
 
     return new_candidates
 

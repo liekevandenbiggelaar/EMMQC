@@ -96,7 +96,15 @@ def get_indices_categorical(descriptive_space=None, condition=None):
         new_space = descriptive_space[ descriptive_space[condition._descriptor] != val ]
 
     elif sign == 1: # has
+        #print('arrived here')
+        #print(descriptive_space.head())
+        #print(descriptive_space.shape)
+        #print(len(descriptive_space['representative_index'].value_counts()))
         new_space = descriptive_space[ descriptive_space[condition._descriptor] == val ]
+        #print(new_space.head())
+        #print(new_space['e1'].value_counts())
+        #print(len(new_space['representative_index'].value_counts()))
+        #print(new_space.shape)
         
     return new_space
 

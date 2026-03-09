@@ -39,7 +39,8 @@ def main(simulation_params=None,
                                     simulation_params['nr_exercises'],
                                     simulation_params['max_length'],
                                     simulation_params['apply_closed_itemsets'], 
-                                    simulation_params['rebuild_trees']))
+                                    simulation_params['find_itemsets'],
+                                    simulation_params['include_e1']))
     nexp = len(parameter_set)
 
     for exp in np.arange(1,nexp+1):   
@@ -55,6 +56,7 @@ def main(simulation_params=None,
             # generate dataset
             df, cov_names, covs, cov_names_types, true_description, target_att_name, precision, recall, F1, array_with_pop_fail_rate = gsd.generate_dataset(params=params)
             #print(df.head(20))
+            #print(df['e1'].value_counts())
             dataset_metrics = [precision, recall, F1, array_with_pop_fail_rate]
 
             # run beam search and save metrics such as runtime, quality value and whether true subgroup was in top-1 / top-10
@@ -76,18 +78,40 @@ def main(simulation_params=None,
             model_params['weighted'] = params[8]
             model_params['apply_averaging'] = params[9]
             model_params['apply_entropy'] = params[10]
+
+            # check if descriptor 'e' should be available or not
+            if not params[16]:
+                if 'e1' in descriptors:
+                    descriptors.remove('e1')
+                    descriptor_dtypes['nominal'].remove('e1')
             
-            if params[15] is True:
+            if params[15] == 'RebuildFPTree':
                 result_set, runtime = bs.beam_search(data=df, descriptors=descriptors, descriptor_dtypes=descriptor_dtypes,targets=targets, ids=ids, refinement_params=refinement_params, beam_params=beam_params, constraint_params=constraint_params, model_params=model_params)
-            else:
+            elif params[15] == 'OneFPTree':
                 result_set, runtime = store_bs.beam_search(data=df, descriptors=descriptors, descriptor_dtypes=descriptor_dtypes,targets=targets, ids=ids, refinement_params=refinement_params, beam_params=beam_params, constraint_params=constraint_params, model_params=model_params)
+            elif params[15] == 'OneHotEncoding':
+                # change item descriptors to binary attributes
+                collection_attributes = descriptor_dtypes['collection']
+                new_columns = []
+                for var in collection_attributes:
+                    vardf = pd.get_dummies(df[var].apply(pd.Series).stack(), prefix=var).groupby(level=0).sum()
+                    df = pd.concat([df.reset_index(drop=True), vardf], axis=1)
+                    df = df.drop(var, axis=1)
+                    descriptors.remove(var)
+                    new_columns = new_columns + vardf.columns.tolist()
+                df.fillna(0, inplace=True)
+                # change names 
+                descriptors = descriptors + new_columns
+                descriptor_dtypes['boolean'] = descriptor_dtypes['boolean'] + new_columns
+                descriptor_dtypes['collection'] = []
+                result_set, runtime = bs.beam_search(data=df, descriptors=descriptors, descriptor_dtypes=descriptor_dtypes,targets=targets, ids=ids, refinement_params=refinement_params, beam_params=beam_params, constraint_params=constraint_params, model_params=model_params)
 
             out = list(params) + [rep] + dataset_metrics + [runtime]
             columns=['N', 'ncovs', 'p', 'pop_fail_rate', 'precision', 
                      'nr_item_descriptors', 'nr_items', 'true_description',
                      'weighted', 'apply_averaging', 'apply_entropy',
                      'focus_on_top', 'nr_exercises', 'max_length', 'apply_closed_itemsets',
-                     'rebuild_trees',
+                     'find_itemsets', 'include_e1',
                      'rep', 
                      'precision', 'recall', 'F1', 'array_with_pop_fail_rate', 
                      'runtime']
@@ -96,6 +120,7 @@ def main(simulation_params=None,
                 rows = po.process_one_subgroup(result_set=result_set, sg=0, out=out, columns=columns)
             else:
                 rows = po.process_multiple_subgroups(result_set=result_set, sg=0, out=out, columns=columns, focus_on_top=params[11])
+
 
             if exp == 1 and rep == 1:
                 result_experiment = rows
@@ -118,6 +143,7 @@ def main(simulation_params=None,
 
 if __name__ == '__main__':
 
+    '''
     # in target space, I set finished = 0, unfinished = 1, and subgroup = 1, non-subgroup = 0
     # the precision, recall, subgroup size and pop fail rate heavily depend on each other
     # the data generating process is such that: we specify the pop fail rate + precision
@@ -139,15 +165,17 @@ if __name__ == '__main__':
                             'nr_exercises': [1],
                             'max_length': [0],
                             'apply_closed_itemsets': [0],
-                            'rebuild_trees': [0]},
+                            'find_itemsets': [0],
+                            'include_e1': [0]},
          refinement_params = {
              'numerical_bins': 2,
              'minimal_support_collections': 0.1, 'maximum_support_collections': 0.9},
          beam_params = {'k': 10, 'd': 3, 'w': 10},         
          model_params = {'model': 'F_beta', 'beta': 1, 'entropy level': 'exercise'},
          nreps=1,
-         experiment_name="Exp1")
-
+         experiment_name="Exp10")
+    '''
+    '''
     # here, we create a scenario with multiple exercises
     # the subgroup size varies, as well as exercise fail rate, and we see the effect of weighting
     main(simulation_params={'N': [1000],
@@ -161,29 +189,30 @@ if __name__ == '__main__':
                             'weighted': [True,False],
                             'apply_averaging': [True,False],
                             'apply_entropy': [False],
-                            'focus_on_top': [3],
+                            'focus_on_top': [1],
                             'nr_exercises': [2,5,10],
                             'max_length': [0],
                             'apply_closed_itemsets': [0],
-                            'rebuild_trees': [0]},
+                            'find_itemsets': [0],
+                            'include_e1': [True,False]},
          refinement_params = {
              'numerical_bins': 2,
              'minimal_support_collections': 0.1, 'maximum_support_collections': 0.9},
          beam_params = {'k': 10, 'd': 3, 'w': 10},         
          model_params = {'model': 'F_beta', 'beta': 1, 'entropy level': 'exercise'},
          nreps=1,
-         experiment_name="Exp2")
+         experiment_name="Exp20")
+    '''
 
     # here, we create a true subgroup based on item descriptor 1, items a and b should be in the tuple
     # items a and b are sampled with probability p, to control subgroup size
     # the other items are sampled with varying probabilities 0.2-0.8 (prob for item the same per descriptor)
     # if item a and b have probability 0.5, this means items a,b will be halfway in the fp tree
     # it also means subgroup size is about 0.25
-
     main(simulation_params={'N': [1000],
                             'ncovs': [10],
                             'p': [0.5], 
-                            'pop_fail_rate': [0.8],
+                            'pop_fail_rate': [0.4],
                             'precision': [0.8],
                             'nr_item_descriptors': [2,5,10],
                             'nr_items': [2,5,10], # always 2 or more
@@ -195,11 +224,12 @@ if __name__ == '__main__':
                             'nr_exercises': [1], 
                             'max_length': [2,5,10],
                             'apply_closed_itemsets': [False, True],
-                            'rebuild_trees': [False, True]},
+                            'find_itemsets': ['OneHotEncoding', 'RebuildFPTree', 'OneFPTree'],
+                            'include_e1': [0]},
          refinement_params = {
              'numerical_bins': 2,
              'minimal_support_collections': 0.1, 'maximum_support_collections': 0.9},
          beam_params = {'k': 10, 'd': 3, 'w': 10},         
          model_params = {'model': 'F_beta', 'beta': 1, 'entropy level': 'exercise'},
-         nreps=1,
+         nreps=10,
          experiment_name="Exp3")
