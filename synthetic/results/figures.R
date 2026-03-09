@@ -85,7 +85,7 @@ plotdata %>%
 # another table for appendix
 
 #### Experiment 3 ####
-data <- read_excel("Exp3[[1000], [10], [0.5], [0.4], [0.8], [2, 5, 10], [2, 5, 10], [False], [False], [False], [3], [1], [2, 5, 10], [False, True], [False, True]].xlsx")
+data <- read_excel("Exp3.xlsx")
 head(data)
 
 plotdata <- data %>% 
@@ -93,18 +93,27 @@ plotdata <- data %>%
   rename(precision_new = precision...19) %>%
   rename(precision = precision...5) %>%
   mutate(nr_item_descriptors=nr_item_descriptors-1) %>%
-  rename(NrCollAttr = nr_item_descriptors)
+  rename(NrCollAttr = nr_item_descriptors) %>%
+  filter(!(find_itemsets == 'OneHotEncoding' & apply_closed_itemsets == TRUE)) %>%
+  mutate(find_itemsets = ordered(factor(find_itemsets), 
+                                 levels = c('OneHotEncoding', 'RebuildFPTree', 'OneFPTree'))) %>%
+  mutate(OurMethod = if_else(find_itemsets == 'OneFPTree' & apply_closed_itemsets == TRUE, 'Ours', 'Other')) %>%
+  rename(Refinement = find_itemsets)
 
-plotdata %>% filter(max_length == 5) %>%
+plot <- plotdata %>% filter(max_length == 5) %>%
   ggplot() + 
-  geom_boxplot(aes(y=runtime,x=rebuild_trees,
-               fill=apply_closed_itemsets),
-           outlier_shape=NA) + 
-  facet_grid(. ~ NrCollAttr, labeller = label_both) + 
+  geom_boxplot(aes(y=runtime,x=as.factor(NrCollAttr),
+               fill=apply_closed_itemsets,
+               alpha=OurMethod),
+           outlier_shape=NA,
+           position=position_dodge(preserve = "single")) + 
+  facet_grid(. ~ Refinement, labeller = label_both) + 
   scale_fill_manual(name="Only closed itemsets?", values=c("#d95f02","#66a61e")) + 
+  scale_alpha_manual(name="", values=c(0.3,0.8)) + 
   theme_bw(base_size=7) + 
-  xlab('Refinement strategy') + 
+  xlab('Number of collection attributes') + 
   ylab('Runtime in seconds') +
+  guides(alpha=FALSE) + 
   theme(legend.position="top",
         legend.justification="right",
         legend.box.margin = margin(-1,0,0,0, "line"),
@@ -116,5 +125,5 @@ plotdata %>% filter(max_length == 5) %>%
         legend.text  = element_text(size=5))
 
 plot
-name <- paste('./exp1plot.pdf', sep = "", collapse = NULL)
+name <- paste('./exp3plot.pdf', sep = "", collapse = NULL)
 ggsave(name, width = 16, height = 8, units = "cm")
