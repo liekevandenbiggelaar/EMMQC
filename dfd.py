@@ -3,13 +3,17 @@ import random
 import pandas as pd
 from joblib import Parallel, delayed
 
-import search as bs
+import search_storing as bs_store
 
 
 
-def get_distribution_params(dataset_descriptors=None, dataset_targets=None, theta=None, m=None, c=None):
+def get_distribution_params(dataset=None, descriptors=None, targets=None, ids=None, 
+                            refinement_params=None, beam_params=None,
+                            constraint_params=None, model_params=None, m=0):
     
-    best_m_qms = get_m_false_discoveries(dataset_descriptors=dataset_descriptors, dataset_targets=dataset_targets, theta=theta, m=m, c=c)
+    best_m_qms = get_m_false_discoveries(dataset=dataset, descriptors=descriptors, targets=targets, ids=ids, 
+                            refinement_params=refinement_params, beam_params=beam_params,
+                            constraint_params=constraint_params, model_params=model_params, m=m)
     
     # Get distribution params
     mu = np.mean(best_m_qms)
@@ -20,17 +24,21 @@ def get_distribution_params(dataset_descriptors=None, dataset_targets=None, thet
     p95 = mu +  1.96 * std
     p99 = mu +  2.58 * std
     
-    dfd_params = {'m': m, 'theta': theta, 'c': c, 
+    dfd_params = {'m': m, 
                   'qms': best_m_qms, 'mu': mu, 'std': std, 
                   'p90': p90, 'p95': p95, 'p99': p99}
 
     return dfd_params
     
 
-def get_m_false_discoveries(dataset_descriptors=None, dataset_targets=None, theta=None, m=None, c=None):
+def get_m_false_discoveries(dataset=None, descriptors=None, targets=None, ids=None, 
+                            refinement_params=None, beam_params=None,
+                            constraint_params=None, model_params=None, m=0):
     
     # Perform process in parallel to increase time efficiency
-    best_m_qms = Parallel(n_jobs=3)(delayed(get_false_discovery)(dataset_descriptors=dataset_descriptors, dataset_targets=dataset_targets, theta=theta, c=c) for i in range(m))
+    best_m_qms = Parallel(n_jobs=3)(delayed(get_false_discovery)(dataset=dataset, descriptors=descriptors, targets=targets, ids=ids, 
+                            refinement_params=refinement_params, beam_params=beam_params,
+                            constraint_params=constraint_params, model_params=model_params) for i in range(m))
     
     return best_m_qms
 
@@ -58,18 +66,18 @@ def shuffle_descriptors(dataset=None, descriptors=None, targets=None, indexes=No
     return df_shuffled
 
 
-def get_false_discovery(dataset_descriptors=None, descriptors=None, targets=None, ids=None, 
+def get_false_discovery(dataset=None, descriptors=None, targets=None, ids=None, 
                             refinement_params=None, beam_params=None,
                             constraint_params=None, model_params=None):
     
     # Shuffle the descriptors to remove any correlation between the descriptors and targets
-    df_shuffled = shuffle_descriptors(dataset_descriptors)
+    df_shuffled = shuffle_descriptors(dataset=dataset, descriptors=descriptors, targets=targets, indexes=ids)
     
     # Perform beam search on the shuffled dataset
-    result_set = bs.beam_search(data=df_shuffled, descriptors=descriptors, targets=targets, ids=ids, 
+    result_set = bs_store.beam_search(data=df_shuffled, descriptors=descriptors, targets=targets, ids=ids, 
                             refinement_params=refinement_params, beam_params=beam_params,
                             constraint_params=constraint_params, model_params=model_params)
     
-    best_qm = result_set._queue[0]._quality # Get the QM of the top-1 subgroup
+    best_qm = result_set._queue[0]._metrics['subgroup_quality']# Get the QM of the top-1 subgroup
     
     return best_qm

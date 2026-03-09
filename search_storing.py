@@ -60,8 +60,11 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     starting_candidates = ca.get_candidates_per_attribute(descriptive_space=descriptive_space,  dtypes=descriptor_types, refinement_params=refinement_params, parent=population, store=True)
     candidate_queue = starting_candidates 
 
+    target_level_str = model_params['target_level'] + 'ID'
+    subgroup_level_str = model_params['subgroup_level'] + 'ID'
+
     # 3. Get the population quality
-    population_finished_counts, _ = qm.finished_rates(target_space=target_space)
+    population_finished_counts, _ = qm.finished_rates(target_space=target_space, target_level_str=target_level_str, subgroup_level_str=subgroup_level_str)
 
     # 4. Initialize the result set and the candidate queue
     result_set = pq.PriorityQueue(queue = [], max_length = beam_params['k'])
@@ -91,19 +94,19 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
                 if len(indices) == 0:
                     continue #no valid subgroup
 
-                unique_sessions = subgroup_descriptors['sessionID'].unique()
+                unique_sessions = subgroup_descriptors[subgroup_level_str].unique()
 
                 # It should be sufficiently long and the descriptions should not exist in the beam queue in any form.
                 if len(unique_sessions) > constraint_params['minimum_size']:
                    
                     subgroup_targets = target_space[ target_space['representative_index'].isin(indices)]
 
-                    subgroup_metrics = qm.subgroup_quality(subgroup_targets=subgroup_targets, population_targets=target_space, params=model_params, population_dct=population_finished_counts) #already compared to population
+                    subgroup_metrics = qm.subgroup_quality(subgroup_targets=subgroup_targets, population_targets=target_space, model_params=model_params, population_dct=population_finished_counts) #already compared to population
                     selected_subgroup = sub.Subgroup(model_params=model_params, description=description, indices=indices, metrics=subgroup_metrics)
 
         # 9.        Insert the subgroup in the beam queue if all constraints are met and into the result set.
-                    beam_queue.insert_subgroup(selected_subgroup)
-                    result_set.insert_subgroup(selected_subgroup)
+                    beam_queue.insert_subgroup(selected_subgroup, improvement_rate=constraint_params['improvement_rate'])
+                    result_set.insert_subgroup(selected_subgroup, improvement_rate=constraint_params['improvement_rate'])
                     candidates_satisfied.append(selected_subgroup)
 
         # 10.   Get the new candidate queue, by refining all descriptions in the beam queue
@@ -112,31 +115,32 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
         # print current descriptions
         # for descr in beam_queue._queue:
         #     print(descr)
+        if level < beam_params['d']:
+            # otherwise no new candidates need to be generated.
+            for subgroup in beam_queue._queue:
 
-        for subgroup in beam_queue._queue:
+                # Generate pruned FP trees on the indices
+                sg_desc = subgroup._description
+                sg_parent = sg_desc._parent
+                prev_FIs = sg_parent._FIs
+                sg_indices = subgroup._indices
+                
+                sg_FIs = {}
+                
+                for attr, itemsets in prev_FIs.items():
+                    new_FI = fp.prune_frequent_itemsets(FI=itemsets, sg_indices=sg_indices, closed=refinement_params['closed_itemsets'])
+                    sg_FIs[attr] = new_FI
+                
+                subgroup.add_FIs(sg_FIs)
 
-            # Generate pruned FP trees on the indices
-            sg_desc = subgroup._description
-            sg_parent = sg_desc._parent
-            prev_FIs = sg_parent._FIs
-            sg_indices = subgroup._indices
-            
-            sg_FIs = {}
-            
-            for attr, itemsets in prev_FIs.items():
-                new_FI = fp.prune_frequent_itemsets(FI=itemsets, sg_indices=sg_indices, closed=refinement_params['closed_itemsets'])
-                sg_FIs[attr] = new_FI
-            
-            subgroup.add_FIs(sg_FIs)
+                temp_subgroup_descriptors = descriptive_space[ descriptive_space['representative_index'].isin(subgroup._indices)] 
 
-            temp_subgroup_descriptors = descriptive_space[ descriptive_space['representative_index'].isin(subgroup._indices)] 
+                # refine this condition further
+                new_conditions = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, refinement_params=refinement_params, parent=subgroup, store=True)
 
-            # refine this condition further
-            new_conditions = ca.get_candidates_per_attribute(descriptive_space=temp_subgroup_descriptors,  dtypes=descriptor_types, refinement_params=refinement_params, parent=subgroup, store=True)
-
-            for new_cond in new_conditions:
-                new_candidate = ca.add_condition(old_description=subgroup._description, new_condition=new_cond._conditions[0], parent=subgroup) # there is only one condition here.
-                candidate_queue.append(new_candidate)
+                for new_cond in new_conditions:
+                    new_candidate = ca.add_condition(old_description=subgroup._description, new_condition=new_cond._conditions[0], parent=subgroup) # there is only one condition here.
+                    candidate_queue.append(new_candidate)
         
 
         #print(f"Last beam was {beam_queue}")

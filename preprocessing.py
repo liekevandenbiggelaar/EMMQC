@@ -13,6 +13,82 @@ import numpy as np
 
 #     df_library.to_csv("algebrakit_firstbatch_2.csv", index=False)
 
+def prepare_data():
+
+    def anonymize_names(df):
+        mapping = {}
+
+        i = 0
+        for name in list(df['studentName'].unique()):
+            if 'unknown' not in name:
+                mapping[name] = 'student' + str(i)
+                i += 1
+            else:
+                continue
+
+        df['studentName'] = df['studentName'].replace(mapping)
+
+        return df
+
+    df = pd.read_csv('algebrakit_practice.csv')
+    df = df.drop(['maxAttempts', 'usedAttempts', 'failed', 'solution'], axis=1)
+    df = anonymize_names(df)
+    df['representative_index'] = range(len(df))
+
+    df_exnams = pd.read_excel("Data/public_algebrakit/Copy of AK-Practice - Exercises.xlsx", 'Exercise Names')
+    df_exnams = df_exnams.rename({'Exercise ID                                                                                                             ': 'ExerciseID'}, axis=1)
+
+    our_exs = set(df['exerciseID'].unique())
+    their_exs = set(df_exnams['ExerciseID'].unique())
+    overlaps = our_exs.intersection(their_exs)
+    df_interesting = df_exnams[df_exnams['ExerciseID'].isin(our_exs)]
+
+    df = clean_data_algebrakit(unfilterd_data=df, filter_type="remove_interaction")
+    
+    first_hint = []
+
+    for row in range(len(df)):
+        if list(df.iloc[row]['event_types'])[0] == 'HINT':
+            first_hint.append(True)
+        else:
+            first_hint.append(False)
+
+    df['context_hint'] = first_hint
+
+    subs = []
+    items = []
+
+    for i in range(len(df)):
+        exID = df.iloc[i]['exerciseID']
+        df_inter = df_interesting[ df_interesting['ExerciseID'] == exID]
+        
+        subs.append(list(df_inter['Subject'])[0].replace("│   ", ""))
+        items.append(list(df_inter['Item Name'])[0])
+
+    df['primarySubject'] = subs
+    df['secondarySubject'] = items
+
+
+
+    df_onehot = df.copy()
+    collection_attr = ['event_types', 'event_evaluations', 'stepTypes']
+
+    for attr in collection_attr:
+
+        df_attr = df_onehot[[attr]]
+
+        # Step 2: One-hot encoding with empty list handling
+        attr_onehot = pd.crosstab(df_attr[attr].explode().index,
+                    df_attr[attr].explode()).add_prefix(f"{attr}_")
+            
+        # Ensure rows with empty lists are handled
+        df_attr_onehot = df_attr.drop(attr, axis=1).join(attr_onehot, how='left').fillna(0).astype(int)
+
+        #df_onehot = df_onehot.drop(attr, axis=1)
+        df_onehot = pd.concat([df_onehot, df_attr_onehot], axis=1)
+
+    df_onehot.to_csv("algebrakit_practice_anonymized.csv", index=False)
+
 def open_file(eID: str, iID: str, sID: str, data_path = 'Data/public_algebrakit/sessionInfo'):
     """ 
     Opens the JSON file of one session of an exercise.

@@ -25,10 +25,10 @@ class PriorityQueue():
         self._average_quality = np.mean(self.get_qualities())
         print(f"This queue has subgroups of average size {self._average_size} in a queue of length {self._length_queue} and an average quality of {self._average_quality}.")
     
-    def insert_subgroup(self, subgroup: sub.Subgroup):
+    def insert_subgroup(self, subgroup: sub.Subgroup, improvement_rate=None):
         
         if len(self._queue) > 0:
-            redundancy_found, best_descr, idx_descr = re.remove_redundant_descriptions(queue=self._queue, subgroup=subgroup)
+            redundancy_found, best_descr, idx_descr = re.remove_redundant_descriptions(queue=self._queue, subgroup=subgroup, improvement_rate=improvement_rate)
 
             if redundancy_found:
                 if best_descr == 'new':

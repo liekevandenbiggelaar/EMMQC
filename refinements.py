@@ -131,12 +131,12 @@ def ordinal_refinement(subgroup=None, attribute=None, parent=None):
         after = sorted_unique[cat_index + 1:]
 
         # only add if there is a value in the range
-        if len(before) != 0:
+        if len(before) != 0 and not( before[0] == 0 and before[-1] == 0 ):
             condition1 = ca.Condition(descriptor=attribute, value=before, datatype='ordinal')
             description1 = ca.Description(conditions=[condition1], parent=parent)
             new_candidates.append(description1)
             
-        if len(after) != 0:
+        if len(after) != 0 and not( after[0] == 0 and after[-1] == 0 ):
             condition2 = ca.Condition(descriptor=attribute, value=after, datatype='ordinal')
             description2 = ca.Description(conditions=[condition2], parent=parent)
             new_candidates.append(description2)
@@ -168,12 +168,12 @@ def nominal_refinement(subgroup=None, attribute=None, parent=None):
 
     for cat in categories:
         condition1 = ca.Condition(descriptor=attribute, value=(1.0, cat), datatype='nominal') # means =
-        condition2 = ca.Condition(descriptor=attribute, value=(0.0, cat), datatype='nominal') # means !=
+        #condition2 = ca.Condition(descriptor=attribute, value=(0.0, cat), datatype='nominal') # means !=
 
         description1 = ca.Description(conditions=[condition1], parent=parent)
-        description2 = ca.Description(conditions=[condition2], parent=parent)
+        #description2 = ca.Description(conditions=[condition2], parent=parent)
         
-        new_candidates = [description1, description2]
+        new_candidates = [description1]#, description2]
 
     return new_candidates
 

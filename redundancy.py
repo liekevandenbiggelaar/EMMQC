@@ -47,7 +47,7 @@ def similar_description(sg_description=None, candidates_satisfied=None):
 
 
 # ====== BEFORE ADDING TO THE PRIORITY QUEUE ======= #
-def remove_redundant_descriptions(queue=None, subgroup=None):
+def remove_redundant_descriptions(queue=None, subgroup=None, improvement_rate=None):
     
     redundancy_found = False #Start with nothing, only change if something if found
     best_descr, idx_descr = None, None
@@ -55,7 +55,12 @@ def remove_redundant_descriptions(queue=None, subgroup=None):
     i = 0
         
     for candidate in queue: #We have already considered them candidate = sub.Subgroup
-        if subgroup._quality == candidate._quality: # we can tweak this with a weight if we want.
+
+        # the candidate quality must be at least 1% higher than the previous
+        min_bound = subgroup._quality * (1 - improvement_rate)
+        max_bound = subgroup._quality * (1 + improvement_rate)
+
+        if candidate._quality > min_bound and candidate._quality < max_bound: # we can tweak this with a weight if we want.
 
             best_descr = compare_two_descs(old_description=candidate._description, new_description=subgroup._description)
 
