@@ -120,19 +120,19 @@ def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
 
 def manual_attribute_types():
 
-    dtypes = {'nominal': ['interactionType', 'primarySubject', 'secondarySubject'], 
+    dtypes = {'nominal': ['interactionType', 'primarySubject', 'secondarySubject', "hintsRequested_cat", 'try_count'], 
               'boolean': ['context_hint'], 
               'numerical': [], 
-              'ordinal': [], #[  'hintsRequested' ],
+              'ordinal': [], 
+                            #[  'hintsRequested' ],
                         #   , 'event_types_EVALUATE', 'event_types_HINT',
                         #     'event_evaluations_CORRECT', 'event_evaluations_ERROR',
                         #     'event_evaluations_FALSE_EXPRESSION',
                         #     'event_evaluations_HINT', 'event_evaluations_NO_MATCH',
                         #     'event_evaluations_PARSE_ERROR', 'event_evaluations_TRUE_EXPRESSION',
                         #     'event_evaluations_UNKNOWN_STEP'],
- #                           'stepTypes_ALGEBRA', 'stepTypes_CALCULATE', 'stepTypes_CONCEPT',
- #                           'stepTypes_STRATEGY'],
-              'collection': ['skills', 'positive_skills', 'negative_skills', 'stepTypes', 'event_types', 'event_evaluations']}
+ #                           ],
+              'collection': ['skills', 'positive_skills', 'negative_skills', 'event_evaluations', 'stepTypes']}
 
     return dtypes
 
