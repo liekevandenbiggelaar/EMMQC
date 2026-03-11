@@ -1,11 +1,10 @@
 """
 This file has the priority queue class that is used in the beam search.
 """
-import sys
 import numpy as np
 
-import subgroups as sub
-import redundancy as re
+import eqc.subgroups as sub
+import eqc.redundancy as re
 
 class PriorityQueue():
     
@@ -62,10 +61,6 @@ class PriorityQueue():
         # no candidates so just add
         else:
             self._queue.append(subgroup)
-
-    
-    def compare_subgroups(self):
-        return None
     
     def get_descriptions(self):
         return [subgroup._description for subgroup in self._queue]

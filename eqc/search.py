@@ -4,12 +4,13 @@ This file has the beam search strategy.
 import numpy as np
 from datetime import datetime 
 
-import candidates as ca
-import priority_queue as pq
-import subgroup_selection as ss
-import subgroups as sub
-import quality_measure as qm
-import redundancy as rd
+import eqc.candidates as ca
+import eqc.priority_queue as pq
+import eqc.subgroup_selection as ss
+import eqc.subgroups as sub
+import eqc.quality_measure as qm
+import eqc.redundancy as rd
+import eqc.fpgrowth as fp
 
 
 def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_params={}, beam_params={}, constraint_params={}, model_params={}):
@@ -42,7 +43,7 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     print(f"Search started at {start_time.now()}")
 
     # 1. Get the data ready -> Preprocessing and Split
-    descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, targets=targets, ids=ids)
+    descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, targets=targets, ids=ids, dtypes=beam_params['dtypes'])
 
     # 2. Get the starting candidate descriptions
     starting_candidates   = ca.get_candidates_per_attribute(descriptive_space=descriptive_space,  dtypes=descriptor_types, refinement_params=refinement_params)

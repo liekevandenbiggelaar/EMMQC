@@ -4,10 +4,6 @@ This file contains all code related to the quality measure.
 
 import numpy as np
 import math
-import pandas as pd
-
-import subgroup_selection as ss
-import model_class as mc
 
 def subgroup_quality(subgroup_targets=None, population_targets=None, model_params={}, population_dct={}):
     """
@@ -29,10 +25,7 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, model_param
     # Start the loop and calculate the score for each unique exercise in the subgroup
     subgroup_dct, session_counts = finished_rates(target_space = subgroup_targets, target_level_str=target_level_str, subgroup_level_str=subgroup_level_str)
 
-
-
     # Initialize the exercise count and the total weighted quality
-
     metrics = { 'total_quality': 0,
                 'exercise_qualities': [],
                 'subgroup_quality': 0,
@@ -254,62 +247,4 @@ def entropy_function(subgroup=None, population=None, level=None):
     entropy = -p_subgroup * math.log(p_subgroup) + p_complement * math.log(p_complement)
 
     return entropy, n_subgroup, n_complement
-
-
-
-
-# = = = = = = = DEPRECATED = = = = = = = #
-def DEPR_entropy_function(subgroup_size=None, population_size=None):
-    complement_size = population_size - subgroup_size
-    
-    # no subgroup so invaluable
-    if subgroup_size == 0 or complement_size == 0:
-        return 0
-    
-    prob_subgroup = subgroup_size / population_size
-    prob_complement = complement_size / population_size
-    
-    entropy = -prob_subgroup * math.log(prob_subgroup) + prob_complement * math.log(prob_complement)
-    
-    return entropy
-
-
-def DEPR_model_function(target_space=None, model=None):
-
-    if model == 'finish_rate':
-        quality, values = mc.finish_rate(target_space) 
-
-    elif model == 'exercise_finish_rate':
-        quality, values = mc.exercise_finish_rate(target_space) 
-
-    elif model == 'average_marks_ratio':
-        quality, values = mc.average_marks_ratio(target_space)
-    
-    else:
-        return "== ERROR: Invalid Model Class"
-
-    return quality, values
-
-
-def DEPR_compute_quality_measure(subgroup_indices=None, target_space=None, model=None, population_quality=None, population_size=None):
-    """
-    Model options: finish_rate, average_marks_rate
-    """
-
-    # Get needed values
-    subgroup_size = len(subgroup_indices)
-    subgroup_target_space = ss.get_subgroup_target_space(target_space, subgroup_indices)
-
-    # Calculate both components
-    entropy = DEPR_entropy_function(subgroup_size, population_size)
-    subgroup_quality, values = DEPR_model_function(subgroup_target_space, model)
-
-
-    # Total quality
-    model_quality = population_quality - subgroup_quality #*entropy
-
-    return model_quality, values
-
-
-
 

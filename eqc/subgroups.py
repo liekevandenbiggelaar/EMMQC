@@ -2,7 +2,7 @@
 This file contains the class of the subgroup.
 """
 
-import candidates as ca
+import eqc.candidates as ca
 
 class Subgroup():
     """

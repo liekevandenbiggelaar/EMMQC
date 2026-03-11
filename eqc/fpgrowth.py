@@ -1,5 +1,3 @@
-import numpy as np
-import pandas as pd
 from collections import Counter, defaultdict
 from itertools import combinations
 import copy
@@ -119,57 +117,6 @@ def compute_ordered_item_sets(data=None, attribute_of_interest=None, frequency_p
 
     return ordered_item_sets
 
-
-# def prune_FPTree(FPTree: None, sg_indices: None):
-#     """
-#     This pruned the FP Tree to only contain the nodes that cover any of the indices in the list of indices inputted.
-
-#     INPUT
-#     * FPTree : the FP tree that we started with.
-#     * sg_indices: the indices of the subgroup that we are only interested in.
-#     """
-
-#     subgroup_FP = copy.deepcopy(FPTree)
-#     # subgroup_FP._firstinstances = {}
-#     set_sg_idx = set(sg_indices)
-
-#     to_visit = []
-
-#     for value, node in subgroup_FP._root._children.items():
-#         to_visit.append(node)
-
-#     for child in to_visit:
-#         set_child_idx = set(child._indices)
-
-#         # Check if any of the items in the sg_indices has the element in the node (so is in the _indices list)
-#         overlapping_idx = set_sg_idx.intersection(set_child_idx)
-#         child.alter_indices(overlapping_idx)
-#         child.alter_frequency(len(overlapping_idx))
-
-#         # in both subgroup and the child node in the FP tree.
-#         if child._frequency <= 0:
-#             child.remove_from_parent()
-#             child.rebuild_links(subgroup_FP)
-
-#         # If not, the children of this value are also not interesting, so we remove the child from its parent and thereby all its children too.
-#         else:
-#             for child_value, child_children in child._children.items():
-#                 to_visit.append(child_children)
-            
-#             # OLD, should be fixed when removing.
-#             # if child._value in subgroup_FP._firstinstances.keys():
-#             #     #not sure if this is correct...
-#             #     if child._frequency > subgroup_FP._firstinstances[child._value]._frequency:
-#             #         subgroup_FP._firstinstances[child._value] = child
-#             # else:
-#             #     subgroup_FP._firstinstances[child._value] = child
-
-
-#     return subgroup_FP
-
-# ================================
-# Building the FP-Tree
-
 class Node:
     """
     This stores the category, frequency, indices about a single node in the FP-Tree.
@@ -199,52 +146,6 @@ class Node:
         if child._value not in self._children:
             self._children[child._value] = child
 
-    # def remove_from_parent(self):
-    #     # 1. remove itself from the parents list of children.
-
-    #     parent = self._parent
-    #     if self == parent._children[self._value]:
-    #         parent._children.pop(self._value)
-
-
-    # def rebuild_links(self, FP):
-    #     """
-    #     This removes itself from the FP tree and rebuilds all links. 
-
-    #     INPUT
-    #     * child (Node) : the child that occurs in relation to this one and needs to be removed.
-    #     """
-
-    #     # recursively.
-    #     # 2. for itself and all its children (and their children, i.e. all removed nodes)
-    #     #       a. if it is in _firstinstances, replace if possible by self._next, otherwise remove key from list
-    #     #       b. for prevnode in self._link, replace prevnode._next = self._next and for nextnode in self._next, replace nextnode._link = self._link -> Done?
-
-    #     prevnode = self._link
-    #     nextnode = self._next
-        
-    #     # remove m2 from example row: m2 <- m1 <- m3
-    #     if prevnode is None:
-    #         # replace in FI, except if nextnode is also None.
-    #         if nextnode is None: # m2 only appearance.
-    #             FP._firstinstances.pop(self._value)
-            
-    #         else:
-    #             FP._firstinstances[self._value] = nextnode
-    #             nextnode._link = prevnode # = None 
-
-    #     # remove m2 from example row: m1 <- m3 <- m2
-    #     elif nextnode is None:
-    #         prevnode._next = nextnode # = None 
-
-    #     else: # remove m2 from example row: m1 <- m2 <- m3
-    #         prevnode._next = nextnode
-    #         nextnode._link = prevnode
-
-    #     for _, child in self._children.items():
-    #         child.rebuild_links(FP)
-
-    
     def add_indices(self, index):
         """
         This adds the index of the current record to the list.
@@ -254,7 +155,6 @@ class Node:
         """
 
         self._indices.add(index)
-    
 
     def add_link(self, node):
         """
@@ -264,8 +164,6 @@ class Node:
         self._link = node
         node._next = self #add self to the node's next list.
     
-
-        
     def increase_frequency(self):
         """
         This increases the frequency by one.

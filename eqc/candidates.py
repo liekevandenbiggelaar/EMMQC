@@ -1,9 +1,8 @@
 """ 
 This file has the code to make the split of descriptors and targets, and gathers the dtypes of all attributes.
 """
-import numpy as np
 
-import refinements as rf
+import eqc.refinements as rf
 
 
 class Condition:
@@ -43,12 +42,6 @@ class Condition:
         elif self._datatype == 'collection':
             summary = f"{self._descriptor.upper()} contains at least {self._value}"                  
 
-        # elif self._datatype == 'sequence':
-        #     summary = f"{self._descriptor.upper()} has {self._value} consecutively without interruptions"
-        
-        # elif self._datatype == 'subsequence':
-        #     summary = f"{self._descriptor.upper()} has {self._value} consecutively with interruptions"
-
         return summary
 
 
@@ -84,8 +77,7 @@ class Description:
     
 
 
-
-def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
+def split_spaces(data=None, descriptors=[], targets=[], ids=[], dtypes=None):
     """
     The original database gets split into the descriptive and target space, discarding all other columns that are not mentioned.
 
@@ -110,28 +102,20 @@ def split_spaces(data=None, descriptors=[], targets=[], ids=[]):
     skipped = list( set(data.columns) - set(descriptors) - set(targets) - set(ids))
 
     # get all data types of the descriptive attributes, necessary for refinement
-    descriptor_types = manual_attribute_types()
-    #descriptor_types = get_attribute_types(descriptive_space, ids)
+    descriptor_types = manual_attribute_types(dtypes)
 
     # store relevant information on attribute placements
     attributes = {'descriptive_attributes': descriptors, 'target_attributes': targets, 'id_attributes': ids, 'skip_attributes': skipped}
 
     return descriptive_space, target_space, attributes, descriptor_types
 
-def manual_attribute_types():
+def manual_attribute_types(dtypes=None):
 
-    dtypes = {'nominal': ['interactionType', 'primarySubject', 'secondarySubject', "hintsRequested_cat", 'try_count'], 
+    if dtypes == None:
+        dtypes = {'nominal': ['interactionType', 'primarySubject', 'secondarySubject', "hintsRequested_cat", 'try_count'], 
               'boolean': ['context_hint'], 
               'numerical': [], 
               'ordinal': [], 
-                            #[  'hintsRequested' ],
-                        #   , 'event_types_EVALUATE', 'event_types_HINT',
-                        #     'event_evaluations_CORRECT', 'event_evaluations_ERROR',
-                        #     'event_evaluations_FALSE_EXPRESSION',
-                        #     'event_evaluations_HINT', 'event_evaluations_NO_MATCH',
-                        #     'event_evaluations_PARSE_ERROR', 'event_evaluations_TRUE_EXPRESSION',
-                        #     'event_evaluations_UNKNOWN_STEP'],
- #                           ],
               'collection': ['skills', 'positive_skills', 'negative_skills', 'event_evaluations', 'stepTypes']}
 
     return dtypes
@@ -195,30 +179,6 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
                                               maximum_itemsets=refinement_params['maximum_itemsets'], closed_itemsets=refinement_params['closed_itemsets'])
         candidates += conditions
 
-
-    # # go over all sequence attributes
-    # for att in dtypes['sequence']:
-        
-    #     conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
-    #                                           minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
-        
-    #     #rf.sequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_sequence'],
-    #     #                                      minimal_support=refinement_params['minimal_support_sequence'], maximum_support=refinement_params['maximum_support_sequence'])
-        
-    #     candidates += conditions
-
-
-    # # go over all subsequence attributes
-    # for att in dtypes['subsequence']:
-        
-    #     conditions = rf.collection_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_collections'],
-    #                                           minimal_support=refinement_params['minimal_support_collections'], maximum_support=refinement_params['maximum_support_collections'])
-        
-    #     # rf.subsequence_refinement(subgroup=descriptive_space, attribute=att, maximum_length=refinement_params['maximum_length_subsequence'],
-    #     #                                       minimal_support=refinement_params['minimal_support_subsequence'], maximum_support=refinement_params['maximum_support_subsequence'])
-    #     candidates += conditions
-
-
     return candidates
 
 
@@ -263,11 +223,6 @@ def add_condition(old_description: Description, new_condition: Condition, parent
         new_description_conditions.append(new_condition)
         
     new_description = Description(conditions=new_description_conditions, parent=parent)
-    # if len(old_description._descriptors) >= 2:
-
-    #     print(f"old descr: {old_description}")
-    #     print(f"new cond: {new_condition}")
-    #     print(f"new descr: {new_description}")
     
     return new_description
 
@@ -289,57 +244,4 @@ def global_add_condition(description=None, starting_candidates=None):
 
     return new_candidates
 
-
-
-
-# ============= OLD ===============
-
-
-
-
-def DEPRECATED_get_attribute_types(data=None, ids=[]):
-    """ 
-    The columns in the data are categorized into four data types: numerical, boolean, categorical. We assume that all attributes are within these three types.
-    Other attribute types such as lists, dicts, tuples, etc. should be removed as a skip attribute.
-
-    INPUT
-    - data       : any dataframe that you want the data types from.
-    - ids (list) : the attributes that are indices and should not be conditioned.
-
-    OUTPUT
-    - dtypes (dict) : a dictionary that contains the attributes sorted per category for the input dataframe. 
-    """
-
-    # initialize
-    dtypes = {'categorical': [], 'boolean': [], 'numerical': [], 'collection': []}
-
-    # check each column in the data space
-    for col in data.columns:
-
-        # we do not want the types of the IDs
-        if col in ids:
-            continue
-        
-        # check if the column has a boolean data type
-        elif data[col].dtype == 'bool': #only two options
-            dtypes['boolean'].append(col)
-        
-        # check if the column has a numerical data type
-        elif np.issubdtype(data[col].dtype, np.number):
-            dtypes['numerical'].append(col)
-        
-        # otherwise it is a categorical value or invalid one
-        elif isinstance(data[col].dropna().iloc[0], str) and len(data[col].dropna().unique()) > 2:
-            dtypes['categorical'].append(col)
-        
-        elif isinstance(data[col].dropna().iloc[0], list): # lists are unordered
-            dtypes['collection'].append(col)
-
-        elif isinstance(data[col].dropna().iloc[0], tuple): # tuples are ordered
-            dtypes['sequence'].append(col)
-        
-        else:
-            continue
-
-    return dtypes
 

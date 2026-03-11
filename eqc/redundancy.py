@@ -3,8 +3,6 @@ This file contains code to reduce redundancies in the discovered subgroups.
 """
 import numpy as np
 
-import priority_queue as pq
-import subgroups as sub
 
 
 # ====== BEFORE COMPUTING THE QUALITY ======= #
@@ -41,8 +39,6 @@ def similar_description(sg_description=None, candidates_satisfied=None):
             return True
 
     return False
-
-
 
 
 
