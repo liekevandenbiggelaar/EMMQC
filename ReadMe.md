@@ -11,7 +11,24 @@ There are two files:
 - casestudy: contains the experimental setup used for the case study mentioned in the paper.
 - synthetic: contains the experimental setup used for the synthetic experiments in the paper.
 
-The reposit
+The reposity can be downloaded using:
+```
+$ git clone https://github.com/yourusername/EMMQC.git
+$ cd EMMQC
+```
+
+## Synthetic Experiments
+
+
 ## Case Study
-To reprodu
+To reproduce the results from the case study, clone the reposity and run the following line in the terminal:
+```
+python casestudy.py
+```
+The experimental setup can be altered within this file by simply adjusting the values in the lists and dictionaries as desired.
+
+Feel free to contact me if things are unclear or if you have any questions.
+
+Kind regards,
+
 
