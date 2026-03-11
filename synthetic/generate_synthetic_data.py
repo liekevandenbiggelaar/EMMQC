@@ -122,6 +122,7 @@ def determine_mask(df=None, true_description=None):
 
     dataset = df.copy()
     desc = true_description
+    #print(desc)
 
     # is true description for binary or item descriptors?
     # determine all covariate names in the description, to select the right columns from the dataset

@@ -129,9 +129,10 @@ def main(simulation_params=None,
                         
     # saving
     simulation_params_copy = simulation_params.copy()
-    simulation_params_copy.pop('true_description', None)
-    save_location = "synthetic/results/" + experiment_name + str(list(simulation_params_copy.values())) + ".xlsx"
-    analysis_info = pd.DataFrame({'nreps':nreps}, index=[0])
+    simulation_params_copy['nreps'] = [nreps]
+    #simulation_params_copy.pop('true_description', None)
+    save_location = "synthetic/results/" + experiment_name + ".xlsx"
+    analysis_info = pd.DataFrame(list(simulation_params_copy.values()))
 
     dfs = {'result_experiment':result_experiment,
            'analysis_info':analysis_info}
@@ -165,7 +166,7 @@ if __name__ == '__main__':
                             'nr_exercises': [1],
                             'max_length': [0],
                             'apply_closed_itemsets': [0],
-                            'find_itemsets': [0],
+                            'find_itemsets': ['OneFPTree'],
                             'include_e1': [0]},
          refinement_params = {
              'numerical_bins': 2,
@@ -173,19 +174,19 @@ if __name__ == '__main__':
          beam_params = {'k': 10, 'd': 3, 'w': 10},         
          model_params = {'model': 'F_beta', 'beta': 1, 'entropy level': 'exercise'},
          nreps=1,
-         experiment_name="Exp10")
+         experiment_name="Exp1")
     '''
-    '''
+
     # here, we create a scenario with multiple exercises
     # the subgroup size varies, as well as exercise fail rate, and we see the effect of weighting
     main(simulation_params={'N': [1000],
-                            'ncovs': [20],
+                            'ncovs': [4],
                             'p': [0.3,0.5,0.7], 
                             'pop_fail_rate': [None],
                             'precision': [0.8],
                             'nr_item_descriptors': [0],
                             'nr_items': [0],
-                            'true_description': [{'a1': 1, 'a2': 1}], 
+                            'true_description': [{'a1': 1, 'a2': 1}], # for second half of exercises: a3 and a4
                             'weighted': [True,False],
                             'apply_averaging': [True,False],
                             'apply_entropy': [False],
@@ -193,7 +194,7 @@ if __name__ == '__main__':
                             'nr_exercises': [2,5,10],
                             'max_length': [0],
                             'apply_closed_itemsets': [0],
-                            'find_itemsets': [0],
+                            'find_itemsets': ['OneFPTree'],
                             'include_e1': [True,False]},
          refinement_params = {
              'numerical_bins': 2,
@@ -201,9 +202,9 @@ if __name__ == '__main__':
          beam_params = {'k': 10, 'd': 3, 'w': 10},         
          model_params = {'model': 'F_beta', 'beta': 1, 'entropy level': 'exercise'},
          nreps=1,
-         experiment_name="Exp20")
-    '''
+         experiment_name="Exp2")
 
+    '''
     # here, we create a true subgroup based on item descriptor 1, items a and b should be in the tuple
     # items a and b are sampled with probability p, to control subgroup size
     # the other items are sampled with varying probabilities 0.2-0.8 (prob for item the same per descriptor)
@@ -233,3 +234,4 @@ if __name__ == '__main__':
          model_params = {'model': 'F_beta', 'beta': 1, 'entropy level': 'exercise'},
          nreps=10,
          experiment_name="Exp3")
+    '''
