@@ -30,11 +30,11 @@ BEAM_PARAMS = {'k': 50, 'd': 3, 'w': 25, 'dtypes': None}
 CONSTRAINT_PARAMS = {'minimum_size': 25, 'improvement_rate': 0.1}
 
 MODEL_PARAMS = {'model': 'F_beta', 'beta': 1, 'weighted': True, 'inner entropy levels': ['session'], 'outer entropy levels': ['interaction'],
-                    'subgroup_level': 'session', 'target_level': 'interaction'}
+                    'subgroup_level': 'session', 'target_level': 'interaction', 'apply_averaging': True, 'apply_entropy': True}
 
 
 # execute beam search
-result_set_st = store_bs.beam_search(data=df_clean, descriptors=DESCRIPTORS, targets=TARGETS, ids=IDS, 
+result_set_st, _ = store_bs.beam_search(data=df_clean, descriptors=DESCRIPTORS, targets=TARGETS, ids=IDS, 
                                 refinement_params=REFINEMENT_PARAMS, beam_params=BEAM_PARAMS,
                                 constraint_params=CONSTRAINT_PARAMS, model_params=MODEL_PARAMS)
     

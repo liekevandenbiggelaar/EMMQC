@@ -18,7 +18,11 @@ $ cd EMMQC
 ```
 
 ## Synthetic Experiments
-
+To reproduce the synthetic data experiments, clone the reposity and run the following line in the terminal:
+```
+python syntheticexperiments.py
+```
+Two experiments can be executed by (un)commenting relevant selections in the __main__ file. 
 
 ## Case Study
 To reproduce the results from the case study, clone the reposity and run the following line in the terminal:

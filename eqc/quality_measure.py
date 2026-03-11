@@ -35,6 +35,7 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, model_param
 
                 'session_counts': session_counts,
                 'exercise_count': 0,
+                'session_count': [],
                 'n_subgroup_inner': [],
                 'n_complement_inner': [],
                 'n_subgroup_outer': [],
@@ -92,14 +93,15 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, model_param
         n_sgs = []
         n_compls = []
 
-        for innerlevel in model_params['inner entropy levels']:
-            innerentropy, n_subgroup_inner, n_complement_inner = entropy_function(subgroup=subgroup_targets[subgroup_targets[target_level_str] == eID], 
-                                                                                  population=population_targets[population_targets[target_level_str] == eID], 
-                                                                                  level=innerlevel)
-            class_inner_entropy.append(innerentropy)
-            n_sgs.append(n_subgroup_inner)
-            n_compls.append(n_complement_inner)
-            exercise_quality = exercise_quality * innerentropy
+        if model_params['apply_entropy']:
+            for innerlevel in model_params['inner entropy levels']:
+                innerentropy, n_subgroup_inner, n_complement_inner = entropy_function(subgroup=subgroup_targets[subgroup_targets[target_level_str] == eID], 
+                                                                                    population=population_targets[population_targets[target_level_str] == eID], 
+                                                                                    level=innerlevel)
+                class_inner_entropy.append(innerentropy)
+                n_sgs.append(n_subgroup_inner)
+                n_compls.append(n_complement_inner)
+                exercise_quality = exercise_quality * innerentropy
 
         # store for post analysis
         metrics['n_subgroup_inner'].append(n_sgs)
@@ -108,19 +110,27 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, model_param
         metrics['exercise_qualities'].append(exercise_quality)
         metrics['exercise_count'] += 1
 
+        nr_sg_sessions = sg_fail + sg_pass
+        #print(nr_sg_sessions)
+        metrics['session_count'].append(nr_sg_sessions)
+
         metrics['total_quality'] += exercise_quality # the higher the better
 
         
     # now outside of aggregation
-    exercise_count_correction = 1 / metrics['exercise_count']
-    sg_qm = exercise_count_correction * metrics['total_quality']
+    if model_params['apply_averaging']:
+        exercise_count_correction = 1 / metrics['exercise_count']
+        sg_qm = exercise_count_correction * metrics['total_quality']
+    else:
+        sg_qm = metrics['total_quality']
     
-    for outerlevel in model_params['outer entropy levels']:
-        outerentropy, n_subgroupout, n_complementout = entropy_function(subgroup=subgroup_targets, population=population_targets, level=outerlevel)
-        metrics['outer entropy'].append(outerentropy)
-        metrics['n_subgroup_outer'].append(n_subgroupout)
-        metrics['n_complement_outer'].append(n_complementout)
-        sg_qm = sg_qm * outerentropy
+    if model_params['apply_entropy']:
+        for outerlevel in model_params['outer entropy levels']:
+            outerentropy, n_subgroupout, n_complementout = entropy_function(subgroup=subgroup_targets, population=population_targets, level=outerlevel)
+            metrics['outer entropy'].append(outerentropy)
+            metrics['n_subgroup_outer'].append(n_subgroupout)
+            metrics['n_complement_outer'].append(n_complementout)
+            sg_qm = sg_qm * outerentropy
 
     metrics['subgroup_quality'] = sg_qm
     

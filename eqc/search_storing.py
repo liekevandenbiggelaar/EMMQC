@@ -144,10 +144,11 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
 
         #print(f"Last beam was {beam_queue}")
     end_time = datetime.now()   
+    runtime = end_time - start_time 
 
-    print(f"This search took {end_time - start_time}")    
+    #print(f"This search took {end_time - start_time}")    
     # 11. Return the result queue
-    return result_set
+    return result_set, runtime
 
 
 
