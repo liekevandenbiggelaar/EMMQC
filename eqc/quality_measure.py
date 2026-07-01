@@ -256,7 +256,7 @@ def entropy_function(subgroup=None, population=None, level=None):
 
         entropy = -p_subgroup * math.log(p_subgroup) + p_complement * math.log(p_complement)
 
-        entropy, n_subgroup, n_complement 
+        return entropy, n_subgroup, n_complement 
 
     if level == None:
         entropy = 1 #no entropy will be added
