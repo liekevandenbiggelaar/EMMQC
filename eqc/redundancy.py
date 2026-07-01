@@ -122,6 +122,11 @@ def compare_two_descs(old_description=None, new_description=None):
                 # we know the difference is in the key difference, we remove the latest one
                 best_descr = 'old'
             elif np.sum(same_descs) == 0:
+
+                # # if we find two conditions of collection-based attributes: keep the description with the longest.
+                # if any(cond._datatype == 'collection' for cond in old_description._conditions) and any(cond._datatype == 'collection' for cond in new_description._conditions):
+                #     ..
+                # else:
                 # remove the more general description
                 # bit complex to write, for convenience we remove the latest one
                 best_descr = 'old'

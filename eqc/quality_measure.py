@@ -5,6 +5,8 @@ This file contains all code related to the quality measure.
 import numpy as np
 import math
 
+
+
 def subgroup_quality(subgroup_targets=None, population_targets=None, model_params={}, population_dct={}):
     """
     This calculates the quality score of the entire subgroup (or population).
@@ -32,7 +34,9 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, model_param
                 'outer entropy': [],
                 'inner entropy': [],
                 'exercises': [],
-
+                'total_records': len(subgroup_targets),
+                'total_sessions': len(list(subgroup_targets['sessionID'].unique())),
+                'total_exercises': len(list(subgroup_targets['exerciseID'].unique())),
                 'session_counts': session_counts,
                 'exercise_count': 0,
                 'session_count': [],
@@ -170,6 +174,7 @@ def finished_rates(target_space=None, target_level_str=None, subgroup_level_str=
         finished_dct[ex] = ex_dct
         nr_sessions = len(list(target_grouped.loc[ex].index.unique()))
         sessions_count.append(nr_sessions)
+    
  
     return finished_dct, sessions_count
  
@@ -237,6 +242,22 @@ def entropy_function(subgroup=None, population=None, level=None):
     * level      [None]: a str that mentions the hierarchical level on which the entropy is fitted, options in use case: [exercise, session, None]
     """
 
+    if level == 'non hierarchical':
+        n_subgroup = len(subgroup)
+        n_population = len(population)
+        n_complement = n_population - n_subgroup
+
+        if n_subgroup == 0 or n_complement == 0:
+            entropy = 0 #one is empty so we select the entire dataset -> give 0 to remove from the top-k list
+            return entropy, n_subgroup, n_complement
+
+        p_subgroup = n_subgroup / n_population
+        p_complement = n_complement / n_population
+
+        entropy = -p_subgroup * math.log(p_subgroup) + p_complement * math.log(p_complement)
+
+        entropy, n_subgroup, n_complement 
+
     if level == None:
         entropy = 1 #no entropy will be added
         return entropy
@@ -258,3 +279,104 @@ def entropy_function(subgroup=None, population=None, level=None):
 
     return entropy, n_subgroup, n_complement
 
+
+def non_hierarchical_subgroup_quality(subgroup_targets=None, population_targets=None, model_params={}, population_dct={}):
+    """
+    This calculates the quality score of the entire subgroup (or population).
+
+    INPUT
+    * subgroup_targets  : [None] the dataframe with the target space of the records included in the subgroup.
+    * complement_targets : [None] the dataframe with the target space of the records included in the complements (and excluded in the subgroup).
+    * params (dict)     : [{}]   a dictionary containing all model settings, including:
+        * weighted (bool)       : [True] an option to remove weighting of more difficult exercises, automatically weighting is added.
+        * function (str)        : [None] an option to select the wanted metric, choose from 'recall', 'precision', or 'F_beta'.
+        * beta (int)            : [1] only important when function is F_beta. Automatically set to 1 for the F1 score.
+    * population_dct (dict) : [{}] a dictionary with the finished and unfinished counts per exercise
+    """
+
+    # Start the loop and calculate the score for each unique exercise in the subgroup
+    subgroup_dct, session_counts = non_hierarchical_finished_rates(target_space = subgroup_targets)
+
+    # Initialize the exercise count and the total weighted quality
+    metrics = { 'total_quality': 0,
+                'subgroup_quality': 0,
+
+                'session_counts': session_counts,
+                'exercise_count': len(list(subgroup_targets['exerciseID'].unique())),
+                'total_records': len(subgroup_targets),
+                'total_sessions': len(list(subgroup_targets['sessionID'].unique())),
+                'total_exercises': len(list(subgroup_targets['exerciseID'].unique())),
+                'fail rates': 0,
+                'recall': 0,
+                'precision': 0,
+                'F_beta': 0,
+                'beta': model_params['beta']}
+
+    pop_fail = population_dct[False] #positive -> we want to capture these
+    pop_pass = population_dct[True]  #negative -> and leave these in the complement.
+
+    sg_fail = subgroup_dct[False] #negative  (TP)  -> we correctly captures these in the subgroup of "failed" exercises, and they actually failed.
+    sg_pass = subgroup_dct[True]  #positive  (FP)  -> we incorrectly captures these in the subgroup of "failed" exercises, and they actually passed.
+    sg_ex_failrate = sg_fail / (sg_fail + sg_pass)
+    metrics['fail rates'] = sg_ex_failrate
+
+    # initialize and fill a confusion matrix for the score computation
+    confusion_matrix = {}
+    confusion_matrix['TP'] = sg_fail
+    confusion_matrix['FP'] = sg_pass
+    confusion_matrix['TN'] = pop_pass - sg_pass # the passed exercises in the complement are the passed exercises in the population minus the ones in the subgroup
+    confusion_matrix['FN'] = pop_fail - sg_fail # the failed exercises in the complement are the failed exercises in the population minus the ones in the subgroup
+        
+
+        
+    # compute the quality score using the metrics
+    pr = precision(confusion_matrix)
+    re = recall(confusion_matrix)
+    if pr == 0 or re == 0:
+        fb = 0 #dividing by 0 is not possible
+    else:
+        fb = F_beta(confusion_matrix, beta=model_params['beta'])
+            
+    # store for post analysis
+    metrics['recall'] = re
+    metrics['precision'] = pr
+    metrics['F_beta'] = fb
+
+    exercise_quality = metrics[model_params['model']] # select last stored one
+    metrics['subgroup_quality'] = exercise_quality
+        
+
+    if model_params['apply_entropy']:
+        entropy = entropy_function(subgroup=subgroup_targets, 
+                                            population=population_targets, 
+                                            level='non hierarchical')
+        exercise_quality = exercise_quality * entropy
+
+        # store for post analysis
+        metrics['subgroup_quality'] = exercise_quality
+    
+    return metrics
+
+def non_hierarchical_finished_rates(target_space=None):
+    """
+    Create a dictionary with all exercises as the keys.
+    Each key gets a new dictionary in the form of {"fail": x, "pass": y, "total": x + y}.
+    Return this dictionary.
+    """
+ 
+    # Group the data on unique exercise and session pairs.
+    # As the "finished" parameter is recorded on the highest level (session), we can just take the last, first, anyone of them.
+    target_grouped = target_space.copy()
+ 
+    # change label names from 1 and 0 to True and False in target_grouped
+    target_grouped['finished'] = np.where(target_grouped['finished'] == 1, True, False)
+    fr_dict = target_grouped['finished'].value_counts().to_dict()
+ 
+    if not True in fr_dict:
+        fr_dict[True] = 0
+    if not False in fr_dict:
+        fr_dict[False] = 0  
+ 
+    nr_sessions = len(list(target_grouped['sessionID'].unique()))
+ 
+    return fr_dict, nr_sessions

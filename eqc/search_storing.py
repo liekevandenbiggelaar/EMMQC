@@ -12,7 +12,7 @@ import eqc.redundancy as rd
 import eqc.fpgrowth as fp
 
 
-def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_params={}, beam_params={}, constraint_params={}, model_params={}):
+def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_params={}, beam_params={}, constraint_params={}, model_params={}, synth=False):
     """
     k : top-k subgroups extracted.
     d : maximum depth of the beam.
@@ -39,7 +39,8 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     # 12. Return the result queue
 
     start_time = datetime.now()
-    print(f"Search started at {start_time.now()}")
+    if not(synth):
+        print(f"Search started at {start_time.now()}")
 
     # 1. Get the data ready -> Preprocessing and Split
     descriptive_space, target_space, attributes, descriptor_types = ca.split_spaces(data=data, descriptors=descriptors, targets=targets, ids=ids, dtypes=beam_params['dtypes'])
@@ -70,7 +71,8 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
 
     # 5. For each level in until the maximum depth is reached, do:
     for level in range(1, beam_params['d'] + 1):
-        print(f"start on level {level} after {datetime.now() - start_time}")
+        if not(synth):
+            print(f"start on level {level} after {datetime.now() - start_time}")
         
 
     # 6.    Initialize the beam queue
@@ -87,8 +89,9 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
                 indices, subgroup_descriptors = ss.check_record_inclusion(descriptive_space=descriptive_space, dtypes=descriptor_types, candidate=description)
 
                 if subgroup_descriptors is None:
-                    for cond in description._conditions:
-                        print(cond._descriptor, cond._value, cond._datatype)
+                    if not(synth):
+                        for cond in description._conditions:
+                            print(cond._descriptor, cond._value, cond._datatype)
 
                 if len(indices) == 0:
                     continue #no valid subgroup
@@ -146,7 +149,8 @@ def beam_search(data=None, descriptors=None, targets=None, ids=None, refinement_
     end_time = datetime.now()   
     runtime = end_time - start_time 
 
-    #print(f"This search took {end_time - start_time}")    
+    if not(synth):
+        print(f"This search took {end_time - start_time}")    
     # 11. Return the result queue
     return result_set, runtime
 

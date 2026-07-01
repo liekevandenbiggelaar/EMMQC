@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import itertools as it
 
+import datetime
 # in console: pip install xlsxwriter
 
 
@@ -17,6 +18,8 @@ def main(simulation_params=None,
          model_params=None,
          nreps=None,    
          experiment_name=None):
+    
+    start_main = datetime.datetime.now()
 
     # create list of all simulation conditions
     parameter_set = list(it.product(simulation_params['N'],
@@ -38,15 +41,20 @@ def main(simulation_params=None,
                                     simulation_params['include_e1']))
     nexp = len(parameter_set)
 
+    print(f"we will execute {nexp * nreps} experiments")
+
     for exp in np.arange(1,nexp+1):   
         print('experiment', exp, 'of', nexp)
+        print(f"we start exp {exp} after {datetime.datetime.now() - start_main} time. ")
         params = parameter_set[exp-1]
-        print('parameters:', params)
+        #print('parameters:', params)
 
         # here you could do a parallelization over the nreps using joblib
         # for now I just do a for loop
         for rep in np.arange(1,nreps+1):
             print('rep', rep, 'of', nreps)
+            print(f'{rep + (exp-1)*nreps}/{nexp*nreps}')
+
                  
             # generate dataset
             df, cov_names, covs, cov_names_types, true_description, target_att_name, precision, recall, F1, array_with_pop_fail_rate = gsd.generate_dataset(params=params)
@@ -84,9 +92,13 @@ def main(simulation_params=None,
                     descriptor_dtypes['nominal'].remove('e1')
             
             if params[15] == 'RebuildFPTree':
-                result_set, runtime = bs.beam_search(data=df, descriptors=descriptors, targets=targets, ids=ids, refinement_params=refinement_params, beam_params=beam_params, constraint_params=constraint_params, model_params=model_params)
+                result_set, runtime = bs.beam_search(data=df, descriptors=descriptors, targets=targets, ids=ids, 
+                                                     refinement_params=refinement_params, beam_params=beam_params, 
+                                                     constraint_params=constraint_params, model_params=model_params, synth=True)
             elif params[15] == 'OneFPTree':
-                result_set, runtime = store_bs.beam_search(data=df, descriptors=descriptors, targets=targets, ids=ids, refinement_params=refinement_params, beam_params=beam_params, constraint_params=constraint_params, model_params=model_params)
+                result_set, runtime = store_bs.beam_search(data=df, descriptors=descriptors, targets=targets, ids=ids, 
+                                                           refinement_params=refinement_params, beam_params=beam_params, 
+                                                           constraint_params=constraint_params, model_params=model_params, synth=True)
             elif params[15] == 'OneHotEncoding':
                 # change item descriptors to binary attributes
                 collection_attributes = descriptor_dtypes['collection']
@@ -102,7 +114,10 @@ def main(simulation_params=None,
                 descriptors = descriptors + new_columns
                 descriptor_dtypes['boolean'] = descriptor_dtypes['boolean'] + new_columns
                 descriptor_dtypes['collection'] = []
-                result_set, runtime = bs.beam_search(data=df, descriptors=descriptors, targets=targets, ids=ids, refinement_params=refinement_params, beam_params=beam_params, constraint_params=constraint_params, model_params=model_params)
+                beam_params['dtypes'] = descriptor_dtypes
+                result_set, runtime = bs.beam_search(data=df, descriptors=descriptors, targets=targets, ids=ids, 
+                                                     refinement_params=refinement_params, beam_params=beam_params, 
+                                                     constraint_params=constraint_params, model_params=model_params, synth=True)
 
 
             out = list(params) + [rep] + dataset_metrics + [runtime]
@@ -125,6 +140,9 @@ def main(simulation_params=None,
                 result_experiment = rows
             else:
                 result_experiment = pd.concat([result_experiment, rows], ignore_index=True)
+        
+        if exp == 1:
+            print(f"Expected execution time: {( datetime.datetime.now() - start_time ) * nexp}")
                         
     # saving
     simulation_params_copy = simulation_params.copy()
@@ -140,6 +158,8 @@ def main(simulation_params=None,
     for sheet_name in dfs.keys():
         dfs[sheet_name].to_excel(writer, sheet_name=sheet_name, index=False)
     writer._save()        
+
+
 
 if __name__ == '__main__':
 
@@ -175,7 +195,7 @@ if __name__ == '__main__':
          nreps=1,
          experiment_name="Exp1")
     '''
-
+    '''
     # here, we create a scenario with multiple exercises
     # the subgroup size varies, as well as exercise fail rate, and we see the effect of weighting
     main(simulation_params={'N': [1000],
@@ -203,14 +223,16 @@ if __name__ == '__main__':
                     'subgroup_level': 'session', 'target_level': 'exercise'},
          nreps=1,
          experiment_name="Exp2")
-
     '''
+
+    start_time = datetime.datetime.now()
+    
     # here, we create a true subgroup based on item descriptor 1, items a and b should be in the tuple
     # items a and b are sampled with probability p, to control subgroup size
     # the other items are sampled with varying probabilities 0.2-0.8 (prob for item the same per descriptor)
     # if item a and b have probability 0.5, this means items a,b will be halfway in the fp tree
     # it also means subgroup size is about 0.25
-    main(simulation_params={'N': [1000],
+    main(simulation_params={'N': [100], #[1000], [10000]
                             'ncovs': [10],
                             'p': [0.5], 
                             'pop_fail_rate': [0.4],
@@ -234,5 +256,8 @@ if __name__ == '__main__':
          model_params = {'model': 'F_beta', 'beta': 1, 'outer entropy levels': ['exercise'], 'inner entropy levels': [],
                     'subgroup_level': 'session', 'target_level': 'exercise'},         
                     nreps=10,
-         experiment_name="Exp3")
-    '''
+         experiment_name="Exp3_100")
+
+    end_time = datetime.datetime.now()
+    print(f'It took {end_time - start_time} to run.')
+    

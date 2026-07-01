@@ -7,7 +7,8 @@ def clean_data_algebrakit(unfilterd_data=None, filter_type=None):
     collection_attributes = ['skills', 'stepTypes', 'event_types', 'event_evaluations', 'positive_skills', 'negative_skills']
 
     for colatt in collection_attributes:
-        unfilterd_data[colatt] = unfilterd_data[colatt].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
+        if colatt in unfilterd_data.columns:
+            unfilterd_data[colatt] = unfilterd_data[colatt].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
 
 
     # if a student has not tried one exercise, remove student session from data.

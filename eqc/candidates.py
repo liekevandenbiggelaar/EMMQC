@@ -149,7 +149,7 @@ def get_candidates_per_attribute(descriptive_space=None, dtypes=None, refinement
     for att in dtypes['boolean']:
 
         # make sure that there are still two options in this attribute. Otherwise, we skip this.
-        if len(descriptive_space[att].unique()) > 1:
+        if descriptive_space[att].nunique() > 1:
             conditions = rf.boolean_refinement(subgroup=descriptive_space, attribute=att, parent=parent)
             candidates += conditions
         

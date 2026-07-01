@@ -14,7 +14,7 @@ def process_one_subgroup(result_set=None, sg=None, out=None, columns=None):
     top1 = result_set._queue[sg]
     top1_description = top1.print_description()
     top1_metrics = top1.print_metrics()
-    print(top1_metrics)
+    #print(top1_metrics)
     results_params = [sg+1, top1_description, np.round(top1_metrics['subgroup_quality'],2),
                       np.round(top1_metrics['precision'],2),np.round(top1_metrics['recall'],2),np.round(top1_metrics['F_beta'],2),
                       np.round(top1_metrics['goodness_weights'],2), 
