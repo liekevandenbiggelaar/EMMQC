@@ -1,7 +1,7 @@
 # EMMQC
 
 
-This repository contains the implementation of the methods introduced in the paper "Efficient Mining of Collection-Based Attributes in Strongly Hierarchical Mixed-Type Data: Itemset Refinements for Exceptional Model Mining", currently under review at ECMLPKDD2026. 
+This repository contains the implementation of the methods introduced in the paper "Efficient Mining of Collection-Based Attributes in Strongly Hierarchical Mixed-Type Data: Itemset Refinements for Exceptional Model Mining", currently under review at KDD2027 - Research Track - First Cycle. 
 
 There are two folders:
 - data: contains the .csv file with the data made available by the collaborating company.
