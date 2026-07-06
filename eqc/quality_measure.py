@@ -36,7 +36,7 @@ def subgroup_quality(subgroup_targets=None, population_targets=None, model_param
                 'exercises': [],
                 'total_records': len(subgroup_targets),
                 'total_sessions': len(list(subgroup_targets['sessionID'].unique())),
-                'total_exercises': len(list(subgroup_targets['exerciseID'].unique())),
+                'total_exercises': len(subgroup_dct.keys()),
                 'session_counts': session_counts,
                 'exercise_count': 0,
                 'session_count': [],
@@ -347,9 +347,9 @@ def non_hierarchical_subgroup_quality(subgroup_targets=None, population_targets=
         
 
     if model_params['apply_entropy']:
-        entropy = entropy_function(subgroup=subgroup_targets, 
+        entropy, n_g, n_c = entropy_function(subgroup=subgroup_targets, 
                                             population=population_targets, 
-                                            level='non hierarchical')
+                                            level='non hierarchical')       
         exercise_quality = exercise_quality * entropy
 
         # store for post analysis

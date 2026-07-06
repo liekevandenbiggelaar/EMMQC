@@ -232,7 +232,7 @@ if __name__ == '__main__':
     # the other items are sampled with varying probabilities 0.2-0.8 (prob for item the same per descriptor)
     # if item a and b have probability 0.5, this means items a,b will be halfway in the fp tree
     # it also means subgroup size is about 0.25
-    main(simulation_params={'N': [100], #[1000], [10000]
+    main(simulation_params={'N': [10000], #[1000], [10000]
                             'ncovs': [10],
                             'p': [0.5], 
                             'pop_fail_rate': [0.4],
@@ -256,7 +256,7 @@ if __name__ == '__main__':
          model_params = {'model': 'F_beta', 'beta': 1, 'outer entropy levels': ['exercise'], 'inner entropy levels': [],
                     'subgroup_level': 'session', 'target_level': 'exercise'},         
                     nreps=10,
-         experiment_name="Exp3_100")
+         experiment_name="Exp3_10000")
 
     end_time = datetime.datetime.now()
     print(f'It took {end_time - start_time} to run.')

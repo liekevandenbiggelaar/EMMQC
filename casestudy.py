@@ -25,12 +25,12 @@ REFINEMENT_PARAMS = {
                         'maximum_itemsets': None, 'closed_itemsets': True
                         }
 
-BEAM_PARAMS = {'k': 50, 'd': 3, 'w': 25, 'dtypes': None} 
+BEAM_PARAMS = {'k': 15, 'd': 3, 'w': 25, 'dtypes': None} 
 
 CONSTRAINT_PARAMS = {'minimum_size': 25, 'improvement_rate': 0.1}
 
-MODEL_PARAMS = {'model': 'F_beta', 'beta': 1, 'weighted': True, 'inner entropy levels': ['session'], 'outer entropy levels': ['interaction'],
-                    'subgroup_level': 'session', 'target_level': 'interaction', 'apply_averaging': True, 'apply_entropy': True}
+MODEL_PARAMS = {'model': 'F_beta', 'beta': 1, 'weighted': True, 'inner entropy levels': ['session'], 'outer entropy levels': ['exercise'],
+                    'subgroup_level': 'session', 'target_level': 'exercise', 'apply_averaging': True, 'apply_entropy': True}
 
 
 # execute beam search
@@ -52,25 +52,26 @@ df['avg. precision'] = [np.mean(sub._metrics['precision']) for sub in result_set
 df['avg. F_beta'] = [round(np.mean(sub._metrics['F_beta']), 2) for sub in result_set_st._queue]
 df['avg. goodness weights'] = [round(np.mean(sub._metrics['goodness_weights']), 2) for sub in result_set_st._queue]
 df['avg. fail rate'] = [round(np.mean(sub._metrics['fail rates']), 2) for sub in result_set_st._queue]
-df['relative improvement'] = [ round( ( round(np.mean(sub._metrics['goodness_weights']), 2) - round(np.mean(sub._metrics['goodness_weights']), 2) ) 
+df['relative improvement'] = [ round( ( round(np.mean(sub._metrics['fail rates']), 2) - round(np.mean(sub._metrics['goodness_weights']), 2) ) 
                                      / round(np.mean(sub._metrics['goodness_weights']), 2)) for sub in result_set_st._queue]
 
-df.to_csv("results_casestudy.csv")
-# examined = 0
-# for sub in result_set_st._queue:
-#     examined += 1
+df.to_csv("results_casestudy_exercise.csv")
 
-#     fail_rate_ex = round(np.mean(sub._metrics['goodness_weights']), 2)
-#     fail_rate_sg = round(np.mean(sub._metrics['fail rates']), 2)
-#     rel_impr = round( (fail_rate_sg - fail_rate_ex) / fail_rate_ex, 2)
+examined = 0
+for sub in result_set_st._queue:
+    examined += 1
 
-#     if rel_impr >= 0.75:
-#         print(f"#{examined}: {sub}")
-#         print(f" avg. recall = {np.mean(sub._metrics['recall'])}")
-#         print(f" avg. precision = {np.mean(sub._metrics['precision'])}")
-#         print(f" avg. F_beta = {round(np.mean(sub._metrics['F_beta']), 2)}")
-#         print(f" avg. goodness_weights = {round(np.mean(sub._metrics['goodness_weights']), 2)}")
-#         print(f" avg. fail rate = {round(np.mean(sub._metrics['fail rates']), 2)}")
-#         print(f" Relative improvement = {rel_impr}")
+    fail_rate_ex = round(np.mean(sub._metrics['goodness_weights']), 2)
+    fail_rate_sg = round(np.mean(sub._metrics['fail rates']), 2)
+    rel_impr = round( (fail_rate_sg - fail_rate_ex) / fail_rate_ex, 2)
 
-#         print(5 * "=========")
+    if rel_impr >= 0.75:
+        print(f"#{examined}: {sub}")
+        print(f" avg. recall = {np.mean(sub._metrics['recall'])}")
+        print(f" avg. precision = {np.mean(sub._metrics['precision'])}")
+        print(f" avg. F_beta = {round(np.mean(sub._metrics['F_beta']), 2)}")
+        print(f" avg. goodness_weights = {round(np.mean(sub._metrics['goodness_weights']), 2)}")
+        print(f" avg. fail rate = {round(np.mean(sub._metrics['fail rates']), 2)}")
+        print(f" Relative improvement = {rel_impr}")
+
+        print(5 * "=========")
