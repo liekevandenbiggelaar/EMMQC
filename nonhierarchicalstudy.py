@@ -29,8 +29,18 @@ IDS = ['exerciseID', 'sessionID', 'questionID', 'interactionID', 'representative
 REFINEMENT_PARAMS = {
                         'numerical_bins': 5,
                         'minimal_support_collections': 0.05, 'maximum_support_collections': 0.95, 
-                        'maximum_itemsets': None, 'closed_itemsets': True
+                        'maximum_itemsets': None, 'closed_itemsets': True,
+                        'only_true': True
                         }
+
+# # UNCOMMENT for experiment with sparse one hot encoding.
+# REFINEMENT_PARAMS = {
+#                         'numerical_bins': 5,
+#                         'minimal_support_collections': 0.05, 'maximum_support_collections': 0.95, 
+#                         'maximum_itemsets': None, 'closed_itemsets': True,
+#                         'only_true': False
+#                         }
+
 
 BEAM_PARAMS = {'k': 15, 'd': 3, 'w': 25, 'dtypes': {'nominal': ['interactionType', 'primarySubject', 'secondarySubject', "hintsRequested_cat", 'try_count'], 
                                                     'boolean': ['context_hint'], 
@@ -42,6 +52,8 @@ CONSTRAINT_PARAMS = {'minimum_size': 25, 'improvement_rate': 0.1}
 
 MODEL_PARAMS = {'model': 'F_beta', 'beta': 1, 'weighted': False, 'inner entropy levels': [], 'outer entropy levels': [],
                     'subgroup_level': 'session', 'target_level': 'exercise', 'apply_averaging': True, 'apply_entropy': True}
+
+
 
 descriptor_dtypes = BEAM_PARAMS['dtypes']
 collection_attributes = descriptor_dtypes['collection']
@@ -78,6 +90,8 @@ df['description'] = [i._description for i in result_set_st._queue]
 df['n'] = [i._metrics['total_records'] for i in result_set_st._queue]
 df['n_exercises'] = [i._metrics['total_exercises'] for i in result_set_st._queue]
 df['n_sessions'] = [i._metrics['total_sessions'] for i in result_set_st._queue]
+df['quality'] = [i._metrics['total_quality'] for i in result_set_st._queue]
+df['fail rate'] = [i._metrics['fail_rates'] for i in result_set_st._queue]
 df['indices'] = [i._indices for i in result_set_st._queue]
 
 df.to_csv("results_nonhierarchical_exercise.csv")

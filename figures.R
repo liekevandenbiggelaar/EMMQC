@@ -90,7 +90,7 @@ setwd("/Users/liekebiggel/Documents/Ph.D./R03 - EMMQC/synthetic/results/")
 # '''
 
 #### Experiment 3 ####
-data <- read_excel("Exp3_100.xlsx")
+data <- read_excel("Exp3_10000.xlsx")
 head(data)
 
 plotdata <- data %>% 
@@ -132,5 +132,5 @@ plot <- plotdata %>% filter(max_length == 5) %>%
         legend.text  = element_text(size=5))
 
 plot
-name <- paste('./exp3plot_100.pdf', sep = "", collapse = NULL)
+name <- paste('./exp3plot_10000.pdf', sep = "", collapse = NULL)
 ggsave(name, width = 16, height = 8, units = "cm")

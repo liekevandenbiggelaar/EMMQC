@@ -64,7 +64,7 @@ def numerical_refinement(subgroup=None, attribute=None, bins=None, parent=None):
     return new_candidates
 
 
-def boolean_refinement(subgroup=None, attribute=None, parent=None):
+def boolean_refinement(subgroup=None, attribute=None, parent=None, only_true=False):
     """
     Refinement of the boolean attributes into the two option.
     The condition will look like: finished = True and finished = False
@@ -86,13 +86,32 @@ def boolean_refinement(subgroup=None, attribute=None, parent=None):
     bool1 = data_attribute.dropna().unique()[0]
     bool2 = data_attribute.dropna().unique()[1]
 
-    condition1 = ca.Condition(descriptor=attribute, value=bool1, datatype='boolean')
-    condition2 = ca.Condition(descriptor=attribute, value=bool2, datatype='boolean')
+    if only_true:
+        if bool1 == False:
+            condition2 = ca.Condition(descriptor=attribute, value=bool2, datatype='boolean')
+            description2 = ca.Description(conditions=[condition2], parent=parent)
+            new_candidates = [description2]
+        elif bool2 == False:
+            condition1 = ca.Condition(descriptor=attribute, value=bool1, datatype='boolean')
+            description1 = ca.Description(conditions=[condition1], parent=parent)
+            new_candidates = [description1]
+        else:
 
-    description1 = ca.Description(conditions=[condition1], parent=parent)
-    description2 = ca.Description(conditions=[condition2], parent=parent)
+            condition1 = ca.Condition(descriptor=attribute, value=bool1, datatype='boolean')
+            condition2 = ca.Condition(descriptor=attribute, value=bool2, datatype='boolean')
+
+            description1 = ca.Description(conditions=[condition1], parent=parent)
+            description2 = ca.Description(conditions=[condition2], parent=parent)
+                
+            new_candidates = [description1, description2]
+    else:
+        condition1 = ca.Condition(descriptor=attribute, value=bool1, datatype='boolean')
+        condition2 = ca.Condition(descriptor=attribute, value=bool2, datatype='boolean')
+
+        description1 = ca.Description(conditions=[condition1], parent=parent)
+        description2 = ca.Description(conditions=[condition2], parent=parent)
         
-    new_candidates = [description1, description2]
+        new_candidates = [description1, description2]
 
     return new_candidates
 
