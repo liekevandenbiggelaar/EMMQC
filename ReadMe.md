@@ -1,4 +1,4 @@
-# EMMQC
+# Code base for: Itemset Refinements for Exceptional Model Mining (2027)
 
 
 This repository contains the implementation of the methods introduced in the paper "Efficient Mining of Collection-Based Attributes in Strongly Hierarchical Mixed-Type Data: Itemset Refinements for Exceptional Model Mining", to appear at KDD 2027.
@@ -10,7 +10,7 @@ There are three folders:
 - synthetic: contains the code for the synthetic experiments in Section 6.
 
 There are four files:
-- casestudy: contains the experimental setup used for the real-world experiment mentioned in the paper.
+- real-world experiment : contains the experimental setup used for the real-world experiment mentioned in the paper.
 - synthetic experiment: contains the experimental setup used for the synthetic experiments in the paper.
 - non-hierarchical study: contains an execution of the real-world experiment with the alternative to our proposed itemset refinement: one-hot encoding all collection-based attributes into binary attributes.
 - figures: recreate the figures from the synthetic experiments from the results.
